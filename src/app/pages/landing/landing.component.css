@@ -1,0 +1,32 @@
+.travel-bag {
+    display: inline-block;
+    width: 500px; 
+    height: 500px;
+    background-image: url('/gatito.png');
+    background-repeat: no-repeat;
+    background-size: contain; 
+    background-position: center;
+}
+
+.titulo1{
+    font-size: 50px;
+    color: var(--purple-font-color);
+}
+
+.titulo2{
+    font-size: 50px;
+    color: var(--purple-color);
+}
+
+.btn-register{
+    background-color: var(--pastel-purple-color);
+    font-weight: semibold;
+    color: white;
+}
+
+.btn-login{
+    background-color: var(--purple-color);
+    font-weight: semibold;
+    color: white;
+    margin-right: 5%;
+}

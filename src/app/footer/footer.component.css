@@ -1,0 +1,21 @@
+.footer{
+    background-color: var(--purple-color);
+}
+
+.socials a{
+  padding: 3%;
+  font-size: 28px;
+}
+
+.footer-text li{
+  padding-top: 2%;
+}
+
+.logo-link {
+    width: 321px; 
+    height: 236px;
+    background-image: url('/logoo.png');
+    background-repeat: no-repeat;
+    background-size: contain; 
+    background-position: center;
+}

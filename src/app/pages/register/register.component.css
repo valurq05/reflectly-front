@@ -1,0 +1,32 @@
+.btn-send{
+    background-color: var(--purple-color);
+    color: white;
+    width: 100%;
+}
+
+.form-register input {
+    background-color: var(--purple-backg-color);
+    color: var(--grey-title-color);
+    padding: 3%;
+}
+
+.modal-register h2{
+    color: var(--grey-title-color);
+}
+
+.modal-register p{
+    color: var(--grey-title-color);
+}
+
+.alternate-login img{
+    max-width: 100px;
+    height: 50px;
+}
+
+.alternate-login button{
+    border: 0.5px solid var(--grey-title-color);
+    border-radius: 10px;
+    margin: 0px 5px 0px 5px;
+    padding: 5px;
+}
+

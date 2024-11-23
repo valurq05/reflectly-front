@@ -1,0 +1,42 @@
+<div class="modal fade" 
+    id="modalLogin" 
+    tabindex="-1" 
+    aria-labelledby="exampleModalLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-login modal-content p-5">
+        <div class="modal-body text-center justify-content-center">
+            <div>
+            <h1 class="fw-bold" id="exampleModalLabel">Iniciar Sesión</h1>
+            <p>Bienvenido a Reflectly. Inicia sesión para comenzar a escribir tu historia</p>
+            </div>
+            <form (submit)="onSubmit()" class="form-login">
+                <div class="mb-3">
+                  <input type="email" class="form-control" formControlName="use_mail" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                  <input type="password" class="form-control" formControlName="use_password" placeholder="Contraseña" id="exampleInputPassword1">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-send fw-bold p-2" [disabled]="form.invalid">Iniciar Sesión</button>
+                </div>
+                <div class="mt-3">
+                   <p>¿Olvidaste tu contraseña? Recuperala <a href="">aquí</a></p>
+                </div>
+                <hr>
+                <p>O accede usando</p>
+                <div class="alternate-login d-flex justify-content-center align-items-center">
+                    <button class="col-6 text-center">
+                        <img src="/logoGoogle.png" alt="">
+                        Google
+                    </button>
+                    <button class="col-6 text-center">
+                        <img src="/logoms.png" alt="">
+                        Microsoft
+                    </button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

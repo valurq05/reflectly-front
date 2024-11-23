@@ -1,0 +1,36 @@
+.logo-link {
+    display: inline-block;
+    margin: 0 8%;
+    width: 200px; 
+    height: 100px;
+    background-image: url('/logomorado.png');
+    background-repeat: no-repeat;
+    background-size: contain; 
+    background-position: center;
+}
+
+.header{
+    background-color: #ffff;
+
+}
+
+.btn-login{
+    color: var(--purple-color);
+}
+
+.btn-register{
+    color: var(--purple-color);
+}
+
+.btn-login:hover{
+    color: #ffff;
+    background-color: var(--purple-color);
+    transition: 0.5s;
+}
+
+.btn-register:hover{
+    color: #ffff;
+    background-color: var(--purple-color);
+    transition: 0.5s;
+}
+
