@@ -1,4 +1,4 @@
-.travel-bag {
+.gato{
     display: inline-block;
     width: 500px; 
     height: 500px;
@@ -30,3 +30,44 @@
     color: white;
     margin-right: 5%;
 }
+
+.share{
+    background-color: #f8e4fc;
+    border-radius: 25px;
+    padding: 15% 25% 15% 25%;
+    margin: 10%;
+}
+
+.download{
+    background-color: #fff4cc;
+    border-radius: 25px;
+    padding: 15% 25% 15% 25%;
+    margin: 10%;
+}
+
+.write{
+    background-color: #e8fcf4;
+    border-radius: 25px;
+    padding: 15% 25% 15% 25%;
+    margin: 10%;
+}
+
+.share i{
+    color: #C06EF3;
+    font-size: 30px;
+}
+
+.download i{
+    color: #FDBA09;
+    font-size: 30px;
+}
+
+.write i{
+    color: #6DEDC3;
+    font-size: 30px;
+}
+
+.info{
+    background-color: #EEECF2;
+}
+

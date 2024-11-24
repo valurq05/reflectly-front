@@ -1,4 +1,10 @@
-<app-header-main></app-header-main>
+<section *ngIf="isLoggedIn(); else notLoggedIn">
+    <app-header-protected></app-header-protected>
+</section>
+
+<ng-template #notLoggedIn>
+    <app-header-main></app-header-main>
+</ng-template>
 
 <main>
 <router-outlet></router-outlet>

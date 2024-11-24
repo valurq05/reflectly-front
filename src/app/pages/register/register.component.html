@@ -7,45 +7,59 @@
       <div class="modal-register modal-content p-5">
         <div class="modal-body text-center justify-content-center">
             <div>
-            <h1 class="fw-bold" id="exampleModalLabel">Registrarse</h1>
-            <p>Bienvenido a Reflectly. Registrate para comenzar a escribir tu historia</p>
+            <h1 class="fw-bold" id="exampleModalLabel">Registro</h1>
+            <p>Bienvenido a Reflectly, registrate para comenzar a escribir tu historia</p>
             </div>
-            <form (submit)="onSubmit()" class="form-register">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-register">
+              <div formGroupName="person">
                 <div class="mb-3">
-                <input type="text" class="form-control" formControlName="per_document" placeholder="Documento" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="text" class="form-control" formControlName="perDocument" placeholder="Documento" id="exampleInputDocument">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" formControlName="per_name" placeholder="Nombre" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" formControlName="per_lastname" placeholder="Apellido" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="text" class="form-control" formControlName="perName" placeholder="Nombre" id="exampleInputName">
                 </div>
                 <div class="mb-3">
-                  <input type="email" class="form-control" formControlName="use_mail" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="text" class="form-control" formControlName="perLastname" placeholder="Apellido" id="exampleInputLastname">
                 </div>
-                <div class="mb-3">
-                  <input type="password" class="form-control" formControlName="use_password" placeholder="Contraseña" id="exampleInputPassword1">
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" formControlName="useMail" placeholder="Correo Electrónico" id="exampleInputEmail">
+              </div>
+              <div class="mb-3">
+                <div class="input-group">
+                  <input 
+                    [type]="showPassword ? 'text' : 'password'" 
+                    class="form-control" 
+                    formControlName="usePassword" 
+                    placeholder="Contraseña" 
+                    id="exampleInputPassword2">
+                  <button 
+                    type="button" 
+                    class="btn btn-eye" 
+                    (click)="seePassword()">
+                    <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                  </button>
                 </div>
-                <div class="mb-3 form-check text-start">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1"> 
-                    <label class="form-check-label" for="exampleCheck1"> Aceptar términos y condiciones</label>
-                  </div>
-                <div>
-                    <button type="submit" class="btn btn-send fw-bold p-2" [disabled]="form.invalid">Registrarse</button>
-                </div>
-                <hr>
+              </div>
+              <div class="mb-3 text-start">
+                <p class="warning">*Al registrarte aceptas los términos y condiciones.</p>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-send fw-bold p-2" [disabled]="form.invalid">Registrarse</button>
+              </div>
+              <hr>
                 <p>O accede usando</p>
                 <div class="alternate-login d-flex justify-content-center align-items-center">
-                    <button class="col-6 btn text-center">
+                    <button class="col-6 text-center">
                         <img src="/logoGoogle.png" alt="">
                         Google
                     </button>
-                    <button class="col-6 btn text-center">
+                    <button class="col-6 text-center">
                         <img src="/logoms.png" alt="">
                         Microsoft
                     </button>
                 </div>
-              </form>
+            </form>
         </div>
       </div>
     </div>

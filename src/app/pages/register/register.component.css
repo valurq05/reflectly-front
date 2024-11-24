@@ -30,3 +30,10 @@
     padding: 5px;
 }
 
+.warning{
+    font-size: 13px;
+}
+
+.btn-eye{
+    background-color: #e1d3e6;
+}

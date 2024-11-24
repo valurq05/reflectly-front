@@ -10,12 +10,25 @@
             <h1 class="fw-bold" id="exampleModalLabel">Iniciar Sesión</h1>
             <p>Bienvenido a Reflectly. Inicia sesión para comenzar a escribir tu historia</p>
             </div>
-            <form (submit)="onSubmit()" class="form-login">
+            <form [formGroup]="form" (submit)="onSubmit()" class="form-login">
                 <div class="mb-3">
-                  <input type="email" class="form-control" formControlName="use_mail" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="email" class="form-control" formControlName="user" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" formControlName="use_password" placeholder="Contraseña" id="exampleInputPassword1">
+                  <div class="input-group">
+                    <input 
+                      [type]="showPassword ? 'text' : 'password'" 
+                      class="form-control" 
+                      formControlName="pwd" 
+                      placeholder="Contraseña" 
+                      id="exampleInputPassword1">
+                    <button 
+                      type="button" 
+                      class="btn btn-eye" 
+                      (click)="seePassword()">
+                      <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                    </button>
+                  </div>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-send fw-bold p-2" [disabled]="form.invalid">Iniciar Sesión</button>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class LayoutComponent {
 
+  AuthService = inject(AuthService);
+
+  isLoggedIn(){
+    return this.AuthService.isLoggedIn();
+  }
 }
