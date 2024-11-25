@@ -1,6 +1,6 @@
-<div>
-    <section class="d-md-flex pb-5">
-        <section class="col-7 ps-5 d-flex flex-column justify-content-center">
+<div class="container-fluid">
+    <section class="d-flex flex-md-row flex-column pb-5 align-items-center">
+        <section class="col-md-5 col-sm-12 text-center p-sm-0 mt-sm-5 ps-md-5 text-md-start justify-content-center align-items-center">
             <div class="title">
                 <h1 class="titulo1 fw-bolder">
                    Cada Día Es Una Nueva
@@ -14,21 +14,18 @@
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum aliquam molestiae quis tempora aliquid
             </div>
             <div class="auth-buttons align-items-start">
-                <button class="btn btn-login"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#modalLogin"><i class="fa-solid fa-down-long"></i>  Consulta nuestros servicios</button>
+                <a class="btn btn-login"
+                type="button" href="#services"><i class="fa-solid fa-down-long"></i>  Consulta nuestros servicios</a>
             </div>
         </section>
     
-        <div class="col-5 align-content-center justify-content-center text-center">
-         <a href="" class="gato"></a>
+        <div class="col-md-7 col-sm-12 align-content-center justify-content-center text-center">
+         <img src="/gatito.png" alt="gato" class="img-fluid">
         </div>
     </section>
 
     <section class="d-flex flex-wrap mb-5 justify-content-center">
-        <section class="col-12 col-md-4 d-flex justify-content-center mb-4">
-            <div class="d-flex align-items-center w-100">
+        <section class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-4">
                 <div class="align-content-center text-center col-5 justify-content-center d-flex">
                     <a class="share"><i class="bi bi-people fs-1"></i></a>
                 </div>
@@ -36,11 +33,9 @@
                     <h2 class="fw-semibold">Comparte</h2>
                     <p>Tus notas con tus amigos o conocidos</p>
                 </div>
-            </div>
         </section>
     
-        <section class="col-12 col-md-4 d-flex justify-content-center mb-4">
-            <div class="d-flex align-items-center w-100">
+        <section class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-4">
                 <div class="align-content-center text-center col-5 justify-content-center d-flex">
                     <a class="download"><i class="bi bi-download fs-1"></i></a>
                 </div>
@@ -48,11 +43,9 @@
                     <h2 class="fw-semibold">Descarga</h2>
                     <p>Tus notas diarias y tenlas al alcance cuando las necesites</p>
                 </div>
-            </div>
         </section>
     
-        <section class="col-12 col-md-4 d-flex justify-content-center mb-4">
-            <div class="d-flex align-items-center w-100">
+        <section class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-4">
                 <div class="align-content-center text-center col-5 justify-content-center d-flex">
                     <a class="write"><i class="bi bi-person-video2 fs-1"></i></a>
                 </div>
@@ -60,31 +53,54 @@
                     <h2 class="fw-semibold">Escribe</h2>
                     <p>Tus pensamientos, emociones y reflexiones de cada día</p>
                 </div>
-            </div>
         </section>
     </section>
 
-    <section class="info d-flex pb-5">
-        <section class="col-4 ps-5 d-flex flex-column justify-content-center align-items-center">
+    <section class="info d-flex flex-wrap p-5 align-items-center">
+        <section class="col-12 col-md-5 text-center text-md-start mb-4 mb-md-0">
             <div class="title">
-                <h1 class="titulo1 fw-bolder">
-                   Escribe
+                <h1 class="titulo3 fw-bolder">
+                    Escribe tus
                 </h1>
-                <h1 class="titulo2 fw-bolder">
-                    Tus pensamientos
+                <h1 class="titulo4 fw-bolder">
+                    pensamientos
                 </h1>
             </div>
             <div class="description">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum aliquam molestiae quis tempora aliquid
+                </p>
             </div>
         </section>
-        <div class="col-9 d-flex justify-content-center gap-3">
-            <img src="/foto1.jpg" alt="Foto 1" class="img-fluid" style="width: 320px; height: 300px; object-fit: cover;">
-            <img src="/foto2.jpg" alt="Foto 2" class="img-fluid" style="width: 320px; height: 300px; object-fit: cover;">
-        </div>        
+        <section class="col-12 col-md-7 d-flex flex-wrap justify-content-center gap-3">
+            <img src="/foto1.jpg" alt="Foto 1" class="img-fluid img-info rounded">
+            <img src="/codigo_etico1x1.webp" alt="Foto 2" class="img-fluid img-info rounded">
+        </section>
     </section>
-    
+
+
+    <section id="services">
+        <section class="services m-5 p-5 text-white">
+            <h2 class="fw-bold text-center">Nuestros Servicios</h2>
+            <section class="d-flex flex-column flex-md-row">
+                <section class="text-center m-2 col-sm-12 col-md-4">
+                    <img src="/nota.png" alt="" class="img-service d-block mx-auto mb-3">
+                    <h3 class="fw-bold">Notas</h3>
+                    <p>Pour itérer sur votre projet, Figjam est un grand tableau blanc digital : Brainstorming, idées.. vous allez adorer</p>
+                </section>
+                <section class="text-center m-2 col-sm-12 col-md-4">
+                    <img src="/lapiz.png" alt="" class="img-service d-block mx-auto mb-3">
+                    <h3 class="fw-bold">Personalizable</h3>
+                    <p>Pour itérer sur votre projet, Figjam est un grand tableau blanc digital : Brainstorming, idées.. vous allez adorer</p>
+                </section>
+                <section class="text-center m-2 col-sm-12 col-md-4">
+                    <img src="/sonrisa.png" alt="" class="img-service d-block mx-auto mb-3">
+                    <h3 class="fw-bold">Estado de Ánimo</h3>
+                    <p>Pour itérer sur votre projet, Figjam est un grand tableau blanc digital : Brainstorming, idées.. vous allez adorer</p>
+                </section>
+            </section>
+        </section>
+    </section>
 </div>
 
     

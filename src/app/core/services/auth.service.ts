@@ -22,12 +22,7 @@ export class AuthService {
     }
 
   register(payload: RegisterPayLoad){
-    const hashedPassword = CryptoJS.SHA256(payload.usePassword).toString();
-    const newPayload = {
-      ...payload,
-      usePassword: hashedPassword
-    };
-    return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, newPayload);
+    return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, payload);
   }
 
   login(payload: LoginPayLoad){
@@ -40,9 +35,9 @@ export class AuthService {
     .pipe(
       map((response) =>{
         if (response && response.Token) {
-          console.log(response.Token);
+          console.log(response);
           localStorage.setItem(LocalStorage.token, response.Token);
-          localStorage.setItem(LocalStorage.user, JSON.stringify(response.data));
+          localStorage.setItem(LocalStorage.user, JSON.stringify(response.Data));
           this.isLoggedIn.update(() => true);
         }
         return response;

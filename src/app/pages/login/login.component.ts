@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } 
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiResponse, User } from '../../core/model/common.model';
+import { AlertServiceService } from '../../core/services/alert-service.service';
 
 declare var bootstrap: any; 
 
@@ -19,7 +20,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService){
+    private authService: AuthService,
+    private alertService: AlertServiceService){
     this.form = this.fb.group({
       user: new FormControl('', [Validators.required, Validators.email]),
       pwd: new FormControl('', [Validators.required,])
@@ -31,14 +33,13 @@ export class LoginComponent {
       console.log(this.form.value);
       this.authService.login(this.form.value).subscribe({
         next: (response: ApiResponse<User>) =>{
-          console.log(response);
-          if (response.status) {
+          if (response.Status) {
             document.querySelector('.modal-backdrop')?.remove();
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalLogin'));
             modal?.hide();
             this.router.navigate(['home']);
           }else{
-            console.log(response);
+            this.alertService.showAlert('Error', response.message || 'Hay un problema con tus credenciales', 'error');
           }
         }
     })

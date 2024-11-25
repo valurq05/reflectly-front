@@ -2,18 +2,13 @@
     background-color: var(--purple-color);
 }
 
-.socials a{
-  padding: 3%;
-  font-size: 28px;
-}
-
 .footer-text li{
   padding-top: 2%;
 }
 
 .logo-link {
-    width: 321px; 
-    height: 236px;
+    max-width: 200px; 
+    height: 206px;
     background-image: url('/l.png');
     background-repeat: no-repeat;
     background-size: contain; 

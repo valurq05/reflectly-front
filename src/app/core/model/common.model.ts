@@ -28,9 +28,9 @@ export interface RegisterPayLoad{
 }
 
 export interface ApiResponse<T>{
-    status?: boolean;
+    Status?: boolean;
     message?: string;
     error?: string;
     Token?: string;
-    data: T;
+    Data: T;
 }
