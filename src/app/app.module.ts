@@ -14,6 +14,8 @@ import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { DailyLogService } from './core/services/daily-log.service';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     RegisterComponent,
     LandingComponent,
     UserHomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     ReactiveFormsModule
   ],
   providers: [
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    DailyLogService
   ],
   bootstrap: [AppComponent]
 })
