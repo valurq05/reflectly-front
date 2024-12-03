@@ -39,6 +39,7 @@ export class LoginComponent {
             modal?.hide();
             this.router.navigate(['home']);
           }else{
+            console.log(response)
             this.alertService.showAlert('Error', response.message || 'Hay un problema con tus credenciales', 'error');
           }
         }

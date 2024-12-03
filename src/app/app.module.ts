@@ -13,6 +13,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     LoginComponent,
     RegisterComponent,
     LandingComponent,
-    UserHomeComponent
+    UserHomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
