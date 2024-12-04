@@ -1,0 +1,122 @@
+.note-container {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.editor-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #6c63ff;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+
+.header {
+    margin-bottom: 20px;
+}
+
+.back-icon {
+    font-size: 24px;
+    color: #6c63ff;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.user-avatars img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 5px;
+    object-fit: cover;
+}
+
+/* Estilos para el editor */
+.editor {
+    min-height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+.action-buttons .btn-action {
+    color: white;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.action-buttons .btn-action:hover {
+    opacity: 0.9;
+}
+
+.action-buttons .btn-tags {
+    background-color: #ff8c00; /* Naranja */
+    margin-right: 10px;
+}
+
+.action-buttons .btn-collaborator {
+    background-color: #00bfae; /* Verde Claro */
+    margin-right: 10px;
+}
+
+.action-buttons .btn-images {
+    background-color: #ff4081; /* Rosa */
+}
+
+.save-btn-container .btn {
+    background-color: #28a745;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 150px;
+}
+
+.save-btn-container .btn:hover {
+    background-color: #218838;
+}
+
+
+@media (max-width: 768px) {
+    .editor-title {
+        font-size: 28px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-avatars {
+        margin-top: 10px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .action-buttons .btn-action {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .save-btn-container .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
