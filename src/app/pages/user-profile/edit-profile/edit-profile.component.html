@@ -1,47 +1,31 @@
-<!-- Botón para abrir el modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditProfile">
-    Editar Perfil
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="modalEditProfile" tabindex="-1" aria-labelledby="modalEditProfileLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- Cabecera del Modal -->
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalEditProfileLabel">Editar Perfil</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <!-- Cuerpo del Modal -->
-        <div class="modal-body">
-          <form id="editProfileForm">
-            <!-- Campo de Nombre -->
-            <div class="mb-3">
-              <label for="editName" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="editName" placeholder="Ingresa tu nombre">
-            </div>
-            <!-- Campo de Apellido -->
-            <div class="mb-3">
-              <label for="editLastName" class="form-label">Apellido</label>
-              <input type="text" class="form-control" id="editLastName" placeholder="Ingresa tu apellido">
-            </div>
-            <!-- Campo de Documento -->
-            <div class="mb-3">
-              <label for="editDocument" class="form-label">Documento</label>
-              <input type="text" class="form-control" id="editDocument" placeholder="Ingresa tu documento">
-            </div>
-            <!-- Campo de Foto -->
-            <div class="mb-3">
-              <label for="editPhoto" class="form-label">Foto de Perfil</label>
-              <input type="file" class="form-control" id="editPhoto" accept="image/*">
-            </div>
-          </form>
-        </div>
-        <!-- Pie del Modal -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar Cambios</button>
-        </div>
+<div class="modal fade" id="modalEditProfile" tabindex="-1" aria-labelledby="modalEditProfileLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditProfileLabel">Editar Perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí puedes colocar el contenido del formulario para editar el perfil -->
+        <form>
+          <div class="mb-3">
+            <label for="userName" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="userName" placeholder="Introduce tu nombre">
+          </div>
+          <div class="mb-3">
+            <label for="userEmail" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="userEmail" placeholder="Introduce tu correo electrónico">
+          </div>
+          <div class="mb-3">
+            <label for="userBio" class="form-label">Biografía</label>
+            <textarea class="form-control" id="userBio" rows="3" placeholder="Cuéntanos sobre ti"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
       </div>
     </div>
-  </div>  
+  </div>
+</div>
