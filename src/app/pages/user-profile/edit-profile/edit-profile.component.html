@@ -1,30 +1,33 @@
 <div class="modal fade" id="modalEditProfile" tabindex="-1" aria-labelledby="modalEditProfileLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalEditProfileLabel">Editar Perfil</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4" style="border-radius: 20px; background-color: #fdf7ff;">
+      <div class="modal-header border-0 text-center">
+        <h5 class="modal-title w-100 fw-bold" id="modalEditProfileLabel">Editar Perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <!-- Aquí puedes colocar el contenido del formulario para editar el perfil -->
         <form>
           <div class="mb-3">
-            <label for="userName" class="form-label">Nombre de Usuario</label>
-            <input type="text" class="form-control" id="userName" placeholder="Introduce tu nombre">
+            <label for="userDocument" class="form-label fw-semibold">Documento</label>
+            <input type="text" class="form-control" id="userDocument" placeholder="Introduce tu documento" style="background-color: #f6e8ff; border-radius: 10px;">
           </div>
           <div class="mb-3">
-            <label for="userEmail" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="Introduce tu correo electrónico">
+            <label for="userName" class="form-label fw-semibold">Nombre</label>
+            <input type="text" class="form-control" id="userName" placeholder="Introduce tu nombre" style="background-color: #f6e8ff; border-radius: 10px;">
           </div>
           <div class="mb-3">
-            <label for="userBio" class="form-label">Biografía</label>
-            <textarea class="form-control" id="userBio" rows="3" placeholder="Cuéntanos sobre ti"></textarea>
+            <label for="userSurname" class="form-label fw-semibold">Apellido</label>
+            <input type="text" class="form-control" id="userSurname" placeholder="Introduce tu apellido" style="background-color: #f6e8ff; border-radius: 10px;">
+          </div>
+          <div class="mb-3">
+            <label for="userPhoto" class="form-label fw-semibold">Foto de perfil</label>
+            <input type="file" class="form-control" id="userPhoto" style="background-color: #f6e8ff; border-radius: 10px;">
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 10px;">Cancelar</button>
+        <button type="button" class="btn btn-primary" style="background-color: #a97eff; border-radius: 10px;">Guardar cambios</button>
       </div>
     </div>
   </div>

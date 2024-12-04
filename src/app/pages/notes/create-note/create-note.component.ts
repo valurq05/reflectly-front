@@ -15,6 +15,7 @@ export class CreateNoteComponent implements AfterViewInit
       this.editor = new Quill(editorContainer, {
         theme: 'snow', 
         modules: {
+          //todo lo que permite hacer la libreria al usuario en la barra 
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'], 
             [{ 'header': 1 }, { 'header': 2 }, { 'font': [] }],
@@ -28,9 +29,9 @@ export class CreateNoteComponent implements AfterViewInit
       });
     }
   }
+  //trae el contenido de lo escrito por el user
   getContent(): string {
     return this.editor ? this.editor.root.innerHTML : '';
   }
   
-
 }

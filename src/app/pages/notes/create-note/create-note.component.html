@@ -1,22 +1,27 @@
-<div class="note-container">
-    <h1 class="editor-title">¿Qué piensas hoy?</h1>
-    
-    <div class="header d-flex justify-content-between align-items-center">
+<div class="note-container p-4">
+    <div class="header d-flex justify-content-between align-items-center mb-3">
         <div class="back-icon">&larr;</div>
         <div class="title" contenteditable="true">Título</div>
         <div class="user-avatars d-flex">
-            <img src="https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D" alt="User 1">
-            <img src="https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D" alt="User 2">
-            <img src="https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D" alt="User 3">
+            <img src="https://via.placeholder.com/40" alt="User 1" class="avatar">
+            <img src="https://via.placeholder.com/40" alt="User 2" class="avatar">
+            <img src="https://via.placeholder.com/40" alt="User 3" class="avatar">
         </div>
     </div>
+    <div id="editor-container" class="editor mb-3" contenteditable="true">Nota</div>
 
-    <div id="editor-container" class="editor"></div>
-
-    <div class="action-buttons d-flex justify-content-between mt-3">
-        <div class="btn-action btn-tags">Agregar Etiquetas</div>
-        <div class="btn-action btn-collaborator">Agregar Colaborador</div>
-        <div class="btn-action btn-images">Subir Imágenes</div>
+    <div class="action-buttons d-flex justify-content-between">
+        <button class="btn btn-sm btn-tags">Agregar Etiquetas <i class="fa-solid fa-tag"></i></button>
+        <button class="btn btn-sm btn-collaborator">Agregar Colaborador <i class="fa-solid fa-user-plus"></i></button>
+        <div class="mood-select-container">
+            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo <i class="fa-solid fa-face-smile"></i></label>
+            <select class="form-select" id="mood-select">
+                <option value="happy">Feliz 😊</option>
+                <option value="sad">Triste 😞</option>
+                <option value="angry">Enojado 😡</option>
+                <option value="proud">Orgulloso 😎</option>
+            </select>
+        </div>
     </div>
 
     <div class="save-btn-container mt-4 text-center">

@@ -1,122 +1,118 @@
+/* Contenedor principal */
 .note-container {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    max-width: 900px;
+    background-color: #f6e8ff;
+    border-radius: 15px;
+    width: 80vw;
     margin: 0 auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #4b3f72;
+    padding: 20px;
 }
 
-
-.editor-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #6c63ff;
-    text-align: center;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-
+/* Encabezado */
 .header {
-    margin-bottom: 20px;
+    font-size: 24px;
+    color: #a97eff;
+    display: flex;
+    flex-wrap: wrap; /* Permite reorganizar contenido si hay poco espacio */
+    gap: 10px; /* Espaciado entre elementos en pantallas pequeñas */
 }
 
 .back-icon {
     font-size: 24px;
-    color: #6c63ff;
+    cursor: pointer;
 }
 
 .title {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
-}
-
-.user-avatars img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-left: 5px;
-    object-fit: cover;
-}
-
-
-.editor {
-    min-height: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-
-.action-buttons .btn-action {
-    color: white;
-    border-radius: 25px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
+    color: #4b3f72;
+    flex: 1; /* Ocupa todo el ancho si es necesario */
     text-align: center;
 }
 
-.action-buttons .btn-action:hover {
-    opacity: 0.9;
+.user-avatars {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
 }
 
-.action-buttons .btn-tags {
-    background-color: #ff8c00; /* Naranja */
-    margin-right: 10px;
+/* Avatares */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
-.action-buttons .btn-collaborator {
-    background-color: #00bfae; /* Verde Claro */
-    margin-right: 10px;
+/* Editor */
+#editor-container {
+    min-height: 150px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #4b3f72;
+    border: 1px solid #e4d4ff;
 }
 
-.action-buttons .btn-images {
-    background-color: #ff4081; /* Rosa */
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se reorganicen verticalmente */
+    gap: 10px; /* Espaciado entre botones */
+    justify-content: space-between;
 }
 
-.save-btn-container .btn {
-    background-color: #28a745;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    width: 150px;
+.btn-tags, .btn-collaborator, .mood-select-container {
+    flex: 1; /* Los botones ocupan el mismo espacio en pantallas pequeñas */
+    text-align: center;
+    background-color: #f7cbff;
+    color: #4b3f72;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #4b3f72;
+    font-weight: 600;
 }
 
-.save-btn-container .btn:hover {
-    background-color: #218838;
+.btn-collaborator {
+    background-color: #b6e0fe;
+}
+
+.mood-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mood-label {
+    font-size: 1rem;
+    color: #4b3f72;
+    font-weight: 600;
+}
+
+.form-select {
+    background-color: #fff1f7;
+    border: 1px solid #e4d4ff;
+    border-radius: 10px;
+    color: #4b3f72;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-select:focus {
+    border-color: #d3c2ff;
 }
 
 
-@media (max-width: 768px) {
-    .editor-title {
-        font-size: 28px;
-    }
 
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 
-    .user-avatars {
-        margin-top: 10px;
-    }
+/* Botón de guardar */
+.save-btn-container {
+    margin-top: 20px;
+    text-align: center;
+}
 
-    .action-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .action-buttons .btn-action {
-        width: 100%;
-        margin: 5px 0;
-    }
-
-    .save-btn-container .btn {
-        width: 100%;
-        margin-top: 10px;
-    }
+.btn-primary {
+    background-color:#4b3f72;
 }

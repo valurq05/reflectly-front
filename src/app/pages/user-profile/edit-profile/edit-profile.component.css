@@ -1,0 +1,19 @@
+.modal-title {
+    font-size: 1.4rem;
+    color: #4b3f72;
+  }
+  
+  .form-control:focus {
+    border-color: #c8a2ff;
+    box-shadow: none;
+  }
+  
+  .btn-primary {
+    background-color: #a97eff;
+    border-color: #a97eff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #9463d4;
+  }
+  
