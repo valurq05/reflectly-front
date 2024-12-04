@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { ProfileComponent } from './pages/user-profile/profile/profile.component
     ReactiveFormsModule
   ],
   providers: [
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
     DailyLogService
   ],
   bootstrap: [AppComponent]

@@ -13,18 +13,24 @@ declare var bootstrap: any;
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  form: FormGroup;
+  form!: FormGroup;
   showPassword:boolean = false;
-
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private alertService: AlertServiceService){
+    this.validateForm();
+  }
+
+  validateForm(){
+    const emailRgx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordRgx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%,._;:*#?&])[A-Za-z\d@$!%.,;:_*#?&]{8,20}$/;
+
     this.form = this.fb.group({
-      user: new FormControl('', [Validators.required, Validators.email]),
-      pwd: new FormControl('', [Validators.required,])
+      user: new FormControl('', [Validators.required, Validators.email, Validators.pattern(emailRgx)]),
+      pwd: new FormControl('', [Validators.required, Validators.pattern(passwordRgx), Validators.minLength(8), Validators.maxLength(20)])
     });
   }
 
@@ -34,6 +40,7 @@ export class LoginComponent {
       this.authService.login(this.form.value).subscribe({
         next: (response: ApiResponse<User>) =>{
           if (response.Status) {
+            console.log(response);
             document.querySelector('.modal-backdrop')?.remove();
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalLogin'));
             modal?.hide();
@@ -51,6 +58,8 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-
+  clearForm() {
+    this.form.reset();
+  }
 
 }

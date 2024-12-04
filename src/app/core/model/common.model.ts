@@ -23,7 +23,6 @@ export interface RegisterPayLoad{
         perDocument: string;
         perName: string;
         perLastname: string;
-        perPhoto?: string;
       };
 }
 

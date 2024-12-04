@@ -1,12 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { ApiResponse } from '../model/common.model';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  if (req.url.includes('/login') || req.url.includes('/register')) {
+   if (req.url.includes('/login') || req.url.includes('/register')) {
     return next(req);
   }
 
@@ -31,6 +30,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       return authService.getRefreshToken().pipe(
         switchMap((response) => {
           authService.setAccessToken(response.NewAccessToken);
+          console.log("refresh interceptor");
           const newReq = req.clone({
             setHeaders: {
               Authorization: `Bearer ${response.NewAccessToken}`
@@ -47,4 +47,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       )
     })
   );
+
 };

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { ApiResponse, LoginPayLoad, RegisterPayLoad, User } from '../model/common.model';
-import { ApiEndpoint } from '../constants.ts/constants';
-import { firstValueFrom, map } from 'rxjs';
+import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
+import { ApiEndpoint, LocalStorage} from '../constants.ts/constants';
+import { firstValueFrom, map} from 'rxjs';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 
@@ -25,13 +25,14 @@ export class AuthService {
       if (response && response.NewAccessToken) {
         this.setAccessToken(response.NewAccessToken);
         this.isLoggedIn.update(() => true);
+        console.log("refresh auth");
       } else {
         this.logout();
       }
     } catch (error) {
       this.logout();
     }
-  } 
+  }
 
   getRefreshToken() {
     return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Refresh}`, null);
@@ -51,6 +52,7 @@ export class AuthService {
       map((response) => {
         if (response && response.Token) {
           console.log('Login exitoso:', response);
+          localStorage.setItem(LocalStorage.user, JSON.stringify(response.Data));
           this.setAccessToken(response.Token);
           console.log("access token:" + this.getAccessToken());
           this.isLoggedIn.update(() => true);
@@ -60,11 +62,8 @@ export class AuthService {
     );
   }
 
-  // getEmotionalStates(){
-  //   return this._http.get<ApiResponse<EmotionalStates>>(`${ApiEndpoint.EmotionalState.EmotionalStates}`);
-  // }
-
   logout() {
+    this.setAccessToken('');
     this.isLoggedIn.update(() => false);
     this.router.navigate(['']);
   }
@@ -82,6 +81,5 @@ export class AuthService {
     console.log('User info:' + user);
     return user;
    }
-
 
 }

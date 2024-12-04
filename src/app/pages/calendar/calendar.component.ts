@@ -32,7 +32,7 @@ export class CalendarComponent implements OnInit {
     this.currentMonth = this.currentDate.getMonth();
     this.generateCalendar();
     this.User = this.AuthService.getUserInfo();
-    this.token = this.AuthService.getUserToken();
+    this.token = this.AuthService.getAccessToken();
     if (this.User && this.User.useId && this.token) {
       console.log(this.token)
       this.DailyLogService.getDailyUserLogs(this.User.useId, this.token).subscribe(response => {

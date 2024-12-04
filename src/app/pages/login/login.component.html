@@ -2,9 +2,17 @@
     id="modalLogin" 
     tabindex="-1" 
     aria-labelledby="exampleModalLabel" 
+    data-bs-backdrop="static"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-login modal-content p-5">
+        <button 
+        type="button" 
+        class="btn-close position-absolute top-0 end-0 m-4" 
+        data-bs-dismiss="modal" 
+        aria-label="Close"
+        (click)="clearForm()">
+        </button>
         <div class="modal-body text-center justify-content-center">
             <div>
             <h1 class="fw-bold" id="exampleModalLabel">Iniciar Sesión</h1>
@@ -12,7 +20,16 @@
             </div>
             <form [formGroup]="form" (submit)="onSubmit()" class="form-login">
                 <div class="mb-3">
-                  <input type="email" class="form-control" formControlName="user" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="email" class="form-control" formControlName="user" placeholder="Correo Electrónico" id="exampleInputEmail1" aria-describedby="emailHelp"  [ngClass]="{
+                    'is-invalid': form.get('user')?.errors && 
+                    form.get('user')?.touched && 
+                    form.get('user')?.dirty}">
+                    <span *ngIf="form.get('user')?.errors && 
+                    form.get('user')?.touched && 
+                    form.get('user')?.dirty">
+                        <p class="text-danger text-start pt-1" *ngIf="form.get('user')?.hasError('required')">*el campo es requerido</p>
+                        <p class="text-danger text-start pt-1" *ngIf="form.get('user')?.hasError('pattern')">*error en formato de campo</p>
+                    </span>
                 </div>
                 <div class="mb-3">
                   <div class="input-group">
@@ -21,7 +38,12 @@
                       class="form-control" 
                       formControlName="pwd" 
                       placeholder="Contraseña" 
-                      id="exampleInputPassword1">
+                      id="exampleInputPassword"  
+                      [ngClass]="{
+                        'is-invalid': form.get('pwd')?.errors && 
+                        form.get('pwd')?.touched && 
+                        form.get('pwd')?.dirty
+                      }">
                     <button 
                       type="button" 
                       class="btn btn-eye" 
@@ -29,6 +51,14 @@
                       <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                     </button>
                   </div>
+                  <div *ngIf="form.get('pwd')?.errors && 
+                    form.get('pwd')?.touched && 
+                    form.get('pwd')?.dirty">
+                    <p class="text-danger text-start pt-1" *ngIf="form.get('pwd')?.hasError('required')">*El campo es requerido</p>
+                    <p class="text-danger text-start pt-1" *ngIf="form.get('pwd')?.hasError('pattern')">*Error en formato de campo</p>
+                    <p class="text-danger text-start pt-1" *ngIf="form.get('pwd')?.hasError('minlength')">*La contraseña debe tener al menos 8 caracteres</p>
+                  </div> 
+                  <p class="warning text-start mt-2">*La contraseña debe tener entre 8 y 20 caracteres, e incluir al menos una letra, un número y un carácter especial.</p>               
                 </div>
                 <div>
                     <button type="submit" class="btn btn-send fw-bold p-2" [disabled]="form.invalid">Iniciar Sesión</button>
