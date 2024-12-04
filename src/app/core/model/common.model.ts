@@ -33,4 +33,5 @@ export interface ApiResponse<T>{
     error?: string;
     Token?: string;
     Data: T;
+    NewAccessToken: string;
 }
