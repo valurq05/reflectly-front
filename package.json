@@ -20,6 +20,7 @@
     "@angular/router": "^18.2.0",
     "crypto-js": "^4.2.0",
     "quill": "^2.0.3",
+    "reflectly-front": "file:",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.5",
     "tslib": "^2.3.0",

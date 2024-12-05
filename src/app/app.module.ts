@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-pro
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,8 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
     UserHomeComponent,
     CalendarComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+
   ],
   imports: [
     BrowserModule,

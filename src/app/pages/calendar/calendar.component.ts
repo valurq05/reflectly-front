@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DailyLogService } from '../../core/services/daily-log.service';
 import { User } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
@@ -18,12 +18,14 @@ export class CalendarComponent implements OnInit {
   days: Array<{ date: Date; isCurrentMonth: boolean, emoji: string | null }> = [];
   User: User | null = null;
   token: string | null = null;
-  weekDays: string[] = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
+  weekDays: string[] = ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
   monthNames: string[] = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ];
-
+  @ViewChild('modalEntries') modalEntries: ElementRef | undefined;
+  entries: any[] = [];
+  
   constructor(private DailyLogService: DailyLogService, private AuthService: AuthService) {
   }
 
@@ -53,25 +55,29 @@ export class CalendarComponent implements OnInit {
     
     const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
     const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
-  
+    firstDayOfMonth.setHours(0, 0, 0, 0);
+    lastDayOfMonth.setHours(0, 0, 0, 0);
     const firstDayOfWeek = firstDayOfMonth.getDay(); 
     const lastDayOfWeek = lastDayOfMonth.getDay();  
   
  
     for (let i = firstDayOfWeek; i > 0; i--) {
       const date = new Date(this.currentYear, this.currentMonth, 1 - i);
+      date.setHours(0, 0, 0, 0);
       this.days.push({ date, isCurrentMonth: false, emoji: null });
     }
   
 
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
       const date = new Date(this.currentYear, this.currentMonth, i);
+      date.setHours(0, 0, 0, 0)
       this.days.push({ date, isCurrentMonth: true, emoji: null});
     }
   
 
     for (let i = 1; i < 7 - lastDayOfWeek; i++) {
       const date = new Date(this.currentYear, this.currentMonth + 1, i);
+      date.setHours(0, 0, 0, 0)
       this.days.push({ date, isCurrentMonth: false, emoji: null });
     }
   }
@@ -113,7 +119,14 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDate(date: Date) {
+    if (date > this.currentDate) {
+      console.log('Este día no puede ser seleccionado');
+      return; 
+    }
     this.selectedDate = date;
+    const selectedDate = this.formatDateToString(date);
+    console.log(selectedDate);
+    this.getDailyLogsForDate(selectedDate);
   }
 
   isToday(date: Date): boolean {
@@ -135,19 +148,40 @@ export class CalendarComponent implements OnInit {
   }
 
   processLogs(logs: any[]) {
+
+    const logsByDate: { [key: string]: any[] } = {};
+  
     logs.forEach(log => {
       const logDate = new Date(log.dayLogDate);
       logDate.setMinutes(logDate.getMinutes() + logDate.getTimezoneOffset());
-      console.log(log, logDate);
-      const emoji = this.getEmojiForStatus(log.emoStaState);
-      console.log(emoji);
-      const day = this.days.find(d => d.date.getDate() === logDate.getDate() && 
-                                       d.date.getMonth() === logDate.getMonth() &&
-                                       d.date.getFullYear() === logDate.getFullYear());
-      if (day) {
-        day.emoji = emoji;
+      const formattedDate = this.formatDateToString(logDate);
+  
+      if (!logsByDate[formattedDate]) {
+        logsByDate[formattedDate] = [];
       }
+      logsByDate[formattedDate].push(log);
     });
+  
+    for (const date in logsByDate) {
+      const dailyLogs = logsByDate[date];
+      const emotionCount: { [key: string]: number } = {};
+  
+      dailyLogs.forEach(log => {
+        const emoji = this.getEmojiForStatus(log.emoStaState);
+        if (emoji) {
+          emotionCount[emoji] = (emotionCount[emoji] || 0) + 1;
+        }
+      });
+  
+      const mostFrequentEmoji = this.getMostFrequentEmotion(emotionCount);
+  
+   
+      const day = this.days.find(d => this.formatDateToString(d.date) === date);
+      if (day) {
+        day.emoji = mostFrequentEmoji;
+      }
+    }
+  
     console.log(this.days);
   }
 
@@ -193,5 +227,58 @@ export class CalendarComponent implements OnInit {
         return ''; 
     }
   }
+
+  getMostFrequentEmotion(emotionCount: { [key: string]: number }): string {
+    let maxCount = 0;
+    let mostFrequentEmoji = '';
+  
+    for (const emoji in emotionCount) {
+      if (emotionCount[emoji] > maxCount) {
+        maxCount = emotionCount[emoji];
+        mostFrequentEmoji = emoji;
+      }
+    }
+
+    return mostFrequentEmoji;
+  }
+
+  formatDateToString(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
+  getDailyLogsForDate(date: string) {
+    if (!this.User || !this.User.useId || !this.token) {
+      console.error('Usuario no encontrado o no válido');
+      return;
+    }
+  
+    this.DailyLogService.getDailyUserLogs(this.User.useId, this.token, date).subscribe(response => {
+      if (response && response.Status && Array.isArray(response.Data) && response.Data.length > 0) {
+        this.entries = response.Data;
+        console.log('Entradas del día:', this.entries);
+      } else {
+        this.entries = [];
+        console.log('No hay entradas para este día');
+      }
+    });
+  }
+
+  stripHtmlTags(html: string): string {
+    return html.replace(/<\/?(?!br|p|ul|li|ol|a|img)[^>]+(>|$)/g, '');  
+  }
+
+    truncateText(text: string, limit: number): string {
+      if (!text) return '';
+    
+  
+      const htmlWithoutTags = this.stripHtmlTags(text);
+      const imgIndex = htmlWithoutTags.indexOf('[IMG]');
+      const truncatePoint = imgIndex >= 0 ? Math.min(imgIndex, limit) : limit;
+  
+      return htmlWithoutTags.length > truncatePoint ? htmlWithoutTags.substring(0, truncatePoint) + '...' : htmlWithoutTags;
+    }
 }
 

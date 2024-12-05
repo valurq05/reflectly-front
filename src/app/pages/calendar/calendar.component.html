@@ -1,27 +1,71 @@
-<div class="calendar-container">
-    <div class="calendar">
-      <div class="calendar-header">
-        <button (click)="prevMonth()">&lt;</button>
-        <span>{{ monthNames[currentMonth] }} {{ currentYear }}</span>
-        <button (click)="nextMonth()">&gt;</button>
+<div class="calendar-container mb-4">
+  <div class="calendar">
+    <div class="calendar-header">
+      <button (click)="prevMonth()">&lt;</button>
+      <span>{{ monthNames[currentMonth] }} {{ currentYear }}</span>
+      <button (click)="nextMonth()">&gt;</button>
+    </div>
+    <div class="calendar-body">
+      <div class="calendar-weekdays">
+        <span *ngFor="let day of weekDays">{{ day }}</span>
       </div>
-      <div class="calendar-body">
-        <div class="calendar-weekdays">
-          <span *ngFor="let day of weekDays">{{ day }}</span>
-        </div>
-        <div class="calendar-days">
-          <span
-            *ngFor="let day of days"
-            [class.today]="isToday(day.date)"
-            [class.selected]="isSelected(day.date)"
-            [class.not-current-month]="!day.isCurrentMonth"
-            (click)="selectDate(day.date)"
-          >
-            {{ day.date.getDate() }}
-            <span *ngIf="day.emoji">{{ day.emoji }}</span>
-          </span>
-        </div>
+      <div class="calendar-days">
+        <span
+          *ngFor="let day of days"
+          [class.today]="isToday(day.date)"
+          [class.selected]="isSelected(day.date)"
+          [class.not-current-month]="!day.isCurrentMonth"
+          [class.not-selectable]="day.date > currentDate"
+          (click)="selectDate(day.date)"
+          [ngClass]="{'disabled': day.date > currentDate}"
+          data-bs-toggle="modal" data-bs-target="#modalEntries"
+        >
+          {{ day.date.getDate() }}
+          <span *ngIf="day.emoji">{{ day.emoji }}</span>
+        </span>
       </div>
     </div>
   </div>
-  
+</div>
+
+
+
+<div class="modal fade" id="modalEntries" tabindex="-1" aria-labelledby="modalEntriesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEntriesLabel">Entradas del Día</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="entries.length > 0; else noEntries">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col" *ngFor="let entry of entries">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="card-title">{{ entry.entTitle }}</h5>
+                  <span class="badge bg-secondary me-1" *ngFor="let category of entry.catCategorie">
+                    {{ category }}
+                  </span>
+                </div>
+                <div class="card-body">
+                  <p><strong>Emoción:</strong> {{ entry.emoStaState }} {{ entry.emoStaState }}</p>
+                  <p class="card-text">{{ truncateText(entry.entText, 20) }}</p>
+                </div>
+                <div class="card-footer">
+                  <button type="button" class="btn btn-primary w-100">Ver entrada</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noEntries>
+          <p class="text-center">No hay entradas para este día.</p>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
