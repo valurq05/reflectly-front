@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ApiEndpoint } from '../constants.ts/constants';
 
 
@@ -23,7 +23,6 @@ export class DailyLogService {
       params = params.set('categoryId', categoryId.toString());
     }
 
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(ApiEndpoint.DailyLog.GetDailyUserLog, { params, headers });
+    return this.http.get(ApiEndpoint.DailyLog.GetDailyUserLog, { params });
   }
 }
