@@ -117,6 +117,131 @@
   pointer-events: none; 
 }
 
+.custom-card {
+  background-color: #f7f4fc; 
+  border: none;
+  border-radius: 12px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.custom-card .card-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.custom-card .avatars-group {
+  display: flex;
+}
+
+.custom-card .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: -8px;
+  border: 2px solid #f7f4fc; 
+}
+
+.custom-card .card-footer {
+  background-color: transparent;
+  border-top: none;
+}
+
+.custom-card .btn {
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.custom-card .btn-outline-primary {
+  color: #6c63ff;
+  border-color: #6c63ff;
+}
+
+.custom-card .btn-outline-primary:hover {
+  background-color: #6c63ff;
+  color: white;
+}
+
+.custom-card .btn-outline-danger {
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.custom-card .btn-outline-danger:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.custom-card .btn-outline-secondary {
+  color: #a29bfe;
+  border-color: #a29bfe;
+}
+
+.custom-card .btn-outline-secondary:hover {
+  background-color: #a29bfe;
+  color: white;
+}
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.badge {
+  font-size: 0.8rem;
+}
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+}
+.card-footer button {
+  font-size: 0.9rem;
+}
+
+.category-gratitud {
+  background-color: #FFC107; 
+  color: #fff;
+}
+.category-metas-y-logros {
+  background-color: #28A745; 
+  color: #fff;
+}
+.category-relaciones {
+  background-color: #007BFF; 
+  color: #fff;
+}
+.category-emociones-positivas {
+  background-color: #17A2B8; 
+  color: #fff;
+}
+.category-emociones-negativas {
+  background-color: #DC3545; 
+  color: #fff;
+}
+.category-autocuidado {
+  background-color: #6F42C1; 
+  color: #fff;
+}
+.category-lecciones-aprendidas {
+  background-color: #FD7E14; 
+  color: #fff;
+}
+.category-momentos-dificiles {
+  background-color: #6C757D; 
+  color: #fff;
+}
+.category-momentos-especiales {
+  background-color: #20C997; 
+  color: #fff;
+}
+
+
 
 @media (max-width: 1000px) {
   .calendar-container{
@@ -303,3 +428,6 @@
     font-size: 10px;  
 }
 }
+
+
+

@@ -50,6 +50,13 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit():void{
+    const tootltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tootltips.forEach(tooltip => {
+      new bootstrap.Tooltip(tooltip);
+    });
+  }
+
   generateCalendar() {
     this.days = []; 
     
@@ -267,7 +274,7 @@ export class CalendarComponent implements OnInit {
   }
 
   stripHtmlTags(html: string): string {
-    return html.replace(/<\/?(?!br|p|ul|li|ol|a|img)[^>]+(>|$)/g, '');  
+    return html.replace(/<\/?()[^>]+(>|$)/g, '');  
   }
 
     truncateText(text: string, limit: number): string {
@@ -279,6 +286,22 @@ export class CalendarComponent implements OnInit {
       const truncatePoint = imgIndex >= 0 ? Math.min(imgIndex, limit) : limit;
   
       return htmlWithoutTags.length > truncatePoint ? htmlWithoutTags.substring(0, truncatePoint) + '...' : htmlWithoutTags;
+    }
+
+
+  getCategoryClass(category: string): string {
+  return `category-${category.replace(/\s+/g, '-').toLowerCase()}`;
+    }
+
+  getVisibleCategories(categories: string[]): string[] {
+      return categories.slice(0, 2); 
+    }
+
+  getExtraCategoriesCount(categories: string[]): number {
+      return categories.length > 2 ? categories.length - 2 : 0; 
+    }
+    getExtraCategories(categories: string[]): string[] {
+      return categories.slice(2); 
     }
 }
 

@@ -29,7 +29,6 @@
 </div>
 
 
-
 <div class="modal fade" id="modalEntries" tabindex="-1" aria-labelledby="modalEntriesLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -41,19 +40,44 @@
         <div *ngIf="entries.length > 0; else noEntries">
           <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col" *ngFor="let entry of entries">
-              <div class="card h-100">
-                <div class="card-header">
-                  <h5 class="card-title">{{ entry.entTitle }}</h5>
-                  <span class="badge bg-secondary me-1" *ngFor="let category of entry.catCategorie">
+              <div class="card h-100 shadow-sm">
+                <div class="card-header bg-light d-flex flex-wrap align-items-center">
+                  <h5 class="card-title mb-0 flex-grow-1">{{ truncateText(entry.entTitle, 10) }}</h5>
+                  <span
+                    class="badge ms-1"
+                    *ngFor="let category of getVisibleCategories(entry.catCategorie)"
+                    [ngClass]="getCategoryClass(category)">
                     {{ category }}
+                  </span>
+                  <span
+                    class="badge bg-secondary ms-1"
+                    *ngIf="getExtraCategoriesCount(entry.catCategorie) > 0"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    [attr.title]="getExtraCategories(entry.catCategorie).join(', ')"
+                  >
+                    +{{ getExtraCategoriesCount(entry.catCategorie) }}
                   </span>
                 </div>
                 <div class="card-body">
-                  <p><strong>Emoción:</strong> {{ entry.emoStaState }} {{ entry.emoStaState }}</p>
-                  <p class="card-text">{{ truncateText(entry.entText, 20) }}</p>
+                  <p class="card-text">
+                    {{ truncateText(entry.entText, 20) }}
+                  </p>
+                  <p class="mb-0 d-flex align-items-center">
+                    <strong>Emoción:</strong>
+                    <span class="ms-2">{{ getEmojiForStatus(entry.emoStaState) }} {{ entry.emoStaState }}</span>
+                  </p>
                 </div>
-                <div class="card-footer">
-                  <button type="button" class="btn btn-primary w-100">Ver entrada</button>
+                <div class="card-footer d-flex justify-content-between">
+                  <button type="button" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-download"></i> Descargar
+                  </button>
+                  <button type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-pencil"></i> Editar
+                  </button>
                 </div>
               </div>
             </div>
@@ -62,7 +86,7 @@
         <ng-template #noEntries>
           <p class="text-center">No hay entradas para este día.</p>
         </ng-template>
-      </div>
+      </div> 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
