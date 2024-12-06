@@ -7,6 +7,8 @@ import Quill from 'quill';
 })
 export class CreateNoteComponent implements AfterViewInit 
 {
+
+  title:string ="Titulo"
   editor: Quill | undefined;
 
   ngAfterViewInit(): void {
@@ -32,6 +34,12 @@ export class CreateNoteComponent implements AfterViewInit
   //trae el contenido de lo escrito por el user
   getContent(): string {
     return this.editor ? this.editor.root.innerHTML : '';
+  }
+
+  OnSaveItem(): any{
+
+    console.log(this.title)
+    console.log(this.getContent())
   }
   
 }

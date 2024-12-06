@@ -1,4 +1,4 @@
-export interface User{
+export interface User {
     useId: number,
     useMail: string,
     usePassword: string,
@@ -8,25 +8,32 @@ export interface User{
         perName: string;
         perLastname: string;
         perPhoto?: string;
-      };
+    };
 }
 
-export interface LoginPayLoad{
+export interface LoginPayLoad {
     user: string,
     pwd: string
 }
 
-export interface RegisterPayLoad{
+export interface RegisterPayLoad {
     useMail: string,
     usePassword: string,
     person: {
         perDocument: string;
         perName: string;
         perLastname: string;
-      };
+    };
 }
 
-export interface ApiResponse<T>{
+export interface Entry {
+    entDate: Date,
+    entText: String,
+    entTitle: String,
+    "entStatus": true
+}
+
+export interface ApiResponse<T> {
     Status?: boolean;
     message?: string;
     error?: string;

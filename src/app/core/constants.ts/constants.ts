@@ -9,6 +9,10 @@ export const ApiEndpoint = {
     DailyLog:{
         Get: `${API_URL}/daily/log`,
         GetDailyUserLog: `${API_URL}/daily/user/logs`,
+    },
+    Entry:{
+        Create:`${API_URL}/entry`,
+
     }
 }
 

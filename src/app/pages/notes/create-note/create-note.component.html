@@ -1,7 +1,9 @@
 <div class="note-container p-4">
     <div class="header d-flex justify-content-between align-items-center mb-3">
         <div class="back-icon">&larr;</div>
-        <div class="title" contenteditable="true">Título</div>
+        <input [(ngModel)]="title" placeholder="Escribe algo aquí"  class="title"/>
+        
+
         <div class="user-avatars d-flex">
             <img src="https://via.placeholder.com/40" alt="User 1" class="avatar">
             <img src="https://via.placeholder.com/40" alt="User 2" class="avatar">
@@ -13,7 +15,8 @@
         <button class="btn btn-sm btn-tags">Agregar Etiquetas <i class="fa-solid fa-tag"></i></button>
         <button class="btn btn-sm btn-collaborator">Agregar Colaborador <i class="fa-solid fa-user-plus"></i></button>
         <div class="mood-select-container">
-            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo <i class="fa-solid fa-face-smile"></i></label>
+            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo <i
+                    class="fa-solid fa-face-smile"></i></label>
             <select class="form-select" id="mood-select">
                 <option value="happy">Feliz 😊</option>
                 <option value="sad">Triste 😞</option>
@@ -21,9 +24,10 @@
                 <option value="proud">Orgulloso 😎</option>
             </select>
         </div>
+
     </div>
 
     <div class="save-btn-container mt-4 text-center">
-        <button class="btn btn-primary">Guardar</button>
+        <button (click)="OnSaveItem()" class="btn btn-primary">Guardar</button>
     </div>
 </div>
