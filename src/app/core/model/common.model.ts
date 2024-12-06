@@ -28,9 +28,21 @@ export interface RegisterPayLoad {
 
 export interface Entry {
     entDate: Date,
-    entText: String,
-    entTitle: String,
-    "entStatus": true
+    entText: string,
+    entTitle: string,
+    entStatus: true
+}
+
+export interface DailyLog {
+    useId: number,
+    emoStaId: number,
+    entText: string,
+    entTitle: string
+}
+
+export interface EmotionalState {
+    emoStaId: number,
+    emoStaState: string,
 }
 
 export interface ApiResponse<T> {

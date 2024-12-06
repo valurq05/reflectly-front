@@ -9,11 +9,12 @@ export const ApiEndpoint = {
     DailyLog:{
         Get: `${API_URL}/daily/log`,
         GetDailyUserLog: `${API_URL}/daily/user/logs`,
+        Create: `${API_URL}/daily/log/allinfo`
     },
-    Entry:{
-        Create:`${API_URL}/entry`,
+    EmotionalState:{
+        getAll: `${API_URL}/emotional/states`
+    },
 
-    }
 }
 
 export const LocalStorage = {

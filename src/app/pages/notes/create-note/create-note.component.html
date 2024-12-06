@@ -15,13 +15,13 @@
         <button class="btn btn-sm btn-tags">Agregar Etiquetas <i class="fa-solid fa-tag"></i></button>
         <button class="btn btn-sm btn-collaborator">Agregar Colaborador <i class="fa-solid fa-user-plus"></i></button>
         <div class="mood-select-container">
-            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo <i
-                    class="fa-solid fa-face-smile"></i></label>
-            <select class="form-select" id="mood-select">
-                <option value="happy">Feliz 😊</option>
-                <option value="sad">Triste 😞</option>
-                <option value="angry">Enojado 😡</option>
-                <option value="proud">Orgulloso 😎</option>
+            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo 
+                <i class="fa-solid fa-face-smile"></i></label>
+                
+            <select [(ngModel)]="emotionalState" class="form-select" id="mood-select">
+                
+                    <option *ngFor="let emotionalState of emotionalStates" [value]="emotionalState.emoStaId">{{emotionalState.emoStaState}}</option>
+
             </select>
         </div>
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiEndpoint } from '../constants.ts/constants';
+import { ApiResponse, DailyLog } from '../model/common.model';
 
 
 @Injectable({
@@ -25,4 +26,10 @@ export class DailyLogService {
 
     return this.http.get(ApiEndpoint.DailyLog.GetDailyUserLog, { params });
   }
+
+  createDailyLog(dailyLog:DailyLog){
+    return this.http.post(ApiEndpoint.DailyLog.Create, dailyLog)
+  }
+
+
 }
