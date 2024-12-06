@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
-import { ApiEndpoint, LocalStorage} from '../constants.ts/constants';
-import { firstValueFrom, map} from 'rxjs';
+import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
+import { map} from 'rxjs';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 
@@ -13,22 +13,25 @@ import * as CryptoJS from 'crypto-js';
 export class AuthService {
 
   isLoggedIn = signal<boolean>(false);
+  secretKey:string = 'TuClaveSecreta';
 
   constructor(private _http: HttpClient, private router: Router) {
+
     if(this.getUserToken()){
       this.isLoggedIn.update(() => true);
     }
+    
   }
 
-  getRefreshToken() {
+  public getRefreshToken() {
     return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Refresh}`, null);
   }
 
-  register(payload: RegisterPayLoad) {
+  public register(payload: RegisterPayLoad) {
     return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, payload);
   }
 
-  login(payload: LoginPayLoad) {
+  public login(payload: LoginPayLoad) {
     const hashedPassword = CryptoJS.SHA256(payload.pwd).toString();
     const newPayload = {
       ...payload,
@@ -39,7 +42,8 @@ export class AuthService {
         if (response && response.Token) {
           console.log('Login exitoso:', response);
           localStorage.setItem(LocalStorage.token, response.Token);
-          localStorage.setItem(LocalStorage.user, JSON.stringify(response.Data));
+          const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(response.Data), this.secretKey).toString()
+          localStorage.setItem(LocalStorage.user, encryptedUser);
           // this.setAccessToken(response.Token);
           // console.log("access token:" + this.getAccessToken());
           this.isLoggedIn.update(() => true);
@@ -49,7 +53,7 @@ export class AuthService {
     );
   }
 
-  logout(){
+  public logout(){
     localStorage.removeItem(LocalStorage.token);
     localStorage.removeItem(LocalStorage.user);
     this.isLoggedIn.update(()=>false);
@@ -64,17 +68,24 @@ export class AuthService {
   //   return this.accessToken;
   // }
 
-  getUserToken(){
+  public getUserToken(){
     if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
       return localStorage.getItem(LocalStorage.token);
     }
     return null;
   }
 
-  getUserInfo(){
-    const user = JSON.parse(localStorage.getItem('USER')!);
-    console.log('User info:' + user);
-    return user;
+  public getUserInfo(){
+    const encryptedUser = localStorage.getItem(LocalStorage.user);
+    if (!encryptedUser) {
+    console.log("no se encontraron datos del usuario");
+    return null;
+    }else{
+      const bytes = CryptoJS.AES.decrypt(encryptedUser, this.secretKey);
+      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+      const userInfo = JSON.parse(decryptedData);
+      return userInfo;
+    }
    }
 
 }
