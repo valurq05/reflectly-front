@@ -1,14 +1,16 @@
+export interface Person {
+    perId: number;
+    perDocument: string;
+    perLastname: string;
+    perName: string;
+    perPhoto: string;
+}
+
 export interface User {
     useId: number,
     useMail: string,
     usePassword: string,
-    person: {
-        perId: number;
-        perDocument: string;
-        perName: string;
-        perLastname: string;
-        perPhoto?: string;
-    };
+    person: Person
 }
 
 export interface LoginPayLoad {
@@ -27,18 +29,35 @@ export interface RegisterPayLoad {
 }
 
 export interface Entry {
-    entDate: Date,
-    entText: string,
-    entTitle: string,
-    entStatus: true
+    entId: number;
+    entDate: string; 
+    entText: string;
+    entTitle: string;
+    entStatus: boolean;
 }
 
-export interface DailyLog {
+
+export interface DailyLogCreate {
     useId: number,
     emoStaId: number,
     entText: string,
     entTitle: string
 }
+
+export interface DailyLog {
+    dayLogId: number;
+    dayLogDate: Date; 
+    emotionalLog: EmotionalLog;
+    entry: Entry;
+}
+
+export interface EmotionalLog {
+    emoLogId: number;
+    emoLogDate: Date; 
+    emotionalState: EmotionalState;
+    user: User;
+}
+
 
 export interface EmotionalState {
     emoStaId: number,

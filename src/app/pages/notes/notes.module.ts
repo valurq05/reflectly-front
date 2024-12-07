@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { NotesComponent } from './notes/notes.component';
+import { UpdateNoteComponent } from './update-note/update-note.component';
 
 
 
@@ -10,7 +11,8 @@ import { NotesComponent } from './notes/notes.component';
   declarations: [
    
     CreateNoteComponent,
-        NotesComponent
+        NotesComponent,
+        UpdateNoteComponent
   ],
   imports: [
     CommonModule,

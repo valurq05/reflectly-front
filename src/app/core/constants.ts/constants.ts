@@ -7,12 +7,14 @@ export const ApiEndpoint = {
         Refresh: `${API_URL}/refresh`
     },
     DailyLog:{
-        Get: `${API_URL}/daily/log`,
+        //Get: `${API_URL}/daily/log`,
         GetDailyUserLog: `${API_URL}/daily/user/logs`,
-        Create: `${API_URL}/daily/log/allinfo`
+        Create: `${API_URL}/daily/log/allinfo`,
+        GetById:`${API_URL}/daily/log/show`,
+
     },
     EmotionalState:{
-        getAll: `${API_URL}/emotional/states`
+        getAll: `${API_URL}/emotional/states`,
     },
     Entry:{
         Delete:`${API_URL}/entry`

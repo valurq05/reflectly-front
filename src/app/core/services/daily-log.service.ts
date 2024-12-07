@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../constants.ts/constants';
-import { DailyLog } from '../model/common.model';
+import { ApiResponse, DailyLog, DailyLogCreate } from '../model/common.model';
 
 
 @Injectable({
@@ -27,8 +27,13 @@ export class DailyLogService {
     return this.http.get(ApiEndpoint.DailyLog.GetDailyUserLog, { params });
   }
 
-  createDailyLog(dailyLog:DailyLog){
+  createDailyLog(dailyLog:DailyLogCreate){
     return this.http.post(ApiEndpoint.DailyLog.Create, dailyLog)
+  }
+
+  getDailyLog(id:string){
+    const params = new HttpParams().set('id', id);
+    return this.http.get<ApiResponse<DailyLog>>(ApiEndpoint.DailyLog.GetById, { params });
   }
 
   deleteEntry(id: string) {

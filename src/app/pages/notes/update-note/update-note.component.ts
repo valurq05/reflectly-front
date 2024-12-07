@@ -1,34 +1,36 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import Quill from 'quill';
 import { DailyLogCreate, EmotionalState, User } from '../../../core/model/common.model';
 import { AlertServiceService } from '../../../core/services/alert-service.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { DailyLogService } from '../../../core/services/daily-log.service';
 import { EmotionalStatesService } from '../../../core/services/emotional-states.service';
+
 @Component({
-  selector: 'app-create-note',
-  templateUrl: './create-note.component.html',
-  styleUrl: './create-note.component.css'
+  selector: 'app-update-note',
+  templateUrl: './update-note.component.html',
+  styleUrl: './update-note.component.css'
 })
-//error por llamar el componente en dos modulos (notas y app) 
-//pero si no lo hago no funcion el ForModule para binding [(ngModel)]
-export class CreateNoteComponent implements AfterViewInit 
-{
+export class UpdateNoteComponent {
+
   user: User | null = null;
   emotionalStates: EmotionalState[] | null = null;
-  title:string ="Titulo";
+  title:string ="";
   emotionalState: number =3;
   editor: Quill | undefined;
-
-  constructor(private dailyLogService: DailyLogService, 
+  noteId!: string; 
+  constructor(private route: ActivatedRoute,
+    private dailyLogService: DailyLogService, 
     private authService: AuthService, 
     private emotionalStatesService: EmotionalStatesService,
     private alertService: AlertServiceService,
-    private router: Router){
-  }
+    private router: Router
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.noteId = this.route.snapshot.paramMap.get('id')!; 
+
     this.user = this.authService.getUserInfo();
     console.log(this.user);
     try{
@@ -39,11 +41,22 @@ export class CreateNoteComponent implements AfterViewInit
           console.log(error, "Hola, no funciona")
         }
       })
+
+      this.dailyLogService.getDailyLog(this.noteId).subscribe({
+        next: (res)=>{
+
+          console.log(res)
+          this.title=res.Data.entry.entTitle
+          this.emotionalState = res.Data.emotionalLog.emotionalState.emoStaId
+          this.setContent(res.Data.entry.entText)
+        },error: (error)=>{
+          console.log(error, "Hola, no funciona")
+        }
+      })
     }catch(e){
       console.log(e, "catch")
     }
   }
-
   ngAfterViewInit(): void {
     const editorContainer = document.getElementById('editor-container');
     if (editorContainer) {
@@ -64,10 +77,6 @@ export class CreateNoteComponent implements AfterViewInit
       });
     }
   }
-  //trae el contenido de lo escrito por el user
-  getContent(): string {
-    return this.editor ? this.editor.root.innerHTML : '';
-  }
 
   OnSaveItem(): any{
     if(this.user){
@@ -77,9 +86,6 @@ export class CreateNoteComponent implements AfterViewInit
         entText: this.getContent(),
         entTitle: this.title
       }
-
-      console.log(data.entText)
-
       try{
         this.dailyLogService.createDailyLog(data).subscribe({
           next:(response)=>{
@@ -95,4 +101,13 @@ export class CreateNoteComponent implements AfterViewInit
       }
     }
   } 
+  getContent(): string {
+    return this.editor ? this.editor.root.innerHTML : '';
+  }
+
+  setContent(content: string): void {
+    if (this.editor) {
+        this.editor.root.innerHTML = content;
+    }
+}
 }
