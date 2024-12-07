@@ -63,6 +63,7 @@ export class CalendarComponent implements OnInit {
         year: "numeric"
       });
     }
+    else return "date"
 
     
   }
