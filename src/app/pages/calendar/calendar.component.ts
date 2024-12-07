@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { DailyLogService } from '../../core/services/daily-log.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
+import { DailyLogService } from '../../core/services/daily-log.service';
 
 
 @Component({
@@ -54,6 +54,18 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  formattedDay(date:Date|null){
+
+    if (date){
+      return date.toLocaleDateString("es-CO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+    }
+
+    
+  }
   generateCalendar() {
     this.days = []; 
     
