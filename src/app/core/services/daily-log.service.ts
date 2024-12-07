@@ -36,5 +36,4 @@ export class DailyLogService {
     return this.http.delete(ApiEndpoint.Entry.Delete, { params });
   }
 
-
 }

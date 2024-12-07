@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
   templateUrl: './create-note.component.html',
   styleUrl: './create-note.component.css'
 })
+//error por llamar el componente en dos modulos (notas y app) 
+//pero si no lo hago no funcion el ForModule para binding [(ngModel)]
 export class CreateNoteComponent implements AfterViewInit 
 {
   user: User | null = null;
   emotionalStates: EmotionalState[] | null = null;
   title:string ="Titulo";
-  emotionalState: number =1;
+  emotionalState: number =3;
   editor: Quill | undefined;
 
   constructor(private dailyLogService: DailyLogService, 
@@ -83,12 +85,10 @@ export class CreateNoteComponent implements AfterViewInit
               this.router.navigate(["home"])}, 3000) 
           }, error:(error)=>{
             this.alertService.showAlert("No se ha podido crear la nota", "Tu nota no ha sido registrada correctamente", "error")
-
           }
         })
       }catch(error){
         console.log(error,"catch")
-  
       }
     }
   } 

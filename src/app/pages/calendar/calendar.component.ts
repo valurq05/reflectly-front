@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
 import { DailyLogService } from '../../core/services/daily-log.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -90,14 +91,13 @@ export class CalendarComponent implements OnInit {
     const firstDayOfWeek = firstDayOfMonth.getDay(); 
     const lastDayOfWeek = lastDayOfMonth.getDay();  
   
- 
+
     for (let i = firstDayOfWeek; i > 0; i--) {
       const date = new Date(this.currentYear, this.currentMonth, 1 - i);
       date.setHours(0, 0, 0, 0);
       this.days.push({ date, isCurrentMonth: false, emoji: null });
     }
   
-
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
       const date = new Date(this.currentYear, this.currentMonth, i);
       date.setHours(0, 0, 0, 0)
@@ -135,9 +135,7 @@ export class CalendarComponent implements OnInit {
     this.generateCalendar(); 
     this.loadLogs();
   }
-  
-  
-  
+
   nextMonth() {
     this.currentMonth++;
     if (this.currentMonth > 11) {
@@ -318,13 +316,43 @@ export class CalendarComponent implements OnInit {
 
   getVisibleCategories(categories: string[]): string[] {
       return categories.slice(0, 2); 
-    }
+  }
 
   getExtraCategoriesCount(categories: string[]): number {
       return categories.length > 2 ? categories.length - 2 : 0; 
-    }
-    getExtraCategories(categories: string[]): string[] {
+  }
+  getExtraCategories(categories: string[]): string[] {
       return categories.slice(2); 
-    }
+  }
+  onClickDeleteEntry(id: string){
+    Swal.fire({title:"¿Seguro que deseas eliminar esta nota?", 
+      text:"No podras recuperarla",
+      icon:"warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar"}).then((result)=>{
+        if(result.isConfirmed){
+          try{
+            this.DailyLogService.deleteEntry(id).subscribe({
+              next:(response)=>{
+                console.log(response)
+      
+                if(this.selectedDate){
+      
+                  this.getDailyLogsForDate(this.formatDateToString(this.selectedDate))  
+                }
+              }, error:(error)=>{
+                console.log(error)
+      
+              }
+            })
+          }
+          catch(e){
+            console.log(e)
+          }
+        }
+    })
+  }
 }
 

@@ -1,3 +1,6 @@
+<div>
+  <button routerLink="/create" class="">Nueva Nota </button>
+</div>
 <div *ngIf="entries.length > 0; else noEntries">
   <div class="row row-cols-1 row-cols-md-2 g-4">
     <div class="col" *ngFor="let entry of entries">
@@ -27,7 +30,7 @@
           <button type="button" class="btn btn-outline-primary btn-sm">
             <i class="bi bi-download"></i> Descargar
           </button>
-          <button type="button" class="btn btn-outline-danger btn-sm">
+          <button (click)="onClickDeleteEntry(entry.entId)" type="button" class="btn btn-outline-danger btn-sm">
             <i class="bi bi-trash"></i> Eliminar
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm">
