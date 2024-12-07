@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
-import { map} from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map} from 'rxjs';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import Cookies from 'js-cookie';
 
 
 @Injectable({
@@ -12,23 +13,33 @@ import * as CryptoJS from 'crypto-js';
 })
 export class AuthService {
 
+  private accessToken: string = '';
   isLoggedIn = signal<boolean>(false);
   secretKey:string = 'TuClaveSecreta';
 
-  constructor(private _http: HttpClient, private router: Router) {
-
-    if(this.getUserToken()){
-      this.isLoggedIn.update(() => true);
+  constructor(private http: HttpClient, private router: Router) {
+    if (!this.getAccessToken() && this.isLoggedIn()) {
+      this.verifySession();
     }
-    
   }
 
-  public getRefreshToken() {
-    return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Refresh}`, null);
+  async verifySession() {
+    try {
+      const response = await firstValueFrom(this.getRefreshToken());
+      if (response && response.NewAccessToken) {
+        this.setAccessToken(response.NewAccessToken);
+        this.isLoggedIn.update(() => true);
+        console.log("refresh auth");
+      } else {
+        this.logout();
+      }
+    } catch (error) {
+      this.logout();
+    }
   }
 
   public register(payload: RegisterPayLoad) {
-    return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, payload);
+    return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, payload);
   }
 
   public login(payload: LoginPayLoad) {
@@ -37,20 +48,23 @@ export class AuthService {
       ...payload,
       usePassword: hashedPassword,
     };
-    return this._http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Login}`, newPayload, { withCredentials: true }).pipe(
+    return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Login}`, newPayload, { withCredentials: true }).pipe(
       map((response) => {
         if (response && response.Token) {
           console.log('Login exitoso:', response);
-          localStorage.setItem(LocalStorage.token, response.Token);
+          this.setAccessToken(response.Token);
+          console.log("access token:" + this.getAccessToken());
           const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(response.Data), this.secretKey).toString()
           localStorage.setItem(LocalStorage.user, encryptedUser);
-          // this.setAccessToken(response.Token);
-          // console.log("access token:" + this.getAccessToken());
           this.isLoggedIn.update(() => true);
         }
         return response;
       })
     );
+  }
+
+  public getRefreshToken() {
+    return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Refresh}`, null)
   }
 
   public logout(){
@@ -60,19 +74,13 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  // setAccessToken(token: string) {
-  //   this.accessToken = token;
-  // }
+  setAccessToken(token: string) {
+    this.accessToken = token;
+  }
 
-  // getAccessToken() {
-  //   return this.accessToken;
-  // }
-
-  public getUserToken(){
-    if(typeof window !== 'undefined' && typeof localStorage !== 'undefined'){
-      return localStorage.getItem(LocalStorage.token);
-    }
-    return null;
+  getAccessToken() {
+    console.log(this.accessToken);
+    return this.accessToken;
   }
 
   public getUserInfo(){

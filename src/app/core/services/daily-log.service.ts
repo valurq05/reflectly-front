@@ -13,7 +13,7 @@ export class DailyLogService {
   constructor(private http: HttpClient) { }
 
 
-  getDailyUserLogs(userId: number, token: string, date?: string, categoryId?: number): Observable<any> {
+  getDailyUserLogs(userId: number, date?: string, categoryId?: number): Observable<any> {
 
     let params = new HttpParams();
     params = params.set('userId', userId.toString());

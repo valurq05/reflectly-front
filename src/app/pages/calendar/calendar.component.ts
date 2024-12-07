@@ -34,12 +34,9 @@ export class CalendarComponent implements OnInit {
     this.currentMonth = this.currentDate.getMonth();
     this.generateCalendar();
     this.User = this.AuthService.getUserInfo();
-    this.token = this.AuthService.getUserToken();
-    if (this.User && this.User.useId && this.token) {
-      console.log(this.token)
-      this.DailyLogService.getDailyUserLogs(this.User.useId, this.token).subscribe(response => {
-        if (this.User && this.User.useId && this.token) {
-          console.log(this.token);
+    if (this.User && this.User.useId) {
+      this.DailyLogService.getDailyUserLogs(this.User.useId).subscribe(response => {
+        if (this.User && this.User.useId) {
           this.loadLogs();
         } else {
           console.error('Usuario no encontrado o no válido');
@@ -90,11 +87,11 @@ export class CalendarComponent implements OnInit {
   }
 
   loadLogs() {
-    if (!this.User || !this.User.useId || !this.token) {
+    if (!this.User || !this.User.useId) {
       console.error('Usuario no encontrado o no válido');
       return;
     }
-    this.DailyLogService.getDailyUserLogs(this.User.useId, this.token).subscribe(response => {
+    this.DailyLogService.getDailyUserLogs(this.User.useId).subscribe(response => {
       if (response && response.Status && Array.isArray(response.Data)) {
         this.processLogs(response.Data); 
       } else {
@@ -257,12 +254,12 @@ export class CalendarComponent implements OnInit {
   }
   
   getDailyLogsForDate(date: string) {
-    if (!this.User || !this.User.useId || !this.token) {
+    if (!this.User || !this.User.useId) {
       console.error('Usuario no encontrado o no válido');
       return;
     }
   
-    this.DailyLogService.getDailyUserLogs(this.User.useId, this.token, date).subscribe(response => {
+    this.DailyLogService.getDailyUserLogs(this.User.useId, date).subscribe(response => {
       if (response && response.Status && Array.isArray(response.Data) && response.Data.length > 0) {
         this.entries = response.Data;
         console.log('Entradas del día:', this.entries);

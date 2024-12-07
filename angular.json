@@ -43,7 +43,7 @@
               "node_modules/quill/dist/quill.core.css"
             ],
             "scripts": [
-             
+              "./node_modules/js-cookie/dist/js.cookie.js"
             ]
           },
           "configurations": {

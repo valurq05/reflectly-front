@@ -2,7 +2,6 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { LocalStorage } from '../constants.ts/constants';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -18,7 +17,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const authService = inject(AuthService);
-  const token = authService.getUserToken();
+  const token = authService.getAccessToken();
 
   const authReq = req.clone({
     setHeaders: {
@@ -30,8 +29,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err) => {
       return authService.getRefreshToken().pipe(
         switchMap((response) => {
-          console.log(err);
-          localStorage.setItem(LocalStorage.token, response.NewAccessToken);
+          authService.setAccessToken(response.NewAccessToken);
           console.log("refresh interceptor");
           const newReq = req.clone({
             setHeaders: {
@@ -43,8 +41,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((refreshErr) => {
           const finalError = new Error(refreshErr);
           console.log("error de refresh");
-          localStorage.removeItem('Token');
-          // authService.setAccessToken('');
+          authService.setAccessToken('');
           return throwError(() => finalError);
         })
       )

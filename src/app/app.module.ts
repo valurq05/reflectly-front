@@ -48,8 +48,7 @@ import { ProfileComponent } from './pages/user-profile/profile/profile.component
   providers: [
     provideHttpClient(
       withInterceptors([authInterceptor])
-    ),
-    DailyLogService
+    )
   ],
   bootstrap: [AppComponent]
 })
