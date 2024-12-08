@@ -18,18 +18,6 @@
     color: var(--grey-title-color);
 }
 
-.alternate-login img{
-    max-width: 100px;
-    height: 50px;
-}
-
-.alternate-login button{
-    border: 0.5px solid var(--grey-title-color);
-    border-radius: 10px;
-    margin: 0px 5px 0px 5px;
-    padding: 5px;
-}
-
 .warning{
     font-size: 13px;
 }
