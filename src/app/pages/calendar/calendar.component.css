@@ -1,11 +1,25 @@
+.add-note-button {
+  background-color: #C06EF3;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
 
+.add-note-button:hover {
+  background-color: #5a54e0;
+}
 .calendar-container {
   display: flex;
   justify-content: center;
-  height: 100vh;
-  padding: 0 10px; 
+  padding: 0 10px;
   height: auto;
 }
+
+/* Calendar Styling */
 .calendar {
   border: 1px solid #6748f1;
   padding: 20px;
@@ -13,11 +27,9 @@
   background-color: #fff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 1000px; 
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box; 
+  max-width: 1000px;
+  box-sizing: border-box;
 }
-
 
 .calendar-header {
   display: flex;
@@ -29,61 +41,46 @@
   color: #333;
 }
 
-
 .calendar-header button {
   color: #0d1bd6;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
-  cursor: pointer;
   font-size: 1.8rem;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-
-.calendar-weekdays {
+.calendar-weekdays,
+.calendar-days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); 
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
   text-align: center;
-  gap: 5px; 
-  margin-bottom: 10px;
 }
 
 .calendar-weekdays span {
   font-weight: bold;
-  padding: 8px 0;
   font-size: 1.2rem;
-}
-
-
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); 
-  gap: 5px; 
-  margin-top: 10px;
 }
 
 .calendar-days span {
   padding: 15px;
-  cursor: pointer;
   border-radius: 50%;
   font-size: 1.6rem;
+  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
   justify-content: center;
-  text-align: center;
   align-items: center;
   min-height: 80px;
   min-width: 80px;
-  margin: 0;
-  box-sizing: border-box;
 }
-
 
 .calendar-days span.selected {
   background-color: #8e44ad;
   color: #fff;
 }
-
 
 .calendar-days span.today {
   background-color: #a47bca;
@@ -91,164 +88,76 @@
   font-weight: bold;
 }
 
-
 .calendar-days span.not-current-month {
   color: #aaa;
   opacity: 0.5;
   pointer-events: none;
 }
 
-.calendar-days span span {
-  font-size: 1.6rem;
-  padding: 0;
-  margin: 0;
-}
-
 .calendar-days span.disabled {
   background-color: #f1f1f1;
   color: #ccc;
-  cursor: not-allowed; 
-  pointer-events: none; 
+  cursor: not-allowed;
 }
 
-.calendar-days span.not-selectable {
-  opacity: 0.5; 
-  color: #5a5a5a;
-  pointer-events: none; 
+/* Card Styling */
+.card {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #FBF3FF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-.custom-card {
-  background-color: #f7f4fc; 
-  border: none;
-  border-radius: 12px; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+.card:hover {
+  transform: scale(1.02);
 }
 
-.custom-card .card-header {
-  background-color: transparent;
-  border-bottom: none;
-}
-
-.custom-card .avatars-group {
+.card-header {
+  background-color: #FBF3FF;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #0c0909;
+  padding: 12px;
   display: flex;
-}
-
-.custom-card .avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-left: -8px;
-  border: 2px solid #f7f4fc; 
-}
-
-.custom-card .card-footer {
-  background-color: transparent;
-  border-top: none;
-}
-
-.custom-card .btn {
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: 16px;
 }
 
-.custom-card .btn-outline-primary {
-  color: #6c63ff;
-  border-color: #6c63ff;
+.card-body {
+  padding: 16px;
+  color: #6c757d;
+  font-size: 0.95rem;
 }
 
-.custom-card .btn-outline-primary:hover {
+.card-footer {
+  background-color: #FBF3FF;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Button Styling */
+.btn {
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.btn-outline-primary {
+  background-color: #C06EF3;
+  color:white;
+  border: none;
+}
+
+.btn-outline-primary:hover {
   background-color: #6c63ff;
   color: white;
 }
 
-.custom-card .btn-outline-danger {
-  color: #ff6b6b;
-  border-color: #ff6b6b;
-}
-
-.custom-card .btn-outline-danger:hover {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.custom-card .btn-outline-secondary {
-  color: #a29bfe;
-  border-color: #a29bfe;
-}
-
-.custom-card .btn-outline-secondary:hover {
-  background-color: #a29bfe;
-  color: white;
-}
-.card-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-}
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-.badge {
-  font-size: 0.8rem;
-}
-.card-text {
-  font-size: 1rem;
-  color: #6c757d;
-}
-.card-footer button {
-  font-size: 0.9rem;
-}
-
-.category-gratitud {
-  background-color: #FFC107; 
-  color: #fff;
-}
-.category-metas-y-logros {
-  background-color: #28A745; 
-  color: #fff;
-}
-.category-relaciones {
-  background-color: #007BFF; 
-  color: #fff;
-}
-.category-emociones-positivas {
-  background-color: #17A2B8; 
-  color: #fff;
-}
-.category-emociones-negativas {
-  background-color: #DC3545; 
-  color: #fff;
-}
-.category-autocuidado {
-  background-color: #6F42C1; 
-  color: #fff;
-}
-.category-lecciones-aprendidas {
-  background-color: #FD7E14; 
-  color: #fff;
-}
-.category-momentos-dificiles {
-  background-color: #6C757D; 
-  color: #fff;
-}
-.category-momentos-especiales {
-  background-color: #20C997; 
-  color: #fff;
-}
-
-
-
+/* Responsive Design */
 @media (max-width: 1000px) {
-  .calendar-container{
-    height: auto;
-  }
   .calendar {
-    padding: 20px;
     max-width: 90%;
   }
 
@@ -256,178 +165,21 @@
     font-size: 1.2rem;
   }
 
-  .calendar-header button {
-    font-size: 1.6rem;
-    padding: 7px 14px;
-  }
-
-  .calendar-weekdays span,
-  .calendar-days span {
-    font-size: 1.4rem; 
-  }
-
   .calendar-days span {
     min-height: 60px;
-    min-width: 30px;
+    min-width: 60px;
+    font-size: 1.4rem;
   }
-
-  .calendar-days span span{
-    font-size: 1.2rem;  
-  }
-
 }
 
-
-@media (max-width: 700px) {
-  .calendar-container{
-    height: auto;
-  }
-  .calendar {
-    padding: 15px;
-  }
-
+@media (max-width: 600px) {
   .calendar-header {
-    font-size: 1.1rem; 
-  }
-
-  .calendar-header button {
-    font-size: 1.4rem;
-    padding: 6px 12px;
-  }
-
-  .calendar-weekdays span {
-    font-size: 1.3rem;
-    padding: 5px 0;
-  }
-  
-  .calendar-days span {
-    font-size: 1.3rem; 
-    padding: 12px;
-    text-align: center;
+    font-size: 1rem;
   }
 
   .calendar-days span {
     min-height: 50px;
     min-width: 50px;
-  }
-
-  .calendar-days span span{
-    font-size: 15px;  
-}
-}
-
-@media (max-width: 600px) {
-  .calendar-container{
-    height: auto;
-  }
-  .calendar {
-    padding: 15px;
-  }
-
-  .calendar-header {
-    font-size: 1rem; 
-  }
-
-  .calendar-header button {
-    font-size: 1.2rem; 
-    padding: 5px 10px;
-  }
-
-  .calendar-weekdays span{
     font-size: 1.2rem;
-    padding: 5px 0;
   }
-
-  .calendar-days span {
-    font-size: 1.2rem; 
-    padding: 10px;
-  }
-
-  .calendar-days span {
-    min-height: 30px;
-    min-width: 30px;
-  }
-
-  .calendar-days span span{
-    font-size: 11px;
-  }
-
 }
-@media (max-width: 500px) {
-  .calendar-container{
-    height: auto;
-  }
-  .calendar {
-    padding: 10px;
-  }
-
-  .calendar-header {
-    font-size: 1rem; 
-  }
-
-  .calendar-header button {
-    font-size: 1.2rem; 
-    padding: 5px 10px;
-  }
-
-  .calendar-weekdays span{
-    font-size: 1rem;
-    padding: 0;
-  }
-
-  .calendar-days span {
-    font-size: 13px; 
-    padding: 8px;
-  }
-
-  .calendar-days span {
-    min-height: 20px;
-    min-width: 20px;
-  }
-  .calendar-days span span{
-    font-size: 10px;  
-}
-}
-
-@media (max-width: 400px) {
-  .calendar-container{
-    height: auto;
-  }
-  .calendar {
-    padding: 5px;
-    height: 100%;
-  }
-
-  .calendar-header {
-    font-size: 0.2rem; 
-  }
-  .calendar-header {
-    font-size: 1rem; 
-  }
-
-  .calendar-header button {
-    font-size: 1.2rem; 
-    padding: 4px 8px;
-  }
-
-  .calendar-weekdays span{
-  font-size: 10px;
-  }
-
-  .calendar-days span {
-    font-size: 1rem; 
-    padding: 6px;
-  }
-
-  .calendar-days span {
-    min-height: 10px;
-    min-width: 10px;
-  }
-  
-  .calendar-days span span{
-    font-size: 10px;  
-}
-}
-
-
-
