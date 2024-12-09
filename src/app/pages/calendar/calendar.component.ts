@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import Swal from 'sweetalert2';
 import { User } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
 import { DailyLogService } from '../../core/services/daily-log.service';
-import Swal from 'sweetalert2';
+import { PdfService } from '../../core/services/pdf.service';
 
 
 @Component({
@@ -27,7 +28,10 @@ export class CalendarComponent implements OnInit {
   @ViewChild('modalEntries') modalEntries: ElementRef | undefined;
   entries: any[] = [];
   
-  constructor(private DailyLogService: DailyLogService, private AuthService: AuthService) {
+  constructor(private DailyLogService: DailyLogService,
+     private AuthService: AuthService,
+      private pdfService:PdfService,
+    private dailyLogService:DailyLogService) {
   }
 
   ngOnInit(){
@@ -353,6 +357,25 @@ export class CalendarComponent implements OnInit {
           }
         }
     })
+  }
+
+  onGeneratePdf(idDailyLog: string){
+
+    try{
+      this.dailyLogService.getDailyLog(idDailyLog).subscribe({
+        next: (res)=>{
+          console.log(res.Data)
+          
+          this.pdfService.generatePdf(res.Data)
+        },error: (error)=>{
+          console.log(error, "Hola, no funciona")
+        }
+      })
+    }
+    catch(e){
+console.log(e)
+    }
+
   }
 }
 

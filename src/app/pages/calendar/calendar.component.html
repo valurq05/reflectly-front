@@ -27,13 +27,13 @@
           </p>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-outline-primary btn-sm">
+          <button (click)="onGeneratePdf(entry.dailyLogId)" type="button" class="btn btn-outline-primary btn-sm">
             <i class="bi bi-download"></i> Descargar
           </button>
           <button (click)="onClickDeleteEntry(entry.entId)" type="button" class="btn btn-outline-danger btn-sm">
             <i class="bi bi-trash"></i> Eliminar
           </button>
-          <button  type="button" class="btn btn-outline-secondary btn-sm">
+          <button   type="button" class="btn btn-outline-secondary btn-sm">
            <a [routerLink]="['/note', entry.dailyLogId]"> <i class="bi bi-pencil"></i> Editar</a>
           </button>
         </div>
