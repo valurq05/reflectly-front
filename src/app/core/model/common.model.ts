@@ -51,6 +51,13 @@ export interface DailyLog {
     entry: Entry;
 }
 
+export interface updateDailyLog {
+    entText: string,
+    entTitle: string,
+    idEmoLog:number,
+    idEmoState:number
+}
+
 export interface EmotionalLog {
     emoLogId: number;
     emoLogDate: Date; 

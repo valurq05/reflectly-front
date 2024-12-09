@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Quill from 'quill';
-import { DailyLogCreate, EmotionalState, User } from '../../../core/model/common.model';
+import { DailyLog, EmotionalState, updateDailyLog, User } from '../../../core/model/common.model';
 import { AlertServiceService } from '../../../core/services/alert-service.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { DailyLogService } from '../../../core/services/daily-log.service';
@@ -19,7 +19,8 @@ export class UpdateNoteComponent {
   title:string ="";
   emotionalState: number =3;
   editor: Quill | undefined;
-  noteId!: string; 
+  dailyLogId!: string; 
+  dailyLog: DailyLog | null = null;
   constructor(private route: ActivatedRoute,
     private dailyLogService: DailyLogService, 
     private authService: AuthService, 
@@ -29,7 +30,7 @@ export class UpdateNoteComponent {
   ) {}
 
   ngOnInit(): void {
-    this.noteId = this.route.snapshot.paramMap.get('id')!; 
+    this.dailyLogId = this.route.snapshot.paramMap.get('id')!; 
 
     this.user = this.authService.getUserInfo();
     console.log(this.user);
@@ -37,24 +38,27 @@ export class UpdateNoteComponent {
       this.emotionalStatesService.getAllEmotionalState().subscribe({
         next: (res)=>{
           this.emotionalStates=res.Data
+
         },error: (error)=>{
           console.log(error, "Hola, no funciona")
         }
       })
 
-      this.dailyLogService.getDailyLog(this.noteId).subscribe({
+      this.dailyLogService.getDailyLog(this.dailyLogId).subscribe({
         next: (res)=>{
-
-          console.log(res)
+          console.log(res.Data)
+          this.dailyLog =res.Data
           this.title=res.Data.entry.entTitle
           this.emotionalState = res.Data.emotionalLog.emotionalState.emoStaId
           this.setContent(res.Data.entry.entText)
         },error: (error)=>{
           console.log(error, "Hola, no funciona")
+          this.router.navigate(["home"])
         }
       })
     }catch(e){
       console.log(e, "catch")
+      this.router.navigate(["home"])
     }
   }
   ngAfterViewInit(): void {
@@ -78,22 +82,23 @@ export class UpdateNoteComponent {
     }
   }
 
-  OnSaveItem(): any{
-    if(this.user){
-      const data:DailyLogCreate={
-        useId: this.user?.useId,
-        emoStaId: this.emotionalState,
+  OnUpdateItem(): any{
+    console.log("clicking")
+    if(this.user && this.dailyLog){
+      const data:updateDailyLog={
+        idEmoLog:this.dailyLog?.emotionalLog.emoLogId,
+        idEmoState: this.emotionalState,
         entText: this.getContent(),
         entTitle: this.title
       }
       try{
-        this.dailyLogService.createDailyLog(data).subscribe({
+        this.dailyLogService.updateDailyLog(data,this.dailyLogId).subscribe({
           next:(response)=>{
-            this.alertService.showAlert("Creado con exito", "Tu nota ha sido registrada correctamente", "success")
+            this.alertService.showAlert("actualizado con exito", "Tu nota ha sido registrada actualizada", "success")
             setTimeout(()=>{
-              this.router.navigate(["home"])}, 3000) 
+              this.router.navigate(["home"])}, 2000) 
           }, error:(error)=>{
-            this.alertService.showAlert("No se ha podido crear la nota", "Tu nota no ha sido registrada correctamente", "error")
+            this.alertService.showAlert("error", "Tu nota no ha sido actualizada correctamente", "error")
           }
         })
       }catch(error){

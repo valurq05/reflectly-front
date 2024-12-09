@@ -85,7 +85,7 @@ export class CreateNoteComponent implements AfterViewInit
           next:(response)=>{
             this.alertService.showAlert("Creado con exito", "Tu nota ha sido registrada correctamente", "success")
             setTimeout(()=>{
-              this.router.navigate(["home"])}, 3000) 
+              this.router.navigate(["home"])}, 2000) 
           }, error:(error)=>{
             this.alertService.showAlert("No se ha podido crear la nota", "Tu nota no ha sido registrada correctamente", "error")
           }

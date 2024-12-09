@@ -12,6 +12,7 @@ export const ApiEndpoint = {
         GetDailyUserLog: `${API_URL}/daily/user/logs`,
         Create: `${API_URL}/daily/log/allinfo`,
         GetById:`${API_URL}/daily/log/show`,
+        Update:`${API_URL}/daily/log`,
 
     },
     EmotionalState:{
