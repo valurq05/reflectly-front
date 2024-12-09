@@ -2,10 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ApiResponse, googleResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
-import { BehaviorSubject, firstValueFrom, map} from 'rxjs';
+import { BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import Cookies from 'js-cookie';
+import { Auth, authState, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class AuthService {
   isLoggedIn = signal<boolean>(false);
   secretKey:string = 'TuClaveSecreta';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private _auth:Auth) {
     if (!this.getAccessToken() && this.isLoggedIn()) {
       this.verifySession();
     }
@@ -63,13 +64,13 @@ export class AuthService {
     );
   }
 
-  public googleLogin(response:any){
-    const params = new HttpParams().set('code', response.code)
-    return this.http.get<any>(`${ApiEndpoint.Auth.Google}`, { params }).pipe(
-      map((response)=>{
-        console.log(response);
-      })
-    )
+  public authState$():Observable<any>{
+    return authState(this._auth);
+  }
+
+  public googleLogin(){
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this._auth, provider);
   }
 
   public getRefreshToken() {

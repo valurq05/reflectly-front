@@ -20,6 +20,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 
 @NgModule({
@@ -49,7 +51,17 @@ import { ProfileComponent } from './pages/user-profile/profile/profile.component
   providers: [
     provideHttpClient(
       withInterceptors([authInterceptor])
-    )
+    ),
+    provideFirebaseApp(() => initializeApp({
+      "projectId":"reflectly-517a2",
+      "appId":"1:105390829842:web:bf32ba5343d09d678203cb",
+      "storageBucket":"reflectly-517a2.firebasestorage.app",
+      "apiKey":"AIzaSyBhKSKQLY4_-7dzaVoaPmaCLQOy0LhjniE",
+      "authDomain":"reflectly-517a2.firebaseapp.com",
+      "messagingSenderId":"105390829842",
+      "measurementId":"G-30MY1P5782"
+    })),
+    provideAuth(() => getAuth())
   ],
   bootstrap: [AppComponent]
 })

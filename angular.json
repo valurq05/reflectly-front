@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "reflectly_front": {
+    "reflectly-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/reflectly_front",
+            "outputPath": "dist/reflectly-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "reflectly_front:build:production"
+              "buildTarget": "reflectly-front:build:production"
             },
             "development": {
-              "buildTarget": "reflectly_front:build:development"
+              "buildTarget": "reflectly-front:build:development"
             }
           },
           "defaultConfiguration": "development"

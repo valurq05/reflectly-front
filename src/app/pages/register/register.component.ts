@@ -61,4 +61,17 @@ export class RegisterComponent {
     this.form.reset();
   }
 
+  googleSignUp(){
+    this.authService.googleLogin();
+    this.authState();
+  }
+
+  authState(){
+    this.authService.authState$().subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    })
+  }
+
 }
