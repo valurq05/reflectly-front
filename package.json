@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@types/js-cookie": "^3.0.6",
+    "bootstrap": "^5.3.3",
     "crypto-js": "^4.2.0",
     "html2pdf.js": "^0.10.2",
     "js-cookie": "^3.0.5",
@@ -26,6 +27,7 @@
     "quill": "^2.0.3",
     "reflectly-front": "file:",
     "rxjs": "~7.8.0",
+    "sass": "^1.82.0",
     "sweetalert2": "^11.14.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

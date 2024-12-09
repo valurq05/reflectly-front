@@ -1,13 +1,21 @@
-<header class="header d-flex align-items-center p-2">
+<header class="header bg-body-tertiary d-flex align-items-center p-2">
     <div class="col-6 col-md-5">
         <a class="logo-link"></a>
     </div>
     <div class="col-12 col-md-7 d-flex justify-content-end align-items-center">
-        <div class="me-3">
-            <input type="checkbox" class="checkbox" id="checkbox">
+        <div>
+            <input 
+                type="checkbox" 
+                class="checkbox" 
+                id="checkbox" 
+                (change)="toggleDarkMode()">
             <label for="checkbox" class="checkbox-label">
-                <i class="fas fa-moon"></i>
-                <i class="fas fa-sun"></i>
+                <i  class="fas" 
+                    [ngClass]="{
+                        'fa-moon': darkModeService.darkModeSignal() === 'null',
+                        'fa-sun': darkModeService.darkModeSignal() === 'dark'
+                    }">
+                </i>
                 <span class="ball"></span>
             </label>
         </div>

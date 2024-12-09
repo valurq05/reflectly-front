@@ -40,10 +40,12 @@
               "src/styles.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/quill/dist/quill.bubble.css",
-              "node_modules/quill/dist/quill.core.css"
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "./node_modules/js-cookie/dist/js.cookie.js"
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -109,7 +111,6 @@
     }
   },
   "cli": {
-
     "analytics": false
 
   }
