@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit{
   handleGoogleLogin(response:any){
     if (response) {
       console.log(response)
+      this.authService.googleLogin(response.credential);
     // const payload = this.decodeToken(response.credential);
     // localStorage.setItem(LocalStorage.user, JSON.stringify(payload));
     // document.querySelector('.modal-backdrop')?.remove();

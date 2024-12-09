@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
+import { ApiResponse, googleResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
 import { BehaviorSubject, firstValueFrom, map} from 'rxjs';
 import { Router } from '@angular/router';
@@ -61,6 +61,15 @@ export class AuthService {
         return response;
       })
     );
+  }
+
+  public googleLogin(response:any){
+    const params = new HttpParams().set('code', response.code)
+    return this.http.get<any>(`${ApiEndpoint.Auth.Google}`, { params }).pipe(
+      map((response)=>{
+        console.log(response);
+      })
+    )
   }
 
   public getRefreshToken() {
