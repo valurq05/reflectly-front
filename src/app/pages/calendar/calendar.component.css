@@ -21,7 +21,6 @@
 
 /* Calendar Styling */
 .calendar {
-  border: 1px solid #6748f1;
   padding: 20px;
   border-radius: 12px;
   background-color: #fff;
@@ -135,6 +134,10 @@
   padding: 12px;
   display: flex;
   justify-content: space-between;
+}
+
+.titulo-not{
+  color: var(--purple-font-color);
 }
 
 /* Button Styling */

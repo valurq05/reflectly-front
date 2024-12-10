@@ -1,28 +1,26 @@
 <header class="header bg-body-tertiary d-flex align-items-center p-2">
-    <div class="col-6 col-md-5">
+    <div class="col-6 col-md-5" [routerLink]="['/home']">
         <a class="logo-link"></a>
     </div>
 
     <div class="col-12 col-md-7 d-flex justify-content-end align-items-center">
+        <!-- Comentado, pero si se necesita agregar dark mode -->
+        <!-- 
         <div class="d-flex align-items-center me-3">
-            <input 
-                type="checkbox" 
-                class="checkbox" 
-                id="checkbox" 
-                (change)="toggleDarkMode()">
+            <input type="checkbox" class="checkbox" id="checkbox" (change)="toggleDarkMode()">
             <label for="checkbox" class="checkbox-label">
-                <i 
-                    class="fas" 
-                    [ngClass]="{
-                        'fa-moon': darkModeService.darkModeSignal() === 'null',
-                        'fa-sun': darkModeService.darkModeSignal() === 'dark'
-                    }">
-                </i>
+                <i class="fas" [ngClass]="{
+                    'fa-moon': darkModeService.darkModeSignal() === 'null',
+                    'fa-sun': darkModeService.darkModeSignal() === 'dark'
+                }"></i>
                 <span class="ball"></span>
             </label>
         </div>
+        -->
 
-        <div class="text-end">
+        <!-- Aquí agregamos la clase d-flex y gap-2 para la fila de botones -->
+        <div class="d-flex gap-2">
+            <button class="btn btn-custom fw-semibold" [routerLink]="['/notes']">Mis Notas</button>
             <button (click)="Logout()" class="btn btn-custom fw-semibold d-flex align-items-center gap-2">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span class="d-none d-md-inline">Salir</span>

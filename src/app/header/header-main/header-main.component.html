@@ -1,9 +1,9 @@
 <header class="header bg-body-tertiary d-flex align-items-center p-2">
-    <div class="col-6 col-md-5">
+    <div class="col-6 col-md-5" [routerLink]="['/home']">
         <a class="logo-link"></a>
     </div>
     <div class="col-6 col-md-7 d-flex justify-content-end align-items-center text-end">
-        <div>
+        <!-- <div>
             <input 
                 type="checkbox" 
                 class="checkbox" 
@@ -18,7 +18,7 @@
                 </i>
                 <span class="ball"></span>
             </label>
-        </div>
+        </div> -->
         <div>
             <button class="btn btn-login" type="button" data-bs-toggle="modal" data-bs-target="#modalLogin">Iniciar Sesión</button>
             <button class="btn btn-register" type="button" data-bs-toggle="modal" data-bs-target="#modalRegister">Registrarse</button>

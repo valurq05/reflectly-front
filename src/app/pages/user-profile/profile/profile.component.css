@@ -34,14 +34,17 @@
 #namePerson{
     margin-left:15px;
     font-size:180%;
-    color: #3f2d98;
+    color: var(--purple-font-color);
 }
 #infoPerson{
     margin-left:15px;
     font-size:120%;
-    color: #5f4c9f;
 }
 #cardProfile{
     background-color: #f3e8ff; 
     border-radius: 15px;
+}
+
+#fotoPerfil{
+    color: var(--purple-font-color);
 }
