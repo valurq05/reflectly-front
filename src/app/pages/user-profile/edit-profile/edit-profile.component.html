@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalEditProfile" tabindex="-1" aria-labelledby="modalEditProfileLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditProfile" tabindex="-1" aria-labelledby="modalEditProfileLabel" aria-hidden="true" #editProfileModal>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4" style="border-radius: 20px; background-color: #fdf7ff;">
       <div class="modal-header border-0 text-center">
@@ -9,25 +9,68 @@
         <form>
           <div class="mb-3">
             <label for="userDocument" class="form-label fw-semibold">Documento</label>
-            <input type="text" class="form-control" id="userDocument" placeholder="Introduce tu documento" style="background-color: #f6e8ff; border-radius: 10px;">
+            <input
+              type="text"
+              [(ngModel)]="document"
+              name="document"
+              class="form-control"
+              id="userDocument"
+              placeholder="Introduce tu documento"
+              style="background-color: #f6e8ff; border-radius: 10px;"
+            >
           </div>
           <div class="mb-3">
             <label for="userName" class="form-label fw-semibold">Nombre</label>
-            <input type="text" class="form-control" id="userName" placeholder="Introduce tu nombre" style="background-color: #f6e8ff; border-radius: 10px;">
+            <input
+              type="text"
+              [(ngModel)]="name"
+              name="name"
+              class="form-control"
+              id="userName"
+              placeholder="Introduce tu nombre"
+              style="background-color: #f6e8ff; border-radius: 10px;"
+            >
           </div>
           <div class="mb-3">
             <label for="userSurname" class="form-label fw-semibold">Apellido</label>
-            <input type="text" class="form-control" id="userSurname" placeholder="Introduce tu apellido" style="background-color: #f6e8ff; border-radius: 10px;">
+            <input
+              type="text"
+              [(ngModel)]="lastName"
+              name="lastName"
+              class="form-control"
+              id="userSurname"
+              placeholder="Introduce tu apellido"
+              style="background-color: #f6e8ff; border-radius: 10px;"
+            >
           </div>
           <div class="mb-3">
             <label for="userPhoto" class="form-label fw-semibold">Foto de perfil</label>
-            <input type="file" class="form-control" id="userPhoto" style="background-color: #f6e8ff; border-radius: 10px;">
+            <input
+            #fileInput
+              (change)="onFileSelected($event)"
+              type="file"
+              class="form-control"
+              id="userPhoto"
+              style="background-color: #f6e8ff; border-radius: 10px;"
+            >
+            <div *ngIf="previewImageUrl" class="mt-3 text-center">
+              <i (click)="deleteSelectedPhtot(fileInput)" class="fas fa-close deletePhoto"></i>
+              <div
+                style="width: 150px; height: 150px; overflow: hidden; margin: 0 auto; border-radius: 50%; border: 3px solid #7e57c2; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                <img
+                  [src]="previewImageUrl"
+                  alt="Previsualización de la imagen"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+            </div>
+            
           </div>
         </form>
+        
       </div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 10px;">Cancelar</button>
-        <button type="button" class="btn btn-primary" style="background-color: #a97eff; border-radius: 10px;">Guardar cambios</button>
+        <button type="button" (click)="onUpdateUser()" class="btn btn-primary" style="background-color: #a97eff; border-radius: 10px;">Guardar cambios</button>
       </div>
     </div>
   </div>

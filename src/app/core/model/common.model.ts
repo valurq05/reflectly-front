@@ -5,6 +5,12 @@ export interface Person {
     perName: string;
     perPhoto: string;
 }
+export interface UpdatePerson {
+    perId: number;
+    perDocument: string;
+    perLastname: string;
+    perName: string;
+}
 
 export interface User {
     useId: number,
@@ -30,7 +36,7 @@ export interface RegisterPayLoad {
 
 export interface Entry {
     entId: number;
-    entDate: string; 
+    entDate: string;
     entText: string;
     entTitle: string;
     entStatus: boolean;
@@ -44,9 +50,13 @@ export interface DailyLogCreate {
     entTitle: string
 }
 
+export interface Category {
+    catId: number,
+    catCategorie: string
+}
 export interface DailyLog {
     dayLogId: number;
-    dayLogDate: Date; 
+    dayLogDate: Date;
     emotionalLog: EmotionalLog;
     entry: Entry;
 }
@@ -54,13 +64,13 @@ export interface DailyLog {
 export interface updateDailyLog {
     entText: string,
     entTitle: string,
-    idEmoLog:number,
-    idEmoState:number
+    idEmoLog: number,
+    idEmoState: number
 }
 
 export interface EmotionalLog {
     emoLogId: number;
-    emoLogDate: Date; 
+    emoLogDate: Date;
     emotionalState: EmotionalState;
     user: User;
 }
@@ -70,7 +80,7 @@ export interface EmotionalState {
     emoStaState: string,
 }
 
-export interface googleResponse{
+export interface googleResponse {
     clientId: string;
     client_id: string;
     credential: string;

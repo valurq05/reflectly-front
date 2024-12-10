@@ -12,7 +12,17 @@
     <div id="editor-container" class="editor mb-3" contenteditable="true">Nota</div>
 
     <div class="action-buttons d-flex justify-content-between">
-        <button class="btn btn-sm btn-tags">Agregar Etiquetas <i class="fa-solid fa-tag"></i></button>
+
+        <div class="mood-select-container">
+            <label for="mood-select" class="mood-label">Agregar Etiqueta 
+                <i class="fa-solid fa-tag"></i></label>
+                
+            <select [(ngModel)]="category" class="form-select" id="mood-select">
+                
+                    <option *ngFor="let category of categories" [value]="category.catId">{{category.catCategorie}}</option>
+
+            </select>
+        </div>
         <button class="btn btn-sm btn-collaborator">Agregar Colaborador <i class="fa-solid fa-user-plus"></i></button>
         <div class="mood-select-container">
             <label for="mood-select" class="mood-label">Agregar Estado de Ánimo 

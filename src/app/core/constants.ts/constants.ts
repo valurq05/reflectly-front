@@ -18,8 +18,18 @@ export const ApiEndpoint = {
     EmotionalState:{
         getAll: `${API_URL}/emotional/states`,
     },
+    categories:{
+        getAll: `${API_URL}/categories`,
+
+    },
+    image:{
+        updateUserPhoto:`${API_URL}/user/profile/img`,
+    },
     Entry:{
         Delete:`${API_URL}/entry`
+    },
+    Person:{
+        Update:`${API_URL}/person`
     }
 
 }

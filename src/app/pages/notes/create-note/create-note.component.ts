@@ -1,9 +1,10 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Quill from 'quill';
-import { DailyLogCreate, EmotionalState, User } from '../../../core/model/common.model';
+import { Category, DailyLogCreate, EmotionalState, User } from '../../../core/model/common.model';
 import { AlertServiceService } from '../../../core/services/alert-service.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { CategoriesService } from '../../../core/services/categories.service';
 import { DailyLogService } from '../../../core/services/daily-log.service';
 import { EmotionalStatesService } from '../../../core/services/emotional-states.service';
 @Component({
@@ -17,13 +18,18 @@ export class CreateNoteComponent implements AfterViewInit
 {
   user: User | null = null;
   emotionalStates: EmotionalState[] | null = null;
+  categories: Category[] | null = null;
+
   title:string ="Titulo";
   emotionalState: number =3;
+  category: number =2;
+
   editor: Quill | undefined;
 
   constructor(private dailyLogService: DailyLogService, 
     private authService: AuthService, 
     private emotionalStatesService: EmotionalStatesService,
+    private categorieService: CategoriesService,
     private alertService: AlertServiceService,
     private router: Router){
   }
@@ -35,6 +41,14 @@ export class CreateNoteComponent implements AfterViewInit
       this.emotionalStatesService.getAllEmotionalState().subscribe({
         next: (res)=>{
           this.emotionalStates=res.Data
+        },error: (error)=>{
+          console.log(error, "Hola, no funciona")
+        }
+      })
+
+      this.categorieService.getCategories().subscribe({
+        next: (res)=>{
+          this.categories=res.Data
         },error: (error)=>{
           console.log(error, "Hola, no funciona")
         }

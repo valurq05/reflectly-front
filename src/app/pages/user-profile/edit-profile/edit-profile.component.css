@@ -17,3 +17,7 @@
     background-color: #9463d4;
   }
   
+  .deletePhoto{
+    color:red;
+    cursor: pointer;
+  }
