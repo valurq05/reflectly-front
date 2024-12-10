@@ -6,7 +6,7 @@ export const ApiEndpoint = {
         Register: `${API_URL}/register`,
         Login: `${API_URL}/login`,
         Refresh: `${API_URL}/refresh`,
-        Google: `${API_URL}/oauth/google`
+        UserExist: `${API_URL}/user/exist`
     },
     DailyLog:{
         //Get: `${API_URL}/daily/log`,
@@ -14,14 +14,12 @@ export const ApiEndpoint = {
         Create: `${API_URL}/daily/log/allinfo`,
         GetById:`${API_URL}/daily/log/show`,
         Update:`${API_URL}/daily/log`,
-
     },
     EmotionalState:{
         getAll: `${API_URL}/emotional/states`,
     },
     categories:{
         getAll: `${API_URL}/categories`,
-
     },
     image:{
         updateUserPhoto:`${API_URL}/user/profile/img`,

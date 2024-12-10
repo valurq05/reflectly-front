@@ -10,9 +10,15 @@ export const authGuard: CanActivateFn = (route, state) => {
   return authService.verifySession().then(() => {
     if (!authService.isLoggedIn()) {
       router.navigate(['']);
+      console.log("No logeado")
       return false;
     }
+    console.log("logeado")
     return true;
+  }).catch(() => {
+    console.log("No logeado")
+    router.navigate(['']);
+    return false;
   });
 
  

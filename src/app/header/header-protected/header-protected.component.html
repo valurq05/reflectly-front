@@ -1,9 +1,10 @@
-<header class="header bg-body-tertiary d-flex align-items-center p-2"> 
+<header class="header bg-body-tertiary d-flex align-items-center p-2">
     <div class="col-6 col-md-5">
         <a class="logo-link"></a>
     </div>
-    <div class="container-fluid d-flex justify-content-end align-items-center">
-        <div>
+
+    <div class="col-12 col-md-7 d-flex justify-content-end align-items-center">
+        <div class="d-flex align-items-center me-3">
             <input 
                 type="checkbox" 
                 class="checkbox" 
@@ -20,10 +21,11 @@
                 <span class="ball"></span>
             </label>
         </div>
-        <div class="text-end p-2">
+
+        <div class="text-end">
             <button (click)="Logout()" class="btn btn-custom fw-semibold d-flex align-items-center gap-2">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Salir</span>
+                <span class="d-none d-md-inline">Salir</span>
             </button>
         </div>
     </div>

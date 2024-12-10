@@ -1,13 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { ApiResponse, googleResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
+import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
 import { BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
-import Cookies from 'js-cookie';
-import { Auth, authState, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
-
+import { Auth, authState, browserLocalPersistence, GoogleAuthProvider, setPersistence, signInWithPopup } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +22,19 @@ export class AuthService {
     }
   }
 
-  async verifySession() {
+  async verifySession(): Promise<void> {
     try {
+     
+      const firebaseUser = await firstValueFrom(this.authState$());
+      if (firebaseUser) {
+          this.setAccessToken(firebaseUser.stsTokenManager.accessToken);
+          this.isLoggedIn.update(() => true);
+          return;
+      }
       const response = await firstValueFrom(this.getRefreshToken());
       if (response && response.NewAccessToken) {
         this.setAccessToken(response.NewAccessToken);
         this.isLoggedIn.update(() => true);
-        console.log("refresh auth");
       } else {
         this.logout();
       }
@@ -38,6 +42,7 @@ export class AuthService {
       this.logout();
     }
   }
+  
 
   public register(payload: RegisterPayLoad) {
     return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Register}`, payload);
@@ -73,24 +78,40 @@ export class AuthService {
     return signInWithPopup(this._auth, provider);
   }
 
+  public userExist(email: string) {
+    let params = new HttpParams().set('email', email);
+
+    return this.http.get<boolean>(`${ApiEndpoint.Auth.UserExist}`, {
+        params: params,
+    });
+}
+
   public getRefreshToken() {
     return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Refresh}`, null)
   }
 
-  public logout(){
-    localStorage.removeItem(LocalStorage.token);
-    localStorage.removeItem(LocalStorage.user);
-    this.isLoggedIn.update(()=>false);
-    this.router.navigate(['']);
-  }
-
-  setAccessToken(token: string) {
+  setAccessToken(token:string) {
     this.accessToken = token;
   }
 
   getAccessToken() {
-    console.log(this.accessToken);
     return this.accessToken;
+  }
+
+  public async logout() {
+    try {
+      await this._auth.signOut();
+
+      this.setAccessToken('');
+      localStorage.removeItem(LocalStorage.user);
+
+      this.isLoggedIn.update(() => false);
+
+      this.router.navigate(['']);
+      console.log('Sesión cerrada exitosamente');
+    } catch (error) {
+      console.error('Error durante el logout:', error);
+    }
   }
 
   public getUserInfo(){
