@@ -26,10 +26,15 @@ export const ApiEndpoint = {
         updateUserPhoto:`${API_URL}/user/profile/img`,
     },
     Entry:{
-        Delete:`${API_URL}/entry`
+        Delete:`${API_URL}/entry`,
+        Update:`${API_URL}/entry`,
     },
     Person:{
         Update:`${API_URL}/person`
+        
+    },
+    EmotionalLog:{
+        Update:`${API_URL}/Emotional/Log`,
     }
 
 }

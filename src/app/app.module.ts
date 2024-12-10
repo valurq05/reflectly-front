@@ -15,13 +15,14 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CreateNoteComponent } from './pages/notes/create-note/create-note.component';
-import { UpdateNoteComponent } from './pages/notes/update-note/update-note.component';
+import { NotesModule } from './pages/notes/notes.module';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+
 
 
 @NgModule({
@@ -38,15 +39,16 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     CalendarComponent,
     ProfileComponent,
     EditProfileComponent,
-    CreateNoteComponent,
-    UpdateNoteComponent
+
+  
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NotesModule
   ],
   providers: [
     provideHttpClient(

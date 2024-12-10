@@ -1,43 +1,117 @@
 <div class="note-container p-4">
-    <div class="header d-flex justify-content-between align-items-center mb-3">
-        <div class="back-icon" routerLink="/home"> &larr;</div>
-        <input [(ngModel)]="title" placeholder="Escribe algo aquí"  class="title"/>
-        
+  <div class="header d-flex justify-content-between align-items-center mb-3">
+    <div class="back-icon" routerLink="/home">&larr;</div>
+    <input [(ngModel)]="title" placeholder="Escribe algo aquí" class="title" />
 
-        <div class="user-avatars d-flex">
-            <img src="https://via.placeholder.com/40" alt="User 1" class="avatar">
-            <img src="https://via.placeholder.com/40" alt="User 2" class="avatar">
-        </div>
+    <div class="user-avatars d-flex">
+      <img src="https://via.placeholder.com/40" alt="User 1" class="avatar" />
+      <img src="https://via.placeholder.com/40" alt="User 2" class="avatar" />
     </div>
-    <div id="editor-container" class="editor mb-3" contenteditable="true">Nota</div>
+  </div>
+  <div id="editor-container" class="editor mb-3" contenteditable="true">
+    Nota
+  </div>
 
-    <div class="action-buttons d-flex justify-content-between">
+  <div class="action-buttons d-flex justify-content-between">
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#tagsModal"
+      class="btn btn-sm btn-tags"
+    >
+      Agregar Etiquetas <i class="fa-solid fa-tag"></i>
+    </button>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#collaboratorModal"
+      class="btn btn-sm btn-collaborator"
+    >
+      Agregar Colaborador <i class="fa-solid fa-user-plus"></i>
+    </button>
 
-        <div class="mood-select-container">
-            <label for="mood-select" class="mood-label">Agregar Etiqueta 
-                <i class="fa-solid fa-tag"></i></label>
-                
-            <select [(ngModel)]="category" class="form-select" id="mood-select">
-                
-                    <option *ngFor="let category of categories" [value]="category.catId">{{category.catCategorie}}</option>
+    <div class="mood-select-container">
+      <label for="mood-select" class="mood-label"
+        >Agregar Estado de Ánimo <i class="fa-solid fa-face-smile"></i
+      ></label>
 
-            </select>
-        </div>
-        <button class="btn btn-sm btn-collaborator">Agregar Colaborador <i class="fa-solid fa-user-plus"></i></button>
-        <div class="mood-select-container">
-            <label for="mood-select" class="mood-label">Agregar Estado de Ánimo 
-                <i class="fa-solid fa-face-smile"></i></label>
-                
-            <select [(ngModel)]="emotionalState" class="form-select" id="mood-select">
-                
-                    <option *ngFor="let emotionalState of emotionalStates" [value]="emotionalState.emoStaId">{{emotionalState.emoStaState}}</option>
-
-            </select>
-        </div>
-
+      <select [(ngModel)]="emotionalState" class="form-select" id="mood-select">
+        <option
+          *ngFor="let emotionalState of emotionalStates"
+          [value]="emotionalState.emoStaId"
+        >
+          {{ emotionalState.emoStaState }}
+        </option>
+      </select>
     </div>
+  </div>
 
-    <div class="save-btn-container mt-4 text-center">
-        <button (click)="OnSaveItem()" class="btn btn-primary">Guardar</button>
+  <div class="save-btn-container mt-4 text-center">
+    <button (click)="OnSaveItem()" class="btn btn-primary">Guardar</button>
+  </div>
+</div>
+<!-- Modal Etiquetas -->
+<div
+  id="tagsModal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="tagsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tagsModalLabel">Agregar Etiquetas</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del modal para agregar etiquetas -->
+        <p>Aquí puedes agregar etiquetas.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal Colaboradores -->
+<div
+  id="collaboratorModal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="collaboratorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="collaboratorModalLabel">
+          Agregar Colaborador
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del modal para agregar colaboradores -->
+        <p>Aquí puedes agregar colaboradores.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
 </div>

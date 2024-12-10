@@ -6,7 +6,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { CreateNoteComponent } from './pages/notes/create-note/create-note.component';
 import { NotesComponent } from './pages/notes/notes/notes.component';
-import { UpdateNoteComponent } from './pages/notes/update-note/update-note.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 
 const routes: Routes = [
@@ -19,7 +18,7 @@ const routes: Routes = [
     { path: 'home', canActivate:[authGuard] ,component: UserHomeComponent},
     { path: 'create', canActivate:[authGuard] ,component: CreateNoteComponent},
     { path: 'notes', canActivate:[authGuard] ,component: NotesComponent},
-    { path: 'note/:id',canActivate: [authGuard],  component: UpdateNoteComponent},
+    { path: 'notes/:id',canActivate: [authGuard],  component: CreateNoteComponent},
 
 
   ] 
