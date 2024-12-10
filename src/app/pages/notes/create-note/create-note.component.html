@@ -1,18 +1,25 @@
 <div class="note-container p-4">
+  <!-- Header Section -->
   <div class="header d-flex justify-content-between align-items-center mb-3">
+    <!-- Back Button -->
     <div class="back-icon" routerLink="/home">&larr;</div>
+
+    <!-- Title Input -->
     <input [(ngModel)]="title" placeholder="Escribe algo aquí" class="title" />
 
+    <!-- User Avatars -->
     <div class="user-avatars d-flex">
       <img src="https://via.placeholder.com/40" alt="User 1" class="avatar" />
       <img src="https://via.placeholder.com/40" alt="User 2" class="avatar" />
     </div>
   </div>
-  <div id="editor-container" class="editor mb-3" contenteditable="true">
-    Nota
-  </div>
 
+  <!-- Editor Section -->
+  <div id="editor-container" class="editor mb-3" contenteditable="true"></div>
+
+  <!-- Action Buttons Section -->
   <div class="action-buttons d-flex justify-content-between">
+    <!-- Tags Button -->
     <button
       data-bs-toggle="modal"
       data-bs-target="#tagsModal"
@@ -20,6 +27,8 @@
     >
       Agregar Etiquetas <i class="fa-solid fa-tag"></i>
     </button>
+
+    <!-- Collaborator Button -->
     <button
       data-bs-toggle="modal"
       data-bs-target="#collaboratorModal"
@@ -28,11 +37,13 @@
       Agregar Colaborador <i class="fa-solid fa-user-plus"></i>
     </button>
 
+    <!-- Mood Select Container -->
     <div class="mood-select-container">
-      <label for="mood-select" class="mood-label"
-        >Agregar Estado de Ánimo <i class="fa-solid fa-face-smile"></i
-      ></label>
+      <label for="mood-select" class="mood-label">
+        Agregar Estado de Ánimo <i class="fa-solid fa-face-smile"></i>
+      </label>
 
+      <!-- Mood Select Dropdown -->
       <select [(ngModel)]="emotionalState" class="form-select" id="mood-select">
         <option
           *ngFor="let emotionalState of emotionalStates"
@@ -42,12 +53,39 @@
         </option>
       </select>
     </div>
+
+    <div class="categories-list">
+      <h5 class="small-heading m-0">Etiquetas</h5>
+      <ul *ngIf="CategoriesEntry && CategoriesEntry.length > 0; else noCategories" 
+          class="list-group" 
+          style="overflow-y: scroll; max-height: 70px;">
+        <li *ngFor="let category of CategoriesEntry" 
+            class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ category.category.catCategorie }}</span>
+          <button 
+            class="btn btn-danger btn-sm" 
+            (click)="deleteCategoryEntry(category.catEntId)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </li>
+      </ul>
+     
+      <ng-template #noCategories>
+        <p class="text-muted">No hay etiquetas disponibles.</p>
+      </ng-template>
+    </div>
+    
+    
   </div>
 
+  
+
+  <!-- Save Button Section -->
   <div class="save-btn-container mt-4 text-center">
     <button (click)="OnSaveItem()" class="btn btn-primary">Guardar</button>
   </div>
 </div>
+
 <!-- Modal Etiquetas -->
 <div
   id="tagsModal"
@@ -56,10 +94,12 @@
   aria-labelledby="tagsModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="tagsModalLabel">Agregar Etiquetas</h5>
+      <div class="modal-header text-white">
+        <h5 class="modal-title" id="tagsModalLabel">
+          Agregar Etiqueta
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -68,20 +108,42 @@
         ></button>
       </div>
       <div class="modal-body">
-        <!-- Contenido del modal para agregar etiquetas -->
-        <p>Aquí puedes agregar etiquetas.</p>
+        <p>Selecciona una etiqueta de la lista:</p>
+        <select
+          [(ngModel)]="selectedCategory"
+          class="form-select"
+          id="tags-select"
+        >
+          <option value="" disabled selected>Seleccione...</option>
+          <option
+            *ngFor="let category of categories"
+            [ngValue]="category"
+            [selected]="category === selectedCategory"
+          >
+            {{ category.catCategorie }}
+          </option>
+        </select>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addCategoryEntry()"
+          [disabled]="!selectedCategory"
+        >
+          Agregar
+        </button>
+      </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal Colaboradores -->
+
+
+
 <div
   id="collaboratorModal"
   class="modal fade"
@@ -89,9 +151,9 @@
   aria-labelledby="collaboratorModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header text-white">
         <h5 class="modal-title" id="collaboratorModalLabel">
           Agregar Colaborador
         </h5>
@@ -103,14 +165,34 @@
         ></button>
       </div>
       <div class="modal-body">
-        <!-- Contenido del modal para agregar colaboradores -->
-        <p>Aquí puedes agregar colaboradores.</p>
+        <p>Selecciona un colaborador de la lista:</p>
+        <select
+          [(ngModel)]="selectedCollaborator"
+          class="form-select"
+          id="collaborator-select"
+        >
+          <option value="" disabled selected>Seleccione...</option>
+          <option
+            *ngFor="let user of collaborators"
+            [ngValue]="user"
+            [selected]="user === selectedCollaborator"
+          >
+            {{ user.useMail }}
+          </option>
+        </select>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addCollaborator()"
+          [disabled]="!selectedCollaborator"
+        >
+          Agregar
+        </button>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 :root{
     --font: "Poppins", sans-serif;
     --purple-color: #a864dc;
-    --purple-font-color: #382c5c;
+    --purple-font-color: #382c5c; 
     --pink-btn-color: #e064ac;
     --blue-btn-color: #70ccfc;
     --purple-backg-color: #f0e4f4;
@@ -17,7 +17,7 @@ body{
     font-family:var(--font); 
 }
 
-  [data-bs-theme='dark'] {
+  /* [data-bs-theme='dark'] {
     background-color: #303434;
     color: #ffffff;
   }
@@ -25,5 +25,5 @@ body{
   [data-bs-theme='light'] {
     background-color: #ffffff;
     color: #000000;
-  }
+  } */
   

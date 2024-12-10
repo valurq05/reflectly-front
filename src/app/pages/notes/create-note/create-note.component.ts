@@ -1,7 +1,16 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Quill from 'quill';
-import { Category, DailyLog, DailyLogCreate, EmotionalLog, EmotionalState, Entry, User } from '../../../core/model/common.model';
+import {
+  Category,
+  DailyLog,
+  DailyLogCreate,
+  EmotionalLog,
+  EmotionalState,
+  Entry,
+  User,
+  Collaborator,
+} from '../../../core/model/common.model';
 import { AlertServiceService } from '../../../core/services/alert-service.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { CategoriesService } from '../../../core/services/categories.service';
@@ -9,6 +18,10 @@ import { DailyLogService } from '../../../core/services/daily-log.service';
 import { EmotionalStatesService } from '../../../core/services/emotional-states.service';
 import { EntryService } from '../../../core/services/entry.service';
 import { EmotionalLogService } from '../../../core/services/emotional-log.service';
+import { UserService } from '../../../core/services/user.service';
+import { CollaboratorService } from '../../../core/services/collaborator.service';
+import { CategoriesEntry } from '../../../core/model/common.model';
+import { CategoriesEntryService } from '../../../core/services/categories-entry.service';
 
 @Component({
   selector: 'app-create-note',
@@ -18,15 +31,22 @@ import { EmotionalLogService } from '../../../core/services/emotional-log.servic
 export class CreateNoteComponent implements AfterViewInit {
   user: User | null = null;
   emotionalStates: EmotionalState[] | null = null;
-  categories: Category[] | null = null;
+  
 
-  title:string ="Titulo";
-  emotionalState: number =3;
-  category: number =2;
+  title: string = 'Titulo';
+  emotionalState: number = 3;
+  category: number = 2;
 
   editor: Quill | undefined;
   dailyLogId!: string;
+  entryId!: number;
   dailyLog: DailyLog | null = null;
+
+  collaborators: User[] = [];
+  selectedCollaborator: User | null = null;
+  categories: Category[] = [];
+  selectedCategory: Category | null = null;
+  CategoriesEntry : CategoriesEntry[] = [];
 
   constructor(
     private dailyLogService: DailyLogService,
@@ -36,6 +56,9 @@ export class CreateNoteComponent implements AfterViewInit {
     private emotionalStatesService: EmotionalStatesService,
     private categorieService: CategoriesService,
     private alertService: AlertServiceService,
+    private UserService: UserService,
+    private CollaboratorService: CollaboratorService,
+    private CategoriesEntryService: CategoriesEntryService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -47,24 +70,34 @@ export class CreateNoteComponent implements AfterViewInit {
     });
     this.user = this.authService.getUserInfo();
     console.log(this.user);
-    try{
+    try {
       this.emotionalStatesService.getAllEmotionalState().subscribe({
-        next: (res)=>{
-          this.emotionalStates=res.Data
-        },error: (error)=>{
-          console.log(error, "Hola, no funciona")
-        }
-      })
+        next: (res) => {
+          this.emotionalStates = res.Data;
+        },
+        error: (error) => {
+          console.log(error, 'Hola, no funciona');
+        },
+      });
 
       this.categorieService.getCategories().subscribe({
-        next: (res)=>{
-          this.categories=res.Data
-        },error: (error)=>{
-          console.log(error, "Hola, no funciona")
-        }
-      })
-    }catch(e){
-      console.log(e, "catch")
+        next: (res) => {
+          this.categories = res.Data;
+        },
+        error: (error) => {
+          console.log(error, 'Hola, no funciona');
+        },
+      });
+
+      this.loadCollaborators();
+
+      if (!this.dailyLogId) {
+        this.createDefaultEntry();
+      } else {
+        this.loadDailyLog();
+      }
+    } catch (e) {
+      console.log(e, 'catch');
     }
   }
 
@@ -85,9 +118,22 @@ export class CreateNoteComponent implements AfterViewInit {
           ],
         },
       });
-      this.loadDailyLog(); 
+
+      this.dailyLogService.getDailyLog(this.dailyLogId).subscribe({
+        next: (res) => {
+          this.dailyLog = res.Data;
+          console.log(this.dailyLog);
+          if (this.dailyLog) {
+            this.setContent(this.dailyLog.entry.entText);
+          }
+        },
+        error: (error) => {
+          console.error('No se pudo obtener los detalles de la nota', error);
+        },
+      });
     }
-  }
+    }
+    
   
 
   loadEmotionalStates() {
@@ -104,20 +150,34 @@ export class CreateNoteComponent implements AfterViewInit {
   loadDailyLog() {
     this.dailyLogService.getDailyLog(this.dailyLogId).subscribe({
       next: (res) => {
+        console.log(res.Data);
         this.dailyLog = res.Data;
         if (this.dailyLog) {
           this.title = this.dailyLog.entry.entTitle;
           this.emotionalState =
             this.dailyLog.emotionalLog.emotionalState.emoStaId;
-  
-          
-          setTimeout(() => {
-            this.setContent(this.dailyLog?.entry?.entText || '');
-          }, 0);
+            this.loadCategoriesEntry(this.dailyLog.entry.entId);
         }
       },
       error: (error) => {
         console.log(error, 'No se pudo obtener los detalles de la nota');
+      },
+    });
+  }
+
+  loadCollaborators(): void {
+    this.UserService.GetAllUsers().subscribe({
+      next: (res: any) => {
+        if (Array.isArray(res.Data)) {
+          this.collaborators = res.Data.filter(
+            (collaborator: User) => collaborator.useId !== this.user?.useId
+          );
+        } else {
+          console.error('La respuesta no es un array de usuarios.');
+        }
+      },
+      error: (error: any) => {
+        console.error(error, 'No se pudieron cargar los colaboradores');
       },
     });
   }
@@ -179,7 +239,6 @@ export class CreateNoteComponent implements AfterViewInit {
           },
         });
       } else {
-      
         const newData: DailyLogCreate = {
           useId: this.user?.useId,
           emoStaId: this.emotionalState,
@@ -208,7 +267,6 @@ export class CreateNoteComponent implements AfterViewInit {
         });
       }
     } else {
-      // If there's no user logged in, redirect to home
       this.router.navigate(['home']);
     }
   }
@@ -219,5 +277,141 @@ export class CreateNoteComponent implements AfterViewInit {
     } else {
       console.warn('El editor no está inicializado.');
     }
+  }
+
+  addCollaborator(): void {
+    if (this.selectedCollaborator) {
+      const newCollaborator: Collaborator = {
+        colId: 0,
+        entry: this.dailyLog!.entry,
+        user: this.selectedCollaborator,
+      };
+
+      this.addCollaboratorToNewEntry(newCollaborator);
+    }
+  }
+
+  deleteCategoryEntry(catEntId: number){
+
+    this.CategoriesEntryService.deleteCategoryEntry(catEntId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.loadCategoriesEntry(this.dailyLog!.entry.entId);
+      },
+      error: (error: any) => {
+        console.log(error, 'No se pudieron cargar las categorias');
+      },
+    });
+
+  }
+
+  loadCategoriesEntry(entId: number){
+
+    this.CategoriesEntryService.getAllCategoriesEntry(entId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.CategoriesEntry = res.Data;
+        console.log(this.CategoriesEntry);
+      },
+      error: (error: any) => {
+        console.log(error, 'No se pudieron cargar las categorias');
+      },
+    });
+  }
+  addCategoryEntry():void{
+    if(this.selectedCategory){
+      const newCategoryEntry: CategoriesEntry = {
+        catEntStatus: true,
+        catEntId: 0,
+        category: this.selectedCategory,
+        entry: this.dailyLog!.entry
+      };
+      this.addCategoryToNewEntry(newCategoryEntry);
+      
+    }
+  }
+
+  private createDefaultEntry(): void {
+    const newData: DailyLogCreate = {
+      useId: this.user!.useId,
+      emoStaId: this.emotionalState,
+      entText: "Nota",
+      entTitle: this.title,
+    };
+    console.log(newData);
+    this.dailyLogService.createDailyLog(newData).subscribe({
+      next: (response: any) => {
+        this.dailyLog = response.Data;
+        console.log(this.dailyLog);
+        console.log('Nueva entrada creada con ID:', this.dailyLog);
+      },
+      error: (error: any) => {
+        console.error('Error al crear la entrada:', error);
+      },
+    });
+  }
+
+  private addCollaboratorToNewEntry(collaborator: Collaborator): void {
+    console.log(collaborator)
+    this.CollaboratorService.createCollaborator(collaborator).subscribe({
+      next: (response: any) => {
+        console.log('Colaborador añadido exitosamente:', response);
+        this.alertService.showAlert(
+          'Colaborador agregado',
+          'El colaborador se ha añadido a tu entrada.',
+          'success'
+        );
+      },
+      error: (error: any) => {
+        if (error.status === 400) {
+          console.error('Error al añadir colaborador:', error);
+          this.alertService.showAlert(
+            'Error al añadir colaborador',
+            error.error.Data, 
+            'error'
+          );
+        } else {
+          console.error('Error inesperado al añadir colaborador:', error);
+          this.alertService.showAlert(
+            'Error al añadir colaborador',
+            'Hubo un problema al añadir el colaborador a tu entrada.',
+            'error'
+          );
+        }
+      },
+    });
+  }
+
+
+  private addCategoryToNewEntry(CategoriesEntry: CategoriesEntry): void {
+    console.log(CategoriesEntry)
+    this.CategoriesEntryService.createCategoryEntry(CategoriesEntry).subscribe({
+      next: (response: any) => {
+        this.loadCategoriesEntry(this.dailyLog!.entry.entId);
+        console.log('Etiqueta añadida exitosamente:', response);
+        this.alertService.showAlert(
+          'Etiqueta agregada',
+          'La Etiqueta se ha añadido a tu entrada.',
+          'success'
+        );
+      },
+      error: (error: any) => {
+        if (error.status === 400) {
+          console.error('Error al añadir Etiqueta:', error);
+          this.alertService.showAlert(
+            'Error al añadir Etiqueta',
+            error.error.Data, 
+            'error'
+          );
+        } else {
+          console.error('Error inesperado al añadir Etiqueta:', error);
+          this.alertService.showAlert(
+            'Error al añadir Etiqueta',
+            'Hubo un problema al añadir la Etiqueta a tu entrada.',
+            'error'
+          );
+        }
+      },
+    });
   }
 }

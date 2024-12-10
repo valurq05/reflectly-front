@@ -1,4 +1,4 @@
-<main [attr.data-bs-theme]="darkModeService.darkModeSignal()">
+<main>
     <section *ngIf="isLoggedIn(); else notLoggedIn">
       <app-header-protected></app-header-protected>
     </section>
