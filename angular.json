@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "reflectly_front": {
+    "reflectly-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/reflectly_front",
+            "outputPath": "dist/reflectly-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -40,10 +40,12 @@
               "src/styles.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/quill/dist/quill.bubble.css",
-              "node_modules/quill/dist/quill.core.css"
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "./node_modules/js-cookie/dist/js.cookie.js"
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -74,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "reflectly_front:build:production"
+              "buildTarget": "reflectly-front:build:production"
             },
             "development": {
-              "buildTarget": "reflectly_front:build:development"
+              "buildTarget": "reflectly-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -109,7 +111,6 @@
     }
   },
   "cli": {
-
     "analytics": false
 
   }

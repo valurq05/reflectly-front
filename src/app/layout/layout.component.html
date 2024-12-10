@@ -1,13 +1,14 @@
-<section *ngIf="isLoggedIn(); else notLoggedIn">
-    <app-header-protected></app-header-protected>
-</section>
-
-<ng-template #notLoggedIn>
-    <app-header-main></app-header-main>
-</ng-template>
-
-<main>
-<router-outlet></router-outlet>
+<main [attr.data-bs-theme]="darkModeService.darkModeSignal()">
+    <section *ngIf="isLoggedIn(); else notLoggedIn">
+      <app-header-protected></app-header-protected>
+    </section>
+  
+    <ng-template #notLoggedIn>
+      <app-header-main></app-header-main>
+    </ng-template>
+  
+    <router-outlet></router-outlet>
+  
+    <app-footer></app-footer>
 </main>
-
-<app-footer></app-footer>
+  

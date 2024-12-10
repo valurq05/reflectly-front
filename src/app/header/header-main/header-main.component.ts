@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DarkModeService } from '../../core/services/dark-mode.service';
 
 @Component({
   selector: 'app-header-main',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class HeaderMainComponent {
 
+  darkModeService = inject(DarkModeService);
+
+  toggleDarkMode(){
+    this.darkModeService.updateDarkMode();
+  }
 }

@@ -14,7 +14,7 @@ declare var google:any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent{
   form!: FormGroup;
   showPassword:boolean = false;
   secretKey:string = 'TuClaveSecreta';
@@ -27,19 +27,6 @@ export class LoginComponent implements OnInit{
     this.validateForm();
   }
 
-  ngOnInit(): void {
-      google.accounts.id.initialize({
-        client_id: '923394514576-8085b0tcvb6a06cucea08lm9v06go3qi.apps.googleusercontent.com',
-        callback: (res:any) => this.handleGoogleLogin(res)
-      });
-
-      google.accounts.id.renderButton(document.getElementById("google-btn"), {
-        theme: 'outline',
-        size: 'large',
-        shape: 'rectangle',
-        width: 350
-      });
-  }
 
   validateForm(){
     const emailRgx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -68,26 +55,6 @@ export class LoginComponent implements OnInit{
           }
         }
     })
-    }
-  }
-
-  private decodeToken(token:string){
-    return JSON.parse(atob(token.split(".")[1]));
-  }
-
-  handleGoogleLogin(response:any){
-    if (response) {
-      console.log(response)
-      this.authService.googleLogin(response.credential);
-    // const payload = this.decodeToken(response.credential);
-    // localStorage.setItem(LocalStorage.user, JSON.stringify(payload));
-    // document.querySelector('.modal-backdrop')?.remove();
-    // const modal = bootstrap.Modal.getInstance(document.getElementById('modalLogin'));
-    // modal?.hide();
-    // this.router.navigate(['home']);
-    } else {
-    console.log(response)
-    this.alertService.showAlert('Error', response.message || 'Hay un problema con tus credenciales', 'error');
     }
   }
 
