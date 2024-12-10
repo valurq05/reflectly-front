@@ -56,8 +56,11 @@
 
     <div class="categories-list">
       <h5 class="small-heading m-0">Etiquetas</h5>
-      <ul class="list-group" style="overflow-y: scroll; max-height: 70px;">
-        <li *ngFor="let category of CategoriesEntry" class="list-group-item d-flex justify-content-between align-items-center">
+      <ul *ngIf="CategoriesEntry && CategoriesEntry.length > 0; else noCategories" 
+          class="list-group" 
+          style="overflow-y: scroll; max-height: 70px;">
+        <li *ngFor="let category of CategoriesEntry" 
+            class="list-group-item d-flex justify-content-between align-items-center">
           <span>{{ category.category.catCategorie }}</span>
           <button 
             class="btn btn-danger btn-sm" 
@@ -66,7 +69,12 @@
           </button>
         </li>
       </ul>
+     
+      <ng-template #noCategories>
+        <p class="text-muted">No hay etiquetas disponibles.</p>
+      </ng-template>
     </div>
+    
     
   </div>
 
