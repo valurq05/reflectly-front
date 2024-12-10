@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person, UpdatePerson, User } from '../../../core/model/common.model';
 import { AlertServiceService } from '../../../core/services/alert-service.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -16,29 +17,33 @@ export class EditProfileComponent {
   modal!: any;
   user: User | null = null;
 
-  document: string | null = null;
-  name: string | null = null;
-
-  lastName: string | null = null;
-  photo: string | null = null;
+  editProfileForm!: FormGroup;
   selectedFile: File | null = null;
-
-  previewImageUrl: string | null = null;
+  previewImageUrl: string | null  |ArrayBuffer= null;
+  selectedFileError: string | null = null;
 
   constructor(private authService: AuthService,
     private imageService: ImageService,
     private personService: PersonService,
-  private alertService:AlertServiceService) { }
+
+    private fb: FormBuilder,
+    private alertService: AlertServiceService) { }
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
+
+    this.editProfileForm = this.fb.group({
+      document: ['', [Validators.required, Validators.pattern(/^[0-9]{7,10}$/)]],
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      photo: [null]
+    });
     if (this.user) {
-
-      this.name = this.user.person.perName
-      this.lastName = this.user.person.perLastname
-      this.document = this.user.person.perDocument
-      this.photo = this.user.person.perPhoto
-
+      this.editProfileForm.patchValue({
+        document: this.user.person.perDocument,
+        name: this.user.person.perName,
+        lastName: this.user.person.perLastname
+      });
     }
   }
   ngAfterViewInit() {
@@ -46,93 +51,86 @@ export class EditProfileComponent {
   }
 
 
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file && this.user) {
-      this.selectedFile = file;
-      this.previewImageUrl = URL.createObjectURL(file);
-      console.log("selected")
-    } else {
-      this.previewImageUrl = null;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
 
-    }
-  }
-
-  deleteSelectedPhtot(fileInput: HTMLInputElement) {
-    this.previewImageUrl = null
-    this.selectedFile = null
-    fileInput.value = ""
-  }
-  onUpdateUser() {
-
-    if (this.user && this.name && this.document && this.lastName) {
-
-      if (this.selectedFile) {
-        try {
-          this.imageService.updateProfilePhoto(this.selectedFile, this.user.useId).subscribe({
-            next: (res) => {
-              console.log(res)
-
-            }, error: (error) => {
-              console.log(error, "Hola, no funciona")
-            }
-          })
-        }
-        catch (e) {
-
-          console.log(e, "Hola, no funciona")
-
-        }
+      if (!file.type.startsWith('image/')) {
+        this.selectedFileError = 'Por favor selecciona una imagen válida.';
+        this.clearFileInput(input);
+        return;
       }
 
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+      if (file.size > maxSizeInBytes) {
+        this.selectedFileError = 'El tamaño de la imagen no debe superar los 2 MB.';
+        this.clearFileInput(input);
+        return;
+      }
 
+      this.selectedFileError = null;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImageUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  clearFileInput(input: HTMLInputElement): void {
+    input.value = '';
+  }
+  deleteSelectedPhoto(fileInput: any): void {
+    this.selectedFile = null;
+    this.previewImageUrl = null;
+    fileInput.value = null;
+  }
+
+  onUpdateUser(): void {
+    if (this.user) {
+      if (this.editProfileForm.invalid) {
+        this.alertService.showAlert("Formulario inválido", "Por favor, corrige los errores", "error");
+        return;
+      }
+
+      const { document, name, lastName } = this.editProfileForm.value;
 
       try {
         let data: UpdatePerson | Person;
 
-        //determinar si se debe actualizar la foto o debe quedar la actual,
-        //ya que el back recibe una entidad personalbar, y en caso de que esta imagen no sea actualizada  
-        //y tampoco se le pase  como porpiedad el campo quedara en null 
-        //por esto si la foto no se actualzia se debe apsar la actual
         if (this.selectedFile) {
           data = {
             perId: this.user.person.perId,
-            perDocument: this.document,
-            perLastname: this.lastName,
-            perName: this.name,
+            perDocument: document,
+            perLastname: lastName,
+            perName: name
           } as UpdatePerson;
+
+          this.imageService.updateProfilePhoto(this.selectedFile, this.user.useId).subscribe({
+            next: (res) => console.log(res),
+            error: (error) => console.error(error, "Error al subir la foto")
+          });
         } else {
           data = {
             perId: this.user.person.perId,
-            perDocument: this.document,
-            perLastname: this.lastName,
-            perName: this.name,
-            perPhoto: this.user.person.perPhoto,
+            perDocument: document,
+            perLastname: lastName,
+            perName: name,
+            perPhoto: this.user.person.perPhoto
           } as Person;
         }
 
-
         this.personService.updatePerson(data).subscribe({
-          next: (res) => {
-            console.log(res)
-            this.modal.hide();
-            this.alertService.showAlert("Usuario actualizado",":D", "success")
-
-            setTimeout(()=>{
-
-              this.authService.logout()
-            },1500)
-
-          }, error: (error) => {
-            console.log(error, "Hola, no funciona")
-          }
-        })
+          next: () => {
+            this.alertService.showAlert("Usuario actualizado", ":D", "success");
+            setTimeout(() => this.authService.logout(), 1500);
+            this.modal.hide()
+          },
+          error: (error) => console.error(error, "Error al actualizar usuario")
+        });
+      } catch (e) {
+        console.error(e, "Error inesperado");
       }
-      catch (e) {
-        console.log(e, "Hola, no funciona")
-      }
-
     }
-
   }
 }
