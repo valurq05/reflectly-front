@@ -50,6 +50,20 @@ export interface DailyLogCreate {
     entTitle: string
 }
 
+export interface Collaborator{
+    colId: number,
+    entry: Entry,
+    user: User
+
+}
+
+export interface CategoriesEntry{
+    catEntId: number,
+    catEntStatus: boolean,
+    category: Category,
+    entry: Entry
+}
+
 export interface Category {
     catId: number,
     catCategorie: string

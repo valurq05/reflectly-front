@@ -1,3 +1,4 @@
+import { Collaborator } from '../model/common.model';
 const API_URL = 'http://localhost:8080';
 
 export const ApiEndpoint = {
@@ -35,7 +36,19 @@ export const ApiEndpoint = {
     },
     EmotionalLog:{
         Update:`${API_URL}/Emotional/Log`,
-    }
+    },
+    User:{
+        GetAll:`${API_URL}/users`,
+    },
+    Collaborator:{
+        Create:`${API_URL}/collaborator`,
+    },
+    CategoriesEntry:{
+        Create:`${API_URL}/Categories/entry`,
+        GetAllCategoriesEntry:`${API_URL}/Categories/by/entry`,
+        Delete:`${API_URL}/Categories/entry`,
+    },
+
 
 }
 

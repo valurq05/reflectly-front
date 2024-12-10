@@ -155,7 +155,7 @@
   color: white;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1000px) {
   .calendar {
     max-width: 90%;
