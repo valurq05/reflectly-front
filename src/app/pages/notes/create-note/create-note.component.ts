@@ -36,6 +36,7 @@ export class CreateNoteComponent implements AfterViewInit {
   title: string = 'Titulo';
   emotionalState: number = 3;
   category: number = 2;
+  
 
   editor: Quill | undefined;
   dailyLogId!: string;

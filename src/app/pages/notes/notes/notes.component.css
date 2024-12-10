@@ -87,3 +87,11 @@
   .categorie{
     background-color: #6c63ff;
   }
+
+  .text-small{
+    font-size: 10px;
+  }
+  
+  .text-med{
+    font-size: 13px;
+  }

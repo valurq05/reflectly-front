@@ -14,6 +14,7 @@ import { PdfService } from '../../core/services/pdf.service';
 export class CalendarComponent implements OnInit {
   currentYear!: number;
   currentMonth!: number;
+  colors = ['#C06EF3', '#6DCBFF', '#FFBB6D'];
   dates: Date[] = [];
   selectedDate: Date | null = null; 
   currentDate: Date = new Date();
@@ -327,6 +328,7 @@ export class CalendarComponent implements OnInit {
   getExtraCategories(categories: string[]): string[] {
       return categories.slice(2); 
   }
+
   onClickDeleteEntry(id: string){
     Swal.fire({title:"¿Seguro que deseas eliminar esta nota?", 
       text:"No podras recuperarla",

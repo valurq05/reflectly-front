@@ -15,29 +15,43 @@
                                   {{ truncateText(entry.entTitle, 25) }}
                               </h5>
                           </div>
-                          <div *ngIf="entry.catCategorie != ''" class="categories col-4 text-end border-black align-items-start">
-                              <span class="categorie text-white fw-semibold p-1 rounded">{{ entry.catCategorie }}</span>
+                          <div class="col-4 align-items-center text-center">
+                            <span  class="fw-semibold text-med"> {{ entry.entDate }}</span>
                           </div>
                       </div>
-                      <span  class="fw-semibold">Fecha de creación: {{ entry.entDate }}</span>
                       <p class="fw-semibold">Estado emocional: {{ entry.emoStaState }} {{ getEmojiForStatus(entry.emoStaState) }}</p>
                       <p class="card-text">
                       {{ truncateText(entry.entText, 50) }}
                       </p>
-                      <div class="botones d-flex justify-content-end">
-                          <button (click)="onGeneratePdf(entry.dailyLogId)" class="btn btn-download btn-sm m-1 text-white fw-bold">
-                            <i class="bi bi-download fw-bold"></i>
-                          </button>
-                          <button (click)="onClickDeleteEntry(entry.entId)" class="btn btn-trash btn-sm m-1 text-white">
-                            <i class="bi bi-trash fw-bold"></i>
-                          </button>
-                          <button class="btn btn-outline-primary btn-sm m-1">
-                            <a [routerLink]="['/notes', entry.dailyLogId]">
-                              <i class="bi bi-pencil text-white fw-bold"></i>
-                            </a>
-                          </button>
+                      <div class="col-12 d-flex justify-content-center align-items-center">
+                        <div *ngIf="entry.catCategorie && entry.catCategorie.length > 0; else noCategories" class="categories col-6 align-items-start">
+                          <span *ngFor="let item of entry.catCategorie; let i = index">
+                            <span 
+                              class="categorie text-small text-white fw-semibold p-1 m-1 rounded" 
+                              [ngStyle]="{'background-color': colors[i % colors.length]}">
+                              {{ item }}
+                            </span>
+                          </span>
                         </div>
-                        
+                        <ng-template #noCategories>
+                          <div class="categories col-6 align-items-start">
+                            No tienes etiquetas.
+                          </div>
+                        </ng-template>
+                          <div class="col-6 justify-content-end text-end">
+                            <button (click)="onGeneratePdf(entry.dailyLogId)" class="btn btn-download btn-sm m-1 text-white fw-bold">
+                              <i class="bi bi-download fw-bold"></i>
+                            </button>
+                            <button (click)="onClickDeleteEntry(entry.entId)" class="btn btn-trash btn-sm m-1 text-white">
+                              <i class="bi bi-trash fw-bold"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm m-1">
+                              <a [routerLink]="['/notes', entry.dailyLogId]">
+                                <i class="bi bi-pencil text-white fw-bold"></i>
+                              </a>
+                            </button>
+                        </div>
+                        </div>
                   </div>
               </div>
           </div>

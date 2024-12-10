@@ -16,6 +16,7 @@ export class NotesComponent implements OnInit{
   categories:any[] = [];
   selectedDate: Date | null = null
   entries: any[] = [];
+  colors = ['#C06EF3', '#6DCBFF', '#FFBB6D'];
 
   constructor(
     private userNotesService: DailyLogService,
