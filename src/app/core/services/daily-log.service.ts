@@ -44,6 +44,7 @@ export class DailyLogService {
       { params } 
     );
   }
+  
   deleteEntry(id: string) {
     const params = new HttpParams().set('id', id);
     return this.http.delete(ApiEndpoint.Entry.Delete, { params });

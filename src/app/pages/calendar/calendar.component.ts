@@ -82,7 +82,6 @@ export class CalendarComponent implements OnInit {
       });
     }
     else return "date"
-
     
   }
   generateCalendar() {

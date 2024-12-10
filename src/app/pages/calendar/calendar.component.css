@@ -158,6 +158,23 @@
   color: white;
 }
 
+.btn-download{
+ background-color: #FFBB6D;
+}
+
+.btn-trash{
+  background-color: #6DCBFF;
+}
+
+.botones i{
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.categorie{
+  background-color: #6c63ff;
+}
+
 
 @media (max-width: 1000px) {
   .calendar {

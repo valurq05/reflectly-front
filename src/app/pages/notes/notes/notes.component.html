@@ -1,1 +1,56 @@
-<p>notes works!</p>
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="fw-bold titulo-not">Tus notas</h2>
+      <button routerLink="/create" class="add-note-button">+ Nueva Nota</button>
+    </div>
+  
+    <div *ngIf="entries.length > 0; else noEntries" class="m-4">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" *ngFor="let entry of entries">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="col-12 align-items-center d-flex">
+                            <div class="col-8">
+                                <h5 class="text-black fw-semibold">
+                                    {{ truncateText(entry.entTitle, 25) }}
+                                </h5>
+                            </div>
+                            <div *ngIf="entry.catCategorie != ''" class="categories col-4 text-end border-black align-items-start">
+                                <span class="categorie text-white fw-semibold p-1 rounded">{{ entry.catCategorie }}</span>
+                            </div>
+                        </div>
+                        <span  class="fw-semibold">Fecha de creación: {{ entry.entDate }}</span>
+                        <p class="fw-semibold">Estado emocional: {{ entry.emoStaState }} {{ getEmojiForStatus(entry.emoStaState) }}</p>
+                        <p class="card-text">
+                        {{ truncateText(entry.entText, 50) }}
+                        </p>
+                        <div class="botones d-flex justify-content-end">
+                            <button (click)="onGeneratePdf(entry.dailyLogId)" class="btn btn-download btn-sm m-1 text-white fw-bold">
+                              <i class="bi bi-download fw-bold"></i>
+                            </button>
+                            <button (click)="onClickDeleteEntry(entry.entId)" class="btn btn-trash btn-sm m-1 text-white">
+                                <i class="bi bi-trash fw-bold"></i>
+                              </button>
+                              <button class="btn btn-outline-primary btn-sm m-1">
+                                <a [routerLink]="['/notes', entry.dailyLogId]">
+                                  <i class="bi bi-pencil text-white fw-bold"></i>
+                                </a>
+                              </button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+  
+    <ng-template #noEntries>
+      <div class="text-center py-4">
+        <span *ngIf="selectedDate == null; else noDate">
+          <p>No tienes entradas </p>
+        </span>
+        <ng-template #noDate>
+          No se encontraron entradas
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>

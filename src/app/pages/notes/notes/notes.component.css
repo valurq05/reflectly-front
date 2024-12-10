@@ -1,0 +1,89 @@
+/* Card Styling */
+.card {
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #FBF3FF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-header {
+    background-color: #FBF3FF;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #0c0909;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-body {
+    padding: 16px;
+    color: #6c757d;
+    font-size: 0.95rem;
+  }
+  
+  .card-footer {
+    background-color: #FBF3FF;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .titulo-not{
+    color: var(--purple-font-color);
+  }
+
+  .add-note-button {
+    background-color: #C06EF3;
+    color: white;
+    border-radius: 12px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+  
+  .add-note-button:hover {
+    background-color: #5a54e0;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  
+  .btn-outline-primary {
+    background-color: #C06EF3;
+    color:white;
+    border: none;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #6c63ff;
+    color: white;
+  }
+
+  .btn-download{
+   background-color: #FFBB6D;
+  }
+
+  .btn-trash{
+    background-color: #6DCBFF;
+  }
+
+  .botones i{
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .categorie{
+    background-color: #6c63ff;
+  }
