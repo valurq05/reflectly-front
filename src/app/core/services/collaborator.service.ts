@@ -15,4 +15,10 @@ export class CollaboratorService {
     console.log(Collaborator);
     return this.http.post(ApiEndpoint.Collaborator.Create, Collaborator);
   }
+
+  getAllCollaboratorsByEntry(entId: number){
+    return this.http.get<ApiResponse<Collaborator>>(`${ApiEndpoint.Collaborator.GetAllCollaboratorsByEntry}`, { params: { colId: entId.toString() } });
+
+
+  }
 }

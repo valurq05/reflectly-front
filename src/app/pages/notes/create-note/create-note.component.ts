@@ -22,6 +22,8 @@ import { UserService } from '../../../core/services/user.service';
 import { CollaboratorService } from '../../../core/services/collaborator.service';
 import { CategoriesEntry } from '../../../core/model/common.model';
 import { CategoriesEntryService } from '../../../core/services/categories-entry.service';
+import { ImageService } from '../../../core/services/image.service';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-create-note',
@@ -31,12 +33,10 @@ import { CategoriesEntryService } from '../../../core/services/categories-entry.
 export class CreateNoteComponent implements AfterViewInit {
   user: User | null = null;
   emotionalStates: EmotionalState[] | null = null;
-  
 
   title: string = 'Titulo';
   emotionalState: number = 3;
   category: number = 2;
-  
 
   editor: Quill | undefined;
   dailyLogId!: string;
@@ -47,7 +47,9 @@ export class CreateNoteComponent implements AfterViewInit {
   selectedCollaborator: User | null = null;
   categories: Category[] = [];
   selectedCategory: Category | null = null;
-  CategoriesEntry : CategoriesEntry[] = [];
+  CategoriesEntry: CategoriesEntry[] = [];
+  collaboratorsByEntry: Collaborator[] = [];
+  image: any;
 
   constructor(
     private dailyLogService: DailyLogService,
@@ -60,6 +62,7 @@ export class CreateNoteComponent implements AfterViewInit {
     private UserService: UserService,
     private CollaboratorService: CollaboratorService,
     private CategoriesEntryService: CategoriesEntryService,
+    private ImageService: ImageService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -133,9 +136,68 @@ export class CreateNoteComponent implements AfterViewInit {
         },
       });
     }
+  }
+
+  showCollaboratorsImages(): void {
+    this.collaboratorsByEntry.forEach((collaborator) => {
+      let imageUrl = collaborator.user.person.perPhoto;
+
+      if (imageUrl.includes('/images/GdXyg8gWgAAQmW1.jpg')) {
+        console.log("Imagen por defecto encontrada, solicitando imagen por defecto");
+        this.ImageService.getDefaultImage().subscribe(
+          (safeUrl: any) => {
+            collaborator.user.person.perPhoto = safeUrl;
+            console.log("Imagen por defecto cargada correctamente:", collaborator.user.person.perPhoto);
+          },
+          (error: any) => {
+            console.error("Error al cargar imagen por defecto:", error);
+            collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+          }
+        );
+      } else if(imageUrl) {
+        
+        console.log("Conversión de URL relativa a absoluta exitosa:", collaborator.user.person.perPhoto);
+        
+        this.ImageService.showImage(collaborator.user.person.perPhoto).subscribe(
+          (safeUrl: any) => {
+            collaborator.user.person.perPhoto = safeUrl;
+            console.log("Imagen segura cargada para:", collaborator.user.person.perName);
+          },
+          (error: any) => {
+            console.error(
+              `Error al cargar la imagen para ${collaborator.user.person.perName}:`,
+              error
+            );
+            collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+          }
+        );
+      } else {
+        collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+      }
+    });
+}
+
+  loadCollaboratorsByEntry(): void {
+    if (this.dailyLog) {
+      this.CollaboratorService.getAllCollaboratorsByEntry(
+        this.dailyLog.entry.entId
+      ).subscribe({
+        next: (res: any) => {
+          if (Array.isArray(res.Data)) {
+            this.collaboratorsByEntry = res.Data;
+            this.showCollaboratorsImages();
+          } else {
+            console.error('La respuesta no es un array de colaboradores.');
+          }
+        },
+        error: (error: any) => {
+          console.error(error, 'No se pudieron cargar los colaboradores');
+        },
+      });
+    } else {
+      console.error('No se ha cargado la nota diaria.');
     }
-    
-  
+  }
 
   loadEmotionalStates() {
     this.emotionalStatesService.getAllEmotionalState().subscribe({
@@ -157,7 +219,8 @@ export class CreateNoteComponent implements AfterViewInit {
           this.title = this.dailyLog.entry.entTitle;
           this.emotionalState =
             this.dailyLog.emotionalLog.emotionalState.emoStaId;
-            this.loadCategoriesEntry(this.dailyLog.entry.entId);
+          this.loadCategoriesEntry(this.dailyLog.entry.entId);
+          this.loadCollaboratorsByEntry();
         }
       },
       error: (error) => {
@@ -292,8 +355,7 @@ export class CreateNoteComponent implements AfterViewInit {
     }
   }
 
-  deleteCategoryEntry(catEntId: number){
-
+  deleteCategoryEntry(catEntId: number) {
     this.CategoriesEntryService.deleteCategoryEntry(catEntId).subscribe({
       next: (res: any) => {
         console.log(res);
@@ -303,11 +365,9 @@ export class CreateNoteComponent implements AfterViewInit {
         console.log(error, 'No se pudieron cargar las categorias');
       },
     });
-
   }
 
-  loadCategoriesEntry(entId: number){
-
+  loadCategoriesEntry(entId: number) {
     this.CategoriesEntryService.getAllCategoriesEntry(entId).subscribe({
       next: (res: any) => {
         console.log(res);
@@ -319,16 +379,15 @@ export class CreateNoteComponent implements AfterViewInit {
       },
     });
   }
-  addCategoryEntry():void{
-    if(this.selectedCategory){
+  addCategoryEntry(): void {
+    if (this.selectedCategory) {
       const newCategoryEntry: CategoriesEntry = {
         catEntStatus: true,
         catEntId: 0,
         category: this.selectedCategory,
-        entry: this.dailyLog!.entry
+        entry: this.dailyLog!.entry,
       };
       this.addCategoryToNewEntry(newCategoryEntry);
-      
     }
   }
 
@@ -336,7 +395,7 @@ export class CreateNoteComponent implements AfterViewInit {
     const newData: DailyLogCreate = {
       useId: this.user!.useId,
       emoStaId: this.emotionalState,
-      entText: "Nota",
+      entText: 'Nota',
       entTitle: this.title,
     };
     console.log(newData);
@@ -353,7 +412,7 @@ export class CreateNoteComponent implements AfterViewInit {
   }
 
   private addCollaboratorToNewEntry(collaborator: Collaborator): void {
-    console.log(collaborator)
+    console.log(collaborator);
     this.CollaboratorService.createCollaborator(collaborator).subscribe({
       next: (response: any) => {
         console.log('Colaborador añadido exitosamente:', response);
@@ -368,7 +427,7 @@ export class CreateNoteComponent implements AfterViewInit {
           console.error('Error al añadir colaborador:', error);
           this.alertService.showAlert(
             'Error al añadir colaborador',
-            error.error.Data, 
+            error.error.Data,
             'error'
           );
         } else {
@@ -383,9 +442,8 @@ export class CreateNoteComponent implements AfterViewInit {
     });
   }
 
-
   private addCategoryToNewEntry(CategoriesEntry: CategoriesEntry): void {
-    console.log(CategoriesEntry)
+    console.log(CategoriesEntry);
     this.CategoriesEntryService.createCategoryEntry(CategoriesEntry).subscribe({
       next: (response: any) => {
         this.loadCategoriesEntry(this.dailyLog!.entry.entId);
@@ -401,7 +459,7 @@ export class CreateNoteComponent implements AfterViewInit {
           console.error('Error al añadir Etiqueta:', error);
           this.alertService.showAlert(
             'Error al añadir Etiqueta',
-            error.error.Data, 
+            error.error.Data,
             'error'
           );
         } else {
