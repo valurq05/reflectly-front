@@ -59,31 +59,6 @@
         
         
       </div>
-      <div class="mb-3">
-        <label for="userPhoto" class="form-label fw-semibold">Foto de perfil</label>
-        <input
-          #fileInput
-          (change)="onFileSelected($event)"
-          type="file"
-          accept="image/*"
-          class="form-control"
-          id="userPhoto"
-          style="background-color: #f6e8ff; border-radius: 10px;"
-        >
-        <div *ngIf="previewImageUrl" class="mt-3 text-center">
-          <i (click)="deleteSelectedPhoto(fileInput)" class="fas fa-times-circle deletePhoto" style="cursor: pointer;"></i>
-          <div
-            style="width: 150px; height: 150px; overflow: hidden; margin: 0 auto; border-radius: 50%; border: 3px solid #7e57c2; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            <img
-              [src]="previewImageUrl"
-              alt="Previsualización de la imagen"
-              style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
-        </div>
-        <div *ngIf="selectedFileError" class="text-danger mt-2">
-          {{ selectedFileError }}
-        </div>
-      </div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 10px;">Cancelar</button>
         <button type="button" (click)="onUpdateUser()" class="btn btn-primary" style="background-color: #a97eff; border-radius: 10px;">Guardar cambios</button>

@@ -25,6 +25,7 @@ export const ApiEndpoint = {
         updateUserPhoto:`${API_URL}/user/profile/img`,
         showImage:`${API_URL}/images/{filename}`,
         defaultImage:`${API_URL}/images/GdXyg8gWgAAQmW1.jpg`,
+        changeDefaultImage:`${API_URL}/user/profile/img`,
     },
     Entry:{
         Delete:`${API_URL}/entry`,
@@ -49,6 +50,7 @@ export const ApiEndpoint = {
         GetAllCategoriesEntry:`${API_URL}/Categories/by/entry`,
         Delete:`${API_URL}/Categories/entry`,
     },
+
 
 
 }

@@ -142,6 +142,12 @@ export class CreateNoteComponent implements AfterViewInit {
     this.collaboratorsByEntry.forEach((collaborator) => {
       let imageUrl = collaborator.user.person.perPhoto;
 
+      if (imageUrl.startsWith('https://lh3.googleusercontent.com')) {
+        
+        console.log("Imagen de Google detectada, no se realizará ninguna acción:", imageUrl);
+        return;
+      }
+
       if (imageUrl.includes('/images/GdXyg8gWgAAQmW1.jpg')) {
         console.log("Imagen por defecto encontrada, solicitando imagen por defecto");
         this.ImageService.getDefaultImage().subscribe(
@@ -415,6 +421,7 @@ export class CreateNoteComponent implements AfterViewInit {
     console.log(collaborator);
     this.CollaboratorService.createCollaborator(collaborator).subscribe({
       next: (response: any) => {
+        this.loadCollaboratorsByEntry();
         console.log('Colaborador añadido exitosamente:', response);
         this.alertService.showAlert(
           'Colaborador agregado',
