@@ -51,19 +51,6 @@ export class CalendarComponent implements OnInit {
     },
   };
   ngOnInit(){
-    try{
-      this.DailyLogService.deleteEntry("7").subscribe({
-        next:(response)=>{
-          console.log(response)
-        }, error:(error)=>{
-          console.log(error)
-
-        }
-      })
-    }
-    catch(e){
-      console.log(e)
-    }
     this.currentYear = this.currentDate.getFullYear();
     this.currentMonth = this.currentDate.getMonth();
     this.generateCalendar();

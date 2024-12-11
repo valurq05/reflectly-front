@@ -3,7 +3,9 @@
     <div class="row align-items-center">
 
       <div class="col-md-8">
-        <h5 id="namePerson" class="fw-bold mb-3">Bienvenidx, {{user?.person?.perName}} {{user?.person?.perLastname}}</h5>
+        <h5 id="namePerson" class="fw-bold mb-3">Hola, 
+          <span class="personName">{{user?.person?.perName}} {{user?.person?.perLastname}}</span>
+        </h5>
         <p id="infoPerson" class="mb-0 text-secondary fw-semibold">Correo: {{user?.useMail}}</p>
         <p id="infoPerson" class="mb-0 text-secondary fw-semibold">Documento: {{user?.person?.perDocument}}</p>
       </div>
