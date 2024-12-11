@@ -22,6 +22,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
+import { GoogleAuthComponent } from './pages/google/google-auth/google-auth.component';
 //register swiper
 register();
 
@@ -39,6 +40,7 @@ register();
     CalendarComponent,
     ProfileComponent,
     EditProfileComponent,
+    GoogleAuthComponent,
 
   
 
