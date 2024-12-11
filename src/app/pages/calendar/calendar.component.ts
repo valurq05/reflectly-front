@@ -34,7 +34,22 @@ export class CalendarComponent implements OnInit {
       private pdfService:PdfService,
     private dailyLogService:DailyLogService) {
   }
-
+  swiperConfig = {
+    slidesPerView: 3,
+    speed: 500,
+    loop: true,
+    navigation: true,
+    pagination: { clickable: true },
+    autoplay: { delay: 3000, disableOnInteraction: false },
+    effect: 'coverflow', // Cambia a 'fade' o 'cube' para otros efectos
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
+  };
   ngOnInit(){
     try{
       this.DailyLogService.deleteEntry("7").subscribe({

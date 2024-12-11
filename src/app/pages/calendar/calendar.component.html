@@ -4,71 +4,109 @@
     <button routerLink="/create" class="add-note-button">+ Nueva Nota</button>
   </div>
 
-  <div *ngIf="entries.length > 0; else noEntries" class="m-4">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-          <div class="col" *ngFor="let entry of entries">
-              <div class="card h-100 shadow-sm">
-                  <div class="card-body p-4">
-                      <div class="col-12 align-items-center d-flex">
-                          <div class="col-8">
-                              <h5 class="text-black fw-semibold">
-                                  {{ truncateText(entry.entTitle, 25) }}
-                              </h5>
-                          </div>
-                          <div class="col-4 align-items-center text-center">
-                            <span  class="fw-semibold text-med"> {{ entry.entDate }}</span>
-                          </div>
-                      </div>
-                      <p class="fw-semibold">Estado emocional: {{ entry.emoStaState }} {{ getEmojiForStatus(entry.emoStaState) }}</p>
-                      <p class="card-text">
-                      {{ truncateText(entry.entText, 50) }}
-                      </p>
-                      <div class="col-12 d-flex justify-content-center align-items-center">
-                        <div *ngIf="entry.catCategorie && entry.catCategorie.length > 0; else noCategories" class="categories col-6 align-items-start">
-                          <span *ngFor="let item of entry.catCategorie; let i = index">
-                            <span 
-                              class="categorie text-small text-white fw-semibold p-1 m-1 rounded" 
-                              [ngStyle]="{'background-color': colors[i % colors.length]}">
-                              {{ item }}
-                            </span>
-                          </span>
-                        </div>
-                        <ng-template #noCategories>
-                          <div class="categories col-6 align-items-start">
-                            No tienes etiquetas.
-                          </div>
-                        </ng-template>
-                          <div class="col-6 justify-content-end text-end">
-                            <button (click)="onGeneratePdf(entry.dailyLogId)" class="btn btn-download btn-sm m-1 text-white fw-bold">
-                              <i class="bi bi-download fw-bold"></i>
-                            </button>
-                            <button (click)="onClickDeleteEntry(entry.entId)" class="btn btn-trash btn-sm m-1 text-white">
-                              <i class="bi bi-trash fw-bold"></i>
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm m-1">
-                              <a [routerLink]="['/notes', entry.dailyLogId]">
-                                <i class="bi bi-pencil text-white fw-bold"></i>
-                              </a>
-                            </button>
-                        </div>
-                        </div>
-                  </div>
+  <swiper-container 
+    [slidesPerView]="3"
+    [spaceBetween]="5"
+    [speed]="500"
+    [loop]="true"
+    [autoplay]="{ delay: 3000, disableOnInteraction: false }"
+    [pagination]="{ clickable: true }"
+    [navigation]="true"
+    [effect]="'coverflow'"
+    [coverflowEffect]="{
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true
+    }"
+     [breakpoints]="{
+      '360': { slidesPerView: 1, },
+      '768': { slidesPerView: 2,  },
+      '1024': { slidesPerView: 3,},
+      '1440': { slidesPerView: 3, }
+    }"
+    cssMode="true"
+    class="slider-cards"
+  >
+    <ng-container *ngIf="selectedDate; else noSelectedDate">
+      <ng-container *ngIf="entries.length > 0; else noEntries">
+        <swiper-slide *ngFor="let entry of entries" class="m-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <div class="row align-items-center mb-3">
+                <div class="col-7">
+                  <h5 class="fw-semibold text-primary">
+                    {{ truncateText(entry.entTitle, 25) }}
+                  </h5>
+                </div>
+                <div class="col-4 text-end">
+                  <span class="fw-semibold text-muted">
+                    {{ entry.entDate }}
+                  </span>
+                </div>
               </div>
+              <p class="fw-semibold mb-2">
+                Estado emocional: {{ entry.emoStaState }} {{ getEmojiForStatus(entry.emoStaState) }}
+              </p>
+              <p class="card-text mb-4 text-secondary">
+                {{ truncateText(entry.entText, 50) }}
+              </p>
+              <div class="row align-items-center">
+                <div class="col-6">
+                  <div *ngIf="entry.catCategorie && entry.catCategorie.length > 0; else noCategories" class="categories">
+                    <span 
+                      *ngFor="let item of entry.catCategorie; let i = index" 
+                      class="categorie text-white p-1 rounded"
+                      [ngStyle]="{'background-color': colors[i % colors.length]}">
+                      {{ item }}
+                    </span>
+                  </div>
+                  <ng-template #noCategories>
+                    <div class="categories">
+                      No tienes etiquetas.
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="col-6 text-end">
+                  <button 
+                    (click)="onGeneratePdf(entry.dailyLogId)" 
+                    class="btn btn-download btn-sm text-white fw-bold">
+                    <i class="bi bi-download"></i>
+                  </button>
+                  <button 
+                    (click)="onClickDeleteEntry(entry.entId)" 
+                    class="btn btn-trash btn-sm text-white">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button class="btn btn-outline-primary btn-sm">
+                    <a [routerLink]="['/notes', entry.dailyLogId]" class="text-decoration-none text-white">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+        </swiper-slide>
+      </ng-container>
+
+      <ng-template #noEntries>
+        <div class="text-center p-5 container-noSelected">
+          <p>No hay entradas disponibles para el día: {{ formattedDay(selectedDate) }}</p>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #noSelectedDate>
+      <div class="text-center p-5 container-noSelected">
+        <p>Selecciona un día para ver tus notas.</p>
       </div>
+    </ng-template>
+  </swiper-container>
 </div>
 
-  <ng-template #noEntries>
-    <div class="text-center py-4">
-      <span *ngIf="selectedDate == null; else noDate">
-        <p>Selecciona un día</p>
-      </span>
-      <ng-template #noDate>
-        No hay entradas para el día seleccionado. {{ formattedDay(selectedDate) }}
-      </ng-template>
-    </div>
-  </ng-template>
-</div>
+
 
 <div class="bg-body-secondary p-5">
   <h2 class="fw-bold text-center mb-5 titulo-not">Calendario</h2>

@@ -1,9 +1,12 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { register } from 'swiper/element/bundle';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
@@ -14,16 +17,13 @@ import { LayoutComponent } from './layout/layout.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { LoginComponent } from './pages/login/login.component';
-import { CreateNoteComponent } from './pages/notes/create-note/create-note.component';
 import { NotesModule } from './pages/notes/notes.module';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-
-
+//register swiper
+register();
 
 @NgModule({
   declarations: [
@@ -65,6 +65,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
     })),
     provideAuth(() => getAuth())
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
