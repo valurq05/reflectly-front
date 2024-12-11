@@ -12,8 +12,7 @@ import { RouterModule } from '@angular/router';
   declarations: [
    
     CreateNoteComponent,
-        NotesComponent,
-
+        NotesComponent
   ],
   imports: [
     CommonModule,

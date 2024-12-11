@@ -42,6 +42,21 @@ export interface Entry {
     entStatus: boolean;
 }
 
+export interface UserEntry{
+    catCategorie: string[]; 
+    dailyLogId: string; 
+    dayLogDate: string;
+    emoLogDate: string;
+    emoLogId: string; 
+    emoStaState: string; 
+    entDate: string; 
+    entId: string;
+    entText: string; 
+    entTitle: string;
+    imgUrl: string; 
+    perName: string; 
+    useMail: string; 
+}
 
 export interface DailyLogCreate {
     useId: number,
@@ -68,6 +83,7 @@ export interface Category {
     catId: number,
     catCategorie: string
 }
+
 export interface DailyLog {
     dayLogId: number;
     dayLogDate: Date;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DailyLogService } from '../../../core/services/daily-log.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { User } from '../../../core/model/common.model';
+import { User, UserEntry } from '../../../core/model/common.model';
 import { PdfService } from '../../../core/services/pdf.service';
 import Swal from 'sweetalert2';
+import { CategoriesService } from '../../../core/services/categories.service';
 
 @Component({
   selector: 'app-notes',
@@ -14,17 +15,21 @@ export class NotesComponent implements OnInit{
 
   user: User | null = null;
   categories:any[] = [];
-  selectedDate: Date | null = null
-  entries: any[] = [];
+  selectedCategory:any;
+  selectedDate: Date | null = null;
+  entries: UserEntry[] = [];
+  filteredEntries: UserEntry[] = [];
   colors = ['#C06EF3', '#6DCBFF', '#FFBB6D'];
 
   constructor(
     private userNotesService: DailyLogService,
     private authService: AuthService,
-    private pdfService: PdfService){}
+    private pdfService: PdfService,
+    private categoriesService: CategoriesService){}
 
   ngOnInit(): void {
     this.readUserNotes();
+    this.readCategories();
   }
 
   private readUserNotes(){
@@ -33,6 +38,7 @@ export class NotesComponent implements OnInit{
        this.userNotesService.getDailyUserLogs(this.user.useId).subscribe(response => {
        if (response.Status) {
          this.entries = response.Data;
+         this.filteredEntries = this.entries;
          console.log(this.entries);
        }
        }
@@ -40,6 +46,39 @@ export class NotesComponent implements OnInit{
     } else {
      console.log("No se encontraron datos del usuario");
     }
+  }
+
+  private readCategories(){
+    this.categoriesService.getCategories().subscribe({
+      next: (res) => {
+        this.categories = res.Data;
+        console.log(this.categories);
+      },
+      error: (error) => {
+        console.log(error, "Hubo un error al leer las categorías");
+      },
+    });
+  }
+
+   applyNoteFilter(): void {
+    this.filteredEntries = this.entries.filter(entry => {
+      const matchesCategory = this.selectedCategory 
+        ? entry.catCategorie.includes(this.selectedCategory) 
+        : true;
+  
+      const matchesDate = this.selectedDate 
+        ? new Date(entry.entDate).toDateString() === new Date(this.selectedDate).toDateString()
+        : true; 
+  
+      return matchesCategory && matchesDate;
+    });
+  }
+
+
+  clearFilter(): void {
+    this.selectedCategory = ''; 
+    this.selectedDate = null;
+    this.filteredEntries = this.entries;
   }
 
   stripHtmlTags(html: string): string {

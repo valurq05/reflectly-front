@@ -1,12 +1,47 @@
 <div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="fw-bold titulo-not">Todas tus notas</h2>
+      <h2 class="fw-bold titulo-not ">Todas tus notas</h2>
       <button routerLink="/create" class="add-note-button">+ Nueva Nota</button>
+    </div>
+
+    <div class="d-flex align-items-end p-3">
+      <div class="p-1">
+        <label for="dateInput" class="form-label fw-semibold">Filtrar por fecha</label>
+        <input 
+          type="date" 
+          [(ngModel)]="selectedDate" 
+          class="form-control inputs-color" 
+          id="dateInput">
+      </div>
+      
+      <div class="p-1">
+        <label for="categorySelect" class="form-label fw-semibold">Filtrar por etiqueta</label>
+        <select 
+          class="form-select inputs-color" 
+          [(ngModel)]="selectedCategory" 
+          id="categorySelect">
+          <option value="">Seleccione una categoría</option>
+          <option 
+            *ngFor="let categoryItem of categories" 
+            [value]="categoryItem.catCategorie">
+            {{ categoryItem.catCategorie }}
+          </option>
+        </select>
+      </div>
+      
+      <div>
+        <button 
+          class="btn btn-sm m-2 fw-semibold btn-outline-primary" 
+          (click)="applyNoteFilter()">Filtrar</button>
+        <button 
+          class="btn btn-sm m-2 fw-semibold btn-trash text-white" 
+          (click)="clearFilter()">Limpiar</button>
+      </div>
     </div>
   
     <div *ngIf="entries.length > 0; else noEntries" class="m-4">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col" *ngFor="let entry of entries">
+          <div *ngFor="let entry of filteredEntries">
                   <div class="card h-100 shadow-sm">
                       <div class="card-body p-4">
                           <div class="col-12 align-items-center d-flex">
@@ -34,9 +69,7 @@
                                 </span>
                               </div>
                               <ng-template #noCategories>
-                                <div class="categories col-6 align-items-start">
-                                  No tienes etiquetas.
-                                </div>
+                                <div class="categories col-6 align-items-start">No tienes etiquetas.</div>
                               </ng-template>
                                                             
                               <div class="col-6 justify-content-end text-end">
