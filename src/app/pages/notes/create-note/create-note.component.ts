@@ -1,9 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Quill from 'quill';
-import {
-  Category,
-  DailyLog,
+import {Category,DailyLog,
   DailyLogCreate,
   EmotionalLog,
   EmotionalState,
