@@ -23,6 +23,8 @@ export const ApiEndpoint = {
     },
     image:{
         updateUserPhoto:`${API_URL}/user/profile/img`,
+        showImage:`${API_URL}/images/{filename}`,
+        defaultImage:`${API_URL}/images/GdXyg8gWgAAQmW1.jpg`,
     },
     Entry:{
         Delete:`${API_URL}/entry`,
@@ -40,6 +42,7 @@ export const ApiEndpoint = {
     },
     Collaborator:{
         Create:`${API_URL}/collaborator`,
+        GetAllCollaboratorsByEntry:`${API_URL}/collaborator/entry`,
     },
     CategoriesEntry:{
         Create:`${API_URL}/Categories/entry`,

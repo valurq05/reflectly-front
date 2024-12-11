@@ -9,8 +9,12 @@
 
     <!-- User Avatars -->
     <div class="user-avatars d-flex">
-      <img src="https://via.placeholder.com/40" alt="User 1" class="avatar" />
-      <img src="https://via.placeholder.com/40" alt="User 2" class="avatar" />
+      <button 
+        class="btn btn-primary" 
+        data-bs-toggle="modal" 
+        data-bs-target="#userModal">
+        Ver Colaboradores
+      </button>
     </div>
   </div>
 
@@ -187,6 +191,29 @@
         >
           Agregar
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">Usuarios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li *ngFor="let user of collaboratorsByEntry" class="list-group-item">
+            <img [src]="user.user.person.perPhoto" alt="Avatar de {{user.user.useMail}}" class="avatar me-2" />
+            {{ user.user.useMail }}
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
