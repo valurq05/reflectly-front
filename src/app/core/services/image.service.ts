@@ -46,4 +46,15 @@ export class ImageService {
       })
     );
   }
+
+  changeProfilePhoto(image: File, userId: number) {
+    const params = new HttpParams().set('userId', userId);
+    const formData = new FormData();
+    formData.append('file', image);
+    return this.http.post<ApiResponse<any>>(
+      ApiEndpoint.image.updateUserPhoto,
+      formData,
+      { params }
+    );
+  }
 }

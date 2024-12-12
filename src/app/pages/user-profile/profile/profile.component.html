@@ -1,31 +1,28 @@
 <div class="container my-5">
-  <div id="cardProfile" class="card p-4 shadow ">
+  <div id="cardProfile" class="card p-4 shadow-lg">
     <div class="row align-items-center">
-
-      <div class="col-md-8">
-        <h5 id="namePerson" class="fw-bold mb-3">Hola, 
-          <span class="personName">{{user?.person?.perName}} {{user?.person?.perLastname}}</span>
-        </h5>
-        <p id="infoPerson" class="mb-0 text-secondary fw-semibold">Correo: {{user?.useMail}}</p>
-        <p id="infoPerson" class="mb-0 text-secondary fw-semibold">Documento: {{user?.person?.perDocument}}</p>
+      <!-- User Information -->
+      <div class="col-md-8 col-sm-12 mb-4 mb-md-0">
+        <h5 id="namePerson" class="fw-bold mb-3">Bienvenidx, {{user?.person?.perName}} {{user?.person?.perLastname}}</h5>
+        <p id="infoPerson" class="mb-1 text-secondary fw-semibold">Correo: {{user?.useMail}}</p>
+        <p id="infoPerson" class="mb-1 text-secondary fw-semibold">Documento: {{user?.person?.perDocument}}</p>
       </div>
 
-
-      <div class="col-md-4 text-center">
-        <img id="imageProfile"
-          src="https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos-810x540.jpg"
-          alt="Foto de perfil" class="rounded-circle img-fluid">
-          <p id="fotoPerfil" class="mt-2 fw-bold">Foto de Perfil</p>
+      <!-- Profile Image -->
+      <div class="col-md-4 col-sm-12 text-center">
+        <img id="imageProfile" [src]="user?.person?.perPhoto" alt="Foto de perfil" class="rounded-circle img-fluid">
+        <p id="fotoPerfil" class="mt-3 fw-bold">Foto de Perfil</p>
       </div>
     </div>
 
-    <div class="mt-2 text-left">
-      <button id="buttonEditProfile" class="btn edit-button" type="button" data-bs-toggle="modal"
-        data-bs-target="#modalEditProfile">Editar Perfil <i class="bi bi-pencil"></i>
-      </button>
-
+    <!-- Buttons -->
+    <div class="text-center mt-4">
+      <button id="buttonEditProfile" class="btn me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalEditProfile">Editar Perfil <i class="bi bi-pencil"></i></button>
+      <input type="file" id="uploadImage" (change)="onFileSelected($event)" hidden>
+      <button id="buttonChangeProfilePhoto" class="btn edit-button " (click)="triggerFileInput()">Cambiar Foto de Perfil</button>
+      
     </div>
   </div>
 </div>
 
-<app-edit-profile> </app-edit-profile>
+<app-edit-profile></app-edit-profile>

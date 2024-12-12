@@ -1,53 +1,100 @@
 .card {
     border: none;
-    border-radius: 12px;
-}
-
-.dark-mode .card {
+    border-radius: 15px;
+    background-color: #f3e8ff;
+  }
+  
+  .dark-mode .card {
     background-color: #1e1e1e;
-}
-
-.edit-button {
+  }
+  
+  /* Buttons */
+  .edit-button {
     background-color: #d63384;
     border: none;
     color: white;
-}
-
-.edit-button:hover {
-    background-color: #bb2d73;
-}
-
-#buttonEditProfile{
-    background-color: #C06EF3; 
-    color: #ffffff; 
-    border: none; 
-    border-radius: 10px; 
+    border-radius: 10px;
     padding: 10px 20px;
-    margin-left:15px;
-}
-
-#imageProfile{
-    width: 250px; 
-    height: 250px; 
+    font-size: 14px;
+  }
+  
+  .edit-button:hover {
+    background-color: #bb2d73;
+  }
+  
+  #buttonEditProfile {
+    background-color: #C06EF3;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  #buttonEditProfile:hover {
+    background-color: #a05dcf;
+  }
+  
+  /* Profile Image */
+  #imageProfile {
+    width: 200px;
+    height: 200px;
     object-fit: cover;
-}
-#namePerson{
-    margin-left:15px;
-    font-size:180%;
-    color: var(--purple-font-color);
-}
-#infoPerson{
-    margin-left:15px;
-    font-size:120%;
-}
-#cardProfile{
-    background-color: #f3e8ff; 
-    border-radius: 15px;
-}
-
-#fotoPerfil{
-    color: var(--purple-font-color);
-}
-.personName{
-    color: #824dad;
-}
+  }
+  
+  /* Typography */
+  #namePerson {
+    font-size: 1.5rem;
+    color: var(--purple-font-color, #824dad);
+  }
+  
+  #infoPerson {
+    font-size: 1rem;
+    color: var(--purple-font-color, #555555);
+  }
+  
+  #fotoPerfil {
+    color: var(--purple-font-color, #824dad);
+    font-size: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    #imageProfile {
+      width: 150px;
+      height: 150px;
+    }
+  
+    #namePerson {
+      font-size: 1.25rem;
+    }
+  
+    #infoPerson {
+      font-size: 0.9rem;
+    }
+  
+    .edit-button {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    #imageProfile {
+      width: 120px;
+      height: 120px;
+    }
+  
+    #namePerson {
+      font-size: 1.1rem;
+    }
+  
+    #infoPerson {
+      font-size: 0.8rem;
+    }
+  
+    .edit-button {
+      font-size: 11px;
+      padding: 6px 12px;
+    }
+  }
