@@ -23,6 +23,9 @@ import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { EditProfileComponent } from './pages/user-profile/edit-profile/edit-profile.component';
 import { ProfileComponent } from './pages/user-profile/profile/profile.component';
 import { GoogleAuthComponent } from './pages/google/google-auth/google-auth.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { AdminRegisterComponent } from './pages/admin-register/admin-register.component';
+import { AdminPatientsComponent } from './pages/admin-patients/admin-patients.component';
 //register swiper
 register();
 
@@ -41,6 +44,9 @@ register();
     ProfileComponent,
     EditProfileComponent,
     GoogleAuthComponent,
+    AdminLoginComponent,
+    AdminRegisterComponent,
+    AdminPatientsComponent,
 
   
 

@@ -1,0 +1,27 @@
+.btn-send{
+    background-color: var(--purple-color);
+    color: white;
+    width: 100%;
+}
+
+.form-login input {
+    background-color: var(--purple-backg-color);
+    color: var(--grey-title-color);
+    padding: 4%;
+}
+
+.modal-login h2{
+    color: var(--grey-title-color);
+}
+
+.modal-login p{
+    color: var(--grey-title-color);
+}
+
+.warning{
+    font-size: 13px;
+}
+
+.btn-eye{
+    background-color: #e1d3e6;
+}

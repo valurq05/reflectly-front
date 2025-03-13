@@ -1,19 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiResponse, User } from '../../core/model/common.model';
 import { AlertServiceService } from '../../core/services/alert-service.service';
 
-declare var bootstrap:any; 
-declare var google:any;
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrl: './admin-login.component.css'
 })
-export class LoginComponent{
+export class AdminLoginComponent {
   form!: FormGroup;
   showPassword:boolean = false;
   secretKey:string = 'TuClaveSecreta';
@@ -64,5 +61,4 @@ export class LoginComponent{
   clearForm() {
     this.form.reset();
   }
-
 }

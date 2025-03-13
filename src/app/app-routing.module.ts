@@ -7,6 +7,8 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { CreateNoteComponent } from './pages/notes/create-note/create-note.component';
 import { NotesComponent } from './pages/notes/notes/notes.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { AdminRegisterComponent } from './pages/admin-register/admin-register.component';
 
 const routes: Routes = [
   {
@@ -19,8 +21,8 @@ const routes: Routes = [
     { path: 'create', canActivate:[authGuard] ,component: CreateNoteComponent},
     { path: 'notes', canActivate:[authGuard] ,component: NotesComponent},
     { path: 'notes/:id',canActivate: [authGuard],  component: CreateNoteComponent},
-
-
+    { path: 'admlogin', canActivate: [guestGuard],  component: AdminLoginComponent},
+    { path: 'admregister', canActivate: [guestGuard],  component: AdminRegisterComponent},
   ] 
   }
 ];

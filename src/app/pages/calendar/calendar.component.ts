@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
-import { User } from '../../core/model/common.model';
+import { User, DailyLog } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
 import { DailyLogService } from '../../core/services/daily-log.service';
 import { PdfService } from '../../core/services/pdf.service';
@@ -369,6 +369,8 @@ export class CalendarComponent implements OnInit {
     try{
       this.dailyLogService.getDailyLog(idDailyLog).subscribe({
         next: (res)=>{
+          res.Data.dayLogDate = res.Data.dayLogDate
+          
           console.log(res.Data)
           
           this.pdfService.generatePdf(res.Data)

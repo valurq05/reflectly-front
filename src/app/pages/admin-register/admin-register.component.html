@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg m-5" style="max-width: 500px; min-height: 450px;">
+      <div class="modal-login p-4">
+        <div class="card-body text-center">
+          <h3 class="fw-bold pb-3">Registro de administrador</h3>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-register">
+            <div formGroupName="person">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Documento" formControlName="perDocument"
+                  [ngClass]="{'is-invalid': form.get('person.perDocument')?.errors && form.get('person.perDocument')?.touched}">
+                <span *ngIf="form.get('person.perDocument')?.errors && form.get('person.perDocument')?.touched">
+                  <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('person.perDocument')?.hasError('required')">*El campo es requerido</p>
+                  <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('person.perDocument')?.hasError('pattern')">*Solo números</p>
+                </span>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Nombre" formControlName="perName"
+                  [ngClass]="{'is-invalid': form.get('person.perName')?.errors && form.get('person.perName')?.touched}">
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Apellido" formControlName="perLastname"
+                  [ngClass]="{'is-invalid': form.get('person.perLastname')?.errors && form.get('person.perLastname')?.touched}">
+              </div>
+            </div>
+            <div class="mb-2">
+              <input type="email" class="form-control" placeholder="Correo Electrónico" formControlName="useMail"
+                [ngClass]="{'is-invalid': form.get('useMail')?.errors && form.get('useMail')?.touched}">
+            </div>
+            <div class="mb-2">
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  placeholder="Contraseña" 
+                  formControlName="usePassword">
+                <button type="button" class="btn btn-eye btn-sm" (click)="seePassword()">
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <p class="text-muted text-start mt-1 fs-7">*Debe tener entre 8 y 20 caracteres, e incluir una letra, un número y un carácter especial.</p>                
+            </div>
+            <div>
+              <button type="submit" class="btn btn-send fw-bold" [disabled]="form.invalid">Registrarse</button>
+            </div>
+            <div class="mt-2 text-start">
+              <p class="fs-7">*Al registrarte aceptas los términos y condiciones.</p>
+            </div>
+            <p class="">¿Ya tienes cuenta? Inicia sesión <a [routerLink]="['/admlogin']">aquí</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

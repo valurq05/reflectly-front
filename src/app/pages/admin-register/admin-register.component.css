@@ -1,0 +1,28 @@
+.btn-send{
+    background-color: var(--purple-color);
+    color: white;
+    width: 100%;
+}
+
+.form-register input {
+    background-color: var(--purple-backg-color);
+    color: var(--grey-title-color);
+    padding: 3%;
+}
+
+.modal-register h2{
+    color: var(--grey-title-color);
+}
+
+.modal-register p{
+    color: var(--grey-title-color);
+}
+
+
+.warning{
+    font-size: 10px;
+}
+
+.btn-eye{
+    background-color: #e1d3e6;
+}

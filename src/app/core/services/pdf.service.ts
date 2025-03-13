@@ -104,7 +104,7 @@ export class PdfService {
       <div class="header">
         <h1>Reporte de Nota</h1>
         <hr>
-        <p style="font-style: italic;">Fecha: ${new Date(dailyLog.dayLogDate).toLocaleDateString()}</p>
+        <p style="font-style: italic;">Fecha: ${dailyLog.dayLogDate}</p>
       </div>
   
       <div class="profile-info">

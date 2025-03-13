@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg m-5" style="max-width: 450px; min-height: 450px;">
+      <div class="modal-login p-4">
+        <div class="card-body text-center">
+          <h3 class="fw-bold">Hola, administrador</h3>
+          <p class="fs-7">Bienvenido a Reflectly. Inicia sesión para manejar tus pacientes</p>
+          <form [formGroup]="form" (submit)="onSubmit()" class="form-login">
+            <div class="mb-2">
+              <input 
+                type="email" 
+                class="form-control" 
+                formControlName="user" 
+                placeholder="Correo Electrónico"
+                [ngClass]="{
+                  'is-invalid': form.get('user')?.errors && form.get('user')?.touched
+                }">
+              <span *ngIf="form.get('user')?.errors && form.get('user')?.touched">
+                <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('user')?.hasError('required')">*El campo es requerido</p>
+                <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('user')?.hasError('pattern')">*Error en formato de campo</p>
+              </span>
+            </div>
+            <div class="mb-2">
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  formControlName="pwd" 
+                  placeholder="Contraseña"
+                  [ngClass]="{
+                    'is-invalid': form.get('pwd')?.errors && form.get('pwd')?.touched
+                  }">
+                <button type="button" class="btn btn-eye btn-sm" (click)="seePassword()">
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+              <span *ngIf="form.get('pwd')?.errors && form.get('pwd')?.touched">
+                <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('pwd')?.hasError('required')">*El campo es requerido</p>
+                <p class="text-danger text-start pt-1 fs-7" *ngIf="form.get('pwd')?.hasError('minlength')">*Debe tener al menos 8 caracteres</p>
+              </span>
+              <p class="text-muted text-start mt-1">*Debe tener entre 8 y 20 caracteres, e incluir una letra, un número y un carácter especial.</p>
+            </div>
+            <button type="submit" class="btn btn-send fw-bold" [disabled]="form.invalid">Iniciar Sesión</button>
+            <div class="mt-2">
+              <p class="fs-7">¿Olvidaste tu contraseña? Recuperala <a href="#">aquí</a></p>
+              <p>Realiza tu registro <a [routerLink]="['/admregister']">aquí</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
