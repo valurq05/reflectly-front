@@ -141,45 +141,62 @@ export class CreateNoteComponent implements AfterViewInit {
       let imageUrl = collaborator.user.person.perPhoto;
 
       if (imageUrl.startsWith('https://lh3.googleusercontent.com')) {
-        
-        console.log("Imagen de Google detectada, no se realizará ninguna acción:", imageUrl);
+        console.log(
+          'Imagen de Google detectada, no se realizará ninguna acción:',
+          imageUrl
+        );
         return;
       }
 
       if (imageUrl.includes('/images/GdXyg8gWgAAQmW1.jpg')) {
-        console.log("Imagen por defecto encontrada, solicitando imagen por defecto");
+        console.log(
+          'Imagen por defecto encontrada, solicitando imagen por defecto'
+        );
         this.ImageService.getDefaultImage().subscribe(
           (safeUrl: any) => {
             collaborator.user.person.perPhoto = safeUrl;
-            console.log("Imagen por defecto cargada correctamente:", collaborator.user.person.perPhoto);
+            console.log(
+              'Imagen por defecto cargada correctamente:',
+              collaborator.user.person.perPhoto
+            );
           },
           (error: any) => {
-            console.error("Error al cargar imagen por defecto:", error);
-            collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+            console.error('Error al cargar imagen por defecto:', error);
+            collaborator.user.person.perPhoto =
+              'http://localhost:8080/images/default-image';
           }
         );
-      } else if(imageUrl) {
-        
-        console.log("Conversión de URL relativa a absoluta exitosa:", collaborator.user.person.perPhoto);
-        
-        this.ImageService.showImage(collaborator.user.person.perPhoto).subscribe(
+      } else if (imageUrl) {
+        console.log(
+          'Conversión de URL relativa a absoluta exitosa:',
+          collaborator.user.person.perPhoto
+        );
+
+        this.ImageService.showImage(
+          collaborator.user.person.perPhoto
+        ).subscribe(
           (safeUrl: any) => {
             collaborator.user.person.perPhoto = safeUrl;
-            console.log("Imagen segura cargada para:", collaborator.user.person.perName);
+            console.log(
+              'Imagen segura cargada para:',
+              collaborator.user.person.perName
+            );
           },
           (error: any) => {
             console.error(
               `Error al cargar la imagen para ${collaborator.user.person.perName}:`,
               error
             );
-            collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+            collaborator.user.person.perPhoto =
+              'http://localhost:8080/images/default-image';
           }
         );
       } else {
-        collaborator.user.person.perPhoto = 'http://localhost:8080/images/default-image';
+        collaborator.user.person.perPhoto =
+          'http://localhost:8080/images/default-image';
       }
     });
-}
+  }
 
   loadCollaboratorsByEntry(): void {
     if (this.dailyLog) {
@@ -257,9 +274,16 @@ export class CreateNoteComponent implements AfterViewInit {
   OnSaveItem(): void {
     if (this.user) {
       if (this.dailyLog) {
+        const localDate = new Date(this.dailyLog.dayLogDate);
+
+        const nextDay = new Date(localDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
         const updatedData: Entry = {
           entId: this.dailyLog.entry.entId,
-          entDate: this.dailyLog.entry.entDate,
+          entDate: new Date(
+            nextDay.getTime() - nextDay.getTimezoneOffset() * 60000
+          ),
           entText: this.getContent(),
           entTitle: this.title,
           entStatus: this.dailyLog.entry.entStatus,
@@ -267,7 +291,9 @@ export class CreateNoteComponent implements AfterViewInit {
 
         const updatedEmotionalLog: EmotionalLog = {
           emoLogId: this.dailyLog.emotionalLog.emoLogId,
-          emoLogDate: this.dailyLog.emotionalLog.emoLogDate,
+          emoLogDate: new Date(
+            nextDay.getTime() - nextDay.getTimezoneOffset() * 60000
+          ),
           emotionalState: { emoStaId: this.emotionalState, emoStaState: '' },
           user: this.user,
         };

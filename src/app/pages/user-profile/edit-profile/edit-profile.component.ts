@@ -5,7 +5,8 @@ import { AlertServiceService } from '../../../core/services/alert-service.servic
 import { AuthService } from '../../../core/services/auth.service';
 import { ImageService } from '../../../core/services/image.service';
 import { PersonService } from '../../../core/services/person.service';
-
+import { LocalStorage } from '../../../core/constants.ts/constants';
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -21,9 +22,9 @@ export class EditProfileComponent {
   selectedFile: File | null = null;
   previewImageUrl: string | null  |ArrayBuffer= null;
   selectedFileError: string | null = null;
+  secretKey:string = 'TuClaveSecreta';
 
   constructor(private authService: AuthService,
-    private imageService: ImageService,
     private personService: PersonService,
 
     private fb: FormBuilder,
@@ -98,33 +99,32 @@ export class EditProfileComponent {
       try {
         let data: UpdatePerson | Person;
 
-        if (this.selectedFile) {
-          data = {
-            perId: this.user.person.perId,
-            perDocument: document,
-            perLastname: lastName,
-            perName: name
-          } as UpdatePerson;
-
-          this.imageService.updateProfilePhoto(this.selectedFile, this.user.useId).subscribe({
-            next: (res) => console.log(res),
-            error: (error) => console.error(error, "Error al subir la foto")
-          });
-        } else {
+       
           data = {
             perId: this.user.person.perId,
             perDocument: document,
             perLastname: lastName,
             perName: name,
             perPhoto: this.user.person.perPhoto
-          } as Person;
-        }
+
+          }
+        
 
         this.personService.updatePerson(data).subscribe({
           next: () => {
-            this.alertService.showAlert("Usuario actualizado", ":D", "success");
-            setTimeout(() => this.authService.logout(), 1500);
+            
+            this.user!.person = data; 
+            const encryptedUser = CryptoJS.AES.encrypt(
+              JSON.stringify(this.user),
+              this.secretKey
+            ).toString();
+            localStorage.setItem(LocalStorage.user, encryptedUser);
+            this.user = this.authService.getUserInfo();
+            console.log("Usuario actualizado", this.user);
+            
             this.modal.hide()
+
+            window.location.reload();
           },
           error: (error) => console.error(error, "Error al actualizar usuario")
         });

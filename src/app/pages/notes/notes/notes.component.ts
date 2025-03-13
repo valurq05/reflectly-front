@@ -188,16 +188,17 @@ export class NotesComponent implements OnInit{
     }
   }
 
-  formattedDay(date:Date|null){
-
-    if (date){
-      return date.toLocaleDateString("es-CO", {
+  formattedDay(date: Date | null): string {
+    if (date) {
+      const adjustedDate = new Date(date);
+      adjustedDate.setMinutes(adjustedDate.getMinutes() - adjustedDate.getTimezoneOffset());
+      return adjustedDate.toLocaleDateString("es-CO", {
         day: "2-digit",
         month: "2-digit",
-        year: "numeric"
+        year: "numeric",
       });
+    } else {
+      return "date";
     }
-    else return "date"
-    
   }
   }

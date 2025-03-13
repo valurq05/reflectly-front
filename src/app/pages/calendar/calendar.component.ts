@@ -78,6 +78,7 @@ export class CalendarComponent implements OnInit {
   formattedDay(date:Date|null){
 
     if (date){
+      console.log(date)
       return date.toLocaleDateString("es-CO", {
         day: "2-digit",
         month: "2-digit",
@@ -280,6 +281,7 @@ export class CalendarComponent implements OnInit {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0');
+    console.log(`${year}-${month}-${day}`);
     return `${year}-${month}-${day}`;
   }
   

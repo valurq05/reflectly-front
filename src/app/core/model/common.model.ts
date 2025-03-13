@@ -36,7 +36,7 @@ export interface RegisterPayLoad {
 
 export interface Entry {
     entId: number;
-    entDate: string;
+    entDate: Date;
     entText: string;
     entTitle: string;
     entStatus: boolean;
