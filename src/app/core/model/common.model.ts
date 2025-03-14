@@ -16,7 +16,8 @@ export interface User {
     useId: number,
     useMail: string,
     usePassword: string,
-    person: Person
+    person: Person,
+    rol: roles
 }
 
 export interface LoginPayLoad {
@@ -115,6 +116,10 @@ export interface googleResponse {
     client_id: string;
     credential: string;
     select_by: string;
+}
+
+export interface roles{
+    rolId: number;
 }
 
 export interface ApiResponse<T> {

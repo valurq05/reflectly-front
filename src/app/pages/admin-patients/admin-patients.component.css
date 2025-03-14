@@ -1,0 +1,12 @@
+#buttonEditProfile {
+    background-color: #C06EF3;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  #buttonEditProfile:hover {
+    background-color: #a05dcf;
+  }

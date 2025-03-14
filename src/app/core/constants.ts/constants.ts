@@ -50,12 +50,10 @@ export const ApiEndpoint = {
         GetAllCategoriesEntry:`${API_URL}/Categories/by/entry`,
         Delete:`${API_URL}/Categories/entry`,
     },
-
-
-
 }
 
 export const LocalStorage = {
     token: 'USER_TOKEN',
-    user: 'USER'
+    user: 'USER',
+    rol: 'ROL',
 }

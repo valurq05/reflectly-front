@@ -62,6 +62,7 @@ export class AuthService {
           console.log("access token:" + this.getAccessToken());
           const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(response.Data), this.secretKey).toString()
           localStorage.setItem(LocalStorage.user, encryptedUser);
+          localStorage.setItem(LocalStorage.rol, JSON.stringify(response.Data));
           this.isLoggedIn.update(() => true);
         }
         return response;
@@ -104,6 +105,7 @@ export class AuthService {
 
       this.setAccessToken('');
       localStorage.removeItem(LocalStorage.user);
+      localStorage.removeItem(LocalStorage.rol);
 
       this.isLoggedIn.update(() => false);
 

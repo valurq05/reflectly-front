@@ -1,1 +1,21 @@
-<p>admin-patients works!</p>
+<div class="container-fluid p-4">
+    <div class="m-3">
+        <h3>Tus pacientes</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-3" *ngFor="let user of users">
+          <div class="card shadow">
+            <div class="card-body text-start">
+                <h5 class="card-title fw-bold">{{ user.person.perName }} {{ user.person.perLastname}} </h5>
+                <div>
+                  <span class="card-text">Correo: {{ user.useMail }}</span><br>
+                  <span class="card-text">Documento: {{ user.person.perDocument }}</span><br>
+                  <button  id="buttonEditProfile" class="btn btn-secondary mt-2">Detalles</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+  

@@ -26,6 +26,7 @@ import { GoogleAuthComponent } from './pages/google/google-auth/google-auth.comp
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './pages/admin-register/admin-register.component';
 import { AdminPatientsComponent } from './pages/admin-patients/admin-patients.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
 //register swiper
 register();
 
@@ -47,9 +48,7 @@ register();
     AdminLoginComponent,
     AdminRegisterComponent,
     AdminPatientsComponent,
-
-  
-
+    AdminHomeComponent,
   ],
   imports: [
     BrowserModule,

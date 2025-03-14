@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse, User } from '../model/common.model';
 import { ApiEndpoint } from '../constants.ts/constants';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class UserService {
 
 
   public GetAllUsers(){
-    return this.http.get<ApiResponse<User>>(ApiEndpoint.User.GetAll);
+    return this.http.get<ApiResponse<User[]>>(ApiEndpoint.User.GetAll)
+    
   }
 }

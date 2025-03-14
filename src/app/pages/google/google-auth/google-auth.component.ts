@@ -48,6 +48,9 @@ export class GoogleAuthComponent {
                                 perLastname: decodedUser.person.perLastname,
                                 perPhoto: decodedUser.person.perPhoto,
                             },
+                            rol:{
+                                rolId:1,
+                            }
                         };
 
                         this.authService.register(newUser).subscribe({
@@ -113,6 +116,9 @@ export class GoogleAuthComponent {
             perLastname: lastName,
             perPhoto: tokenDecodified.picture,
         },
+        rol:{
+            rolId:1
+        }
     };
   }
 
