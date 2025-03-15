@@ -30,6 +30,7 @@ export const ApiEndpoint = {
     Entry:{
         Delete:`${API_URL}/entry`,
         Update:`${API_URL}/entry`,
+        AllEntries: `${API_URL}/all/daily/log/user`
     },
     Person:{
         Update:`${API_URL}/person`
@@ -50,6 +51,9 @@ export const ApiEndpoint = {
         GetAllCategoriesEntry:`${API_URL}/Categories/by/entry`,
         Delete:`${API_URL}/Categories/entry`,
     },
+    Bot:{
+        Question:`http://localhost:5000/chatbot`
+    }
 }
 
 export const LocalStorage = {

@@ -10,3 +10,13 @@
   #buttonEditProfile:hover {
     background-color: #a05dcf;
   }
+
+  .sub-title{
+    color: var(--purple-font-color, #824dad);
+  }
+
+  .btn-send{
+    background-color: var(--purple-color);
+    color: white;
+    width: 80%;
+}

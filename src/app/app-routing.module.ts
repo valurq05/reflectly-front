@@ -9,6 +9,7 @@ import { NotesComponent } from './pages/notes/notes/notes.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './pages/admin-register/admin-register.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'notes/:id',canActivate: [authGuard],  component: CreateNoteComponent},
     { path: 'admlogin', canActivate: [guestGuard],  component: AdminLoginComponent},
     { path: 'admregister', canActivate: [guestGuard],  component: AdminRegisterComponent},
+    { path: 'adminhome', canActivate:[authGuard], component: AdminHomeComponent}
   ] 
   }
 ];

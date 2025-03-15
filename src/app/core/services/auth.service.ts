@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { ApiResponse, LoginPayLoad, RegisterPayLoad, User} from '../model/common.model';
+import { ApiResponse, LoginPayLoad, RegisterPayLoad, User, UserData} from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants.ts/constants';
 import { BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
 import { Router } from '@angular/router';
@@ -54,15 +54,17 @@ export class AuthService {
       ...payload,
       usePassword: hashedPassword,
     };
-    return this.http.post<ApiResponse<User>>(`${ApiEndpoint.Auth.Login}`, newPayload, { withCredentials: true }).pipe(
+    return this.http.post<ApiResponse<UserData>>(`${ApiEndpoint.Auth.Login}`, newPayload, { withCredentials: true }).pipe(
       map((response) => {
         if (response && response.Token) {
           console.log('Login exitoso:', response);
           this.setAccessToken(response.Token);
           console.log("access token:" + this.getAccessToken());
-          const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(response.Data), this.secretKey).toString()
+          const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(response.Data.user), this.secretKey).toString()
+          console.log(response.Data.user);
           localStorage.setItem(LocalStorage.user, encryptedUser);
-          localStorage.setItem(LocalStorage.rol, JSON.stringify(response.Data));
+          console.log("Rol de usuario: " + JSON.stringify(response.Data.roles[0].rolId));
+          localStorage.setItem(LocalStorage.rol, JSON.stringify(response.Data.roles[0].rolId));
           this.isLoggedIn.update(() => true);
         }
         return response;

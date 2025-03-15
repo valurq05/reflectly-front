@@ -48,7 +48,7 @@ register();
     AdminLoginComponent,
     AdminRegisterComponent,
     AdminPatientsComponent,
-    AdminHomeComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,

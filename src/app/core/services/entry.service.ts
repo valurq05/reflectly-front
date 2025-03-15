@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse, EmotionalState, Entry } from '../model/common.model';
 import { ApiEndpoint } from '../constants.ts/constants';
@@ -13,6 +13,14 @@ export class EntryService {
   }
     public updateEntry(Entry: Entry){
       return this.http.put<ApiResponse<Entry[]>>(ApiEndpoint.Entry.Update, Entry);
+    }
+
+    public readAllEntries(userId: string){
+      let params = new HttpParams().set('userId', userId);
+
+      return this.http.get<ApiResponse<Entry[]>>(ApiEndpoint.Entry.AllEntries,{
+        params: params,
+      })
     }
   
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../core/services/user.service';
-import { User } from '../../core/model/common.model';
+import { chatBotPayLoad, User } from '../../core/model/common.model';
 
 @Component({
   selector: 'app-admin-patients',
@@ -9,21 +9,52 @@ import { User } from '../../core/model/common.model';
 })
 export class AdminPatientsComponent implements OnInit {
 
-  users: User[] | null = null
+  users: User[] | null = null;
+  selectedUserId: string = ''; 
+  question: string = '';       
+  chatResponse: string = ''; 
 
-  constructor(private userService_: UserService){
-  }
+  constructor(private userService_: UserService) { }
 
   ngOnInit() {
-    console.log("cargado componente pacientes")
+    console.log("Cargado componente pacientes");
     this.readUserNotes();
   }
 
   private readUserNotes() { 
     this.userService_.GetAllUsers().subscribe(response => {
       this.users = response.Data;
-      console.log("pacientes" + response.Data)
-      })
+      console.log("Pacientes: ", response.Data);
+    });
   }
-  
+
+  openModal(userId: number) {
+    this.selectedUserId = JSON.stringify(userId);
+    this.chatResponse = '';
+    console.log("Usuario seleccionado para consulta:", userId);
+  }
+
+
+   onSubmit() {
+    if (!this.selectedUserId || !this.question.trim()) {
+      console.log("❌ No hay usuario seleccionado o la pregunta está vacía.");
+      return;
+    }
+
+    this.userService_.readAllEntries(this.selectedUserId).subscribe(response => {
+      const contexto = response.Data;
+      console.log("✅ Contexto obtenido:", contexto);
+
+      const payload: chatBotPayLoad = {
+        contexto: contexto,  
+        pregunta: this.question
+      };
+
+      this.userService_.askChatBot(payload).subscribe(res => {
+        this.chatResponse = res;
+        console.log("✅ Respuesta del chatbot:", res);
+      });
+    });
+  }
+ 
 }

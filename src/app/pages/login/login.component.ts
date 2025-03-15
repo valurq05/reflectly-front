@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { ApiResponse, User } from '../../core/model/common.model';
+import { ApiResponse, User, UserData } from '../../core/model/common.model';
 import { AlertServiceService } from '../../core/services/alert-service.service';
 
 declare var bootstrap:any; 
@@ -41,7 +41,7 @@ export class LoginComponent{
     if(this.form.valid){
       console.log(this.form.value);
       this.authService.login(this.form.value).subscribe({
-        next: (response: ApiResponse<User>) =>{
+        next: (response: ApiResponse<UserData>) =>{
           if (response.Status) {
             console.log(response);
             document.querySelector('.modal-backdrop')?.remove();

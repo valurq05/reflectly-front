@@ -1,5 +1,5 @@
-<div class="container-fluid p-4">
-    <div class="m-3">
+<div class="container p-4">
+    <div class="p-4 sub-title">
         <h3>Tus pacientes</h3>
     </div>
     <div class="row">
@@ -10,12 +10,56 @@
                 <div>
                   <span class="card-text">Correo: {{ user.useMail }}</span><br>
                   <span class="card-text">Documento: {{ user.person.perDocument }}</span><br>
-                  <button  id="buttonEditProfile" class="btn btn-secondary mt-2">Detalles</button>
+                  <button id="buttonEditProfile" 
+                  class="btn btn-secondary mt-2" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#modalPregunta" 
+                  (click)="openModal(user.useId)">
+              Hacer Consulta
+          </button>
+          
                 </div>
             </div>
           </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" 
+    id="modalPregunta" 
+    tabindex="-1" 
+    aria-labelledby="exampleModalLabel" 
+    data-bs-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-login modal-content p-5">
+        <button 
+        type="button" 
+        class="btn-close position-absolute top-0 end-0 m-4" 
+        data-bs-dismiss="modal" 
+        aria-label="Close">
+        </button>
+        <div class="modal-body text-center justify-content-center">
+          <div>
+              <h1 class="fw-bold">Consulta</h1>
+              <p>Haz las preguntas que desees sobre tu paciente y obtén respuestas basadas en sus notas!</p>
+          </div>
+          <form (submit)="onSubmit(); $event.preventDefault();" class="form-login">
+              <div>
+                <input type="text" class="form-control" [(ngModel)]="question" name="question">
+              </div>
+              <div>
+                  <button type="submit" class="btn btn-send fw-bold mt-3">Preguntar</button>
+              </div>   
+          </form>
+          <div class="mt-3">
+              <h5>Respuesta del Chatbot:</h5>
+              <p *ngIf="chatResponse">{{ chatResponse }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>  
+
 
   

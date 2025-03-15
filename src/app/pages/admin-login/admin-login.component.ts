@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { ApiResponse, User } from '../../core/model/common.model';
+import { ApiResponse, User, UserData } from '../../core/model/common.model';
 import { AlertServiceService } from '../../core/services/alert-service.service';
 
 @Component({
@@ -23,7 +23,6 @@ export class AdminLoginComponent {
     this.validateForm();
   }
 
-
   validateForm(){
     const emailRgx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRgx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%,._;:*#?&])[A-Za-z\d@$!%.,;:_*#?&]{8,20}$/;
@@ -38,13 +37,13 @@ export class AdminLoginComponent {
     if(this.form.valid){
       console.log(this.form.value);
       this.authService.login(this.form.value).subscribe({
-        next: (response: ApiResponse<User>) =>{
+        next: (response: ApiResponse<UserData>) =>{
           if (response.Status) {
             console.log(response);
             document.querySelector('.modal-backdrop')?.remove();
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalLogin'));
             modal?.hide();
-            this.router.navigate(['home']);
+            this.router.navigate(['adminhome']);
           }else{
             console.log(response)
             this.alertService.showAlert('Error', response.message || 'Hay un problema con tus credenciales', 'error');

@@ -12,12 +12,16 @@ export interface UpdatePerson {
     perName: string;
 }
 
+export interface UserData{
+    user: User,
+    roles: Roles[]
+}
+
 export interface User {
     useId: number,
     useMail: string,
     usePassword: string,
-    person: Person,
-    rol: roles
+    person: Person
 }
 
 export interface LoginPayLoad {
@@ -33,6 +37,11 @@ export interface RegisterPayLoad {
         perName: string;
         perLastname: string;
     };
+}
+
+export interface chatBotPayLoad{
+    pregunta: string,
+    contexto: string
 }
 
 export interface Entry {
@@ -118,7 +127,7 @@ export interface googleResponse {
     select_by: string;
 }
 
-export interface roles{
+export interface Roles{
     rolId: number;
 }
 
