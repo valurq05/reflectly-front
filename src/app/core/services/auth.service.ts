@@ -83,7 +83,6 @@ export class AuthService {
 
   public userExist(email: string) {
     let params = new HttpParams().set('email', email);
-
     return this.http.get<boolean>(`${ApiEndpoint.Auth.UserExist}`, {
         params: params,
     });

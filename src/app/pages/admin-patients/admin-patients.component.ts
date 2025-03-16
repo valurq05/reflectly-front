@@ -10,7 +10,7 @@ import { chatBotPayLoad, User } from '../../core/model/common.model';
 export class AdminPatientsComponent implements OnInit {
 
   users: User[] | null = null;
-  selectedUserId: string = ''; 
+  selectedUserId: number | null = null;
   question: string = '';       
   chatResponse: string = ''; 
 
@@ -29,21 +29,22 @@ export class AdminPatientsComponent implements OnInit {
   }
 
   openModal(userId: number) {
-    this.selectedUserId = JSON.stringify(userId);
+    this.selectedUserId = userId;
     this.chatResponse = '';
     console.log("Usuario seleccionado para consulta:", userId);
   }
 
-
    onSubmit() {
     if (!this.selectedUserId || !this.question.trim()) {
-      console.log("❌ No hay usuario seleccionado o la pregunta está vacía.");
+      console.log("No hay usuario seleccionado o la pregunta está vacía.");
       return;
     }
 
+    console.log(this.selectedUserId);
+
     this.userService_.readAllEntries(this.selectedUserId).subscribe(response => {
       const contexto = response.Data;
-      console.log("✅ Contexto obtenido:", contexto);
+      console.log("Contexto obtenido:", contexto);
 
       const payload: chatBotPayLoad = {
         contexto: contexto,  

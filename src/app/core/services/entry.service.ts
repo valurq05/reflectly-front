@@ -18,9 +18,11 @@ export class EntryService {
     public readAllEntries(userId: string){
       let params = new HttpParams().set('userId', userId);
 
-      return this.http.get<ApiResponse<Entry[]>>(ApiEndpoint.Entry.AllEntries,{
+      return this.http.get<ApiResponse<string>>(ApiEndpoint.Entry.AllEntries, {
         params: params,
-      })
+        withCredentials: true
+      });
+      
     }
   
 }

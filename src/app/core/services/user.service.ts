@@ -16,14 +16,16 @@ export class UserService {
     return this.http.get<ApiResponse<User[]>>(ApiEndpoint.User.GetAll)
   }
 
-  public readAllEntries(userId: string){
-    let params = new HttpParams().set('userId', userId);
-
-    return this.http.get<ApiResponse<string>>(ApiEndpoint.Entry.AllEntries,{
+  public readAllEntries(userId: number) {
+    let params = new HttpParams().set('userId', userId.toString());
+  
+    return this.http.post<ApiResponse<string>>(ApiEndpoint.Entry.AllEntries, null, {
       params: params,
-    })
+    });
   }
-
+  
+  
+  
   public askChatBot(payload: chatBotPayLoad){
     return this.http.post<string>(`${ApiEndpoint.Bot.Question}`, payload);
   }

@@ -30,22 +30,33 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       return authService.getRefreshToken().pipe(
         switchMap((response) => {
           authService.setAccessToken(response.NewAccessToken);
+          console.log(token);
           console.log("refresh interceptor");
+  
           const newReq = req.clone({
             setHeaders: {
               Authorization: `Bearer ${response.NewAccessToken}`
             }
           });
+  
           return next(newReq);
         }),
         catchError((refreshErr) => {
-          const finalError = new Error(refreshErr);
-          console.log("error de refresh");
+          console.error("Error al refrescar el token:", refreshErr);
+  
+          // Obtener más detalles del error
+          const errorMessage = refreshErr?.message || JSON.stringify(refreshErr);
+          const errorStatus = refreshErr?.status || 'Desconocido';
+          const errorResponse = refreshErr?.error ? JSON.stringify(refreshErr.error) : 'Sin respuesta';
+  
+          console.log(`Detalles del error: Status: ${errorStatus}, Mensaje: ${errorMessage}, Respuesta: ${errorResponse}`);
+  
           authService.setAccessToken('');
-          return throwError(() => finalError);
+          return throwError(() => new Error(`Error de refresh: ${errorMessage}, Status: ${errorStatus}, Respuesta: ${errorResponse}`));
         })
-      )
+      );
     })
   );
+  
 
 };
