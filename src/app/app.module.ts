@@ -27,6 +27,8 @@ import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './pages/admin-register/admin-register.component';
 import { AdminPatientsComponent } from './pages/admin-patients/admin-patients.component';
 import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { SubscriptionComponent } from './pages/subscription/subscription.component';
+import { PaymentComponent } from './pages/payment/payment.component';
 //register swiper
 register();
 
@@ -48,7 +50,9 @@ register();
     AdminLoginComponent,
     AdminRegisterComponent,
     AdminPatientsComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    SubscriptionComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

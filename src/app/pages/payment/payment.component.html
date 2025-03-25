@@ -1,0 +1,12 @@
+<div class="container">
+    <h2>Suscripción Premium</h2>
+    <p>Precio de la suscripción: <strong>{{ subscriptionPrice }} ETH</strong></p>
+  
+    <button (click)="connectWallet()">Conectar MetaMask</button>
+  
+    <div *ngIf="walletAddress">
+      <p><strong>Conectado con:</strong> {{ walletAddress }}</p>
+      <button (click)="paySubscription()">Pagar Suscripción</button>
+    </div>
+  </div>
+  
