@@ -9,7 +9,7 @@ import { MetamaskService } from '../../core/services/metamask.service';
 export class PaymentComponent {
   walletAddress: string | null = null;
   subscriptionPrice = 0.01; 
-  paymentAddress = '0x3776f676B96b90FbAAAC60B8e31fB989bd038Ea0'; 
+  paymentAddress = '0xB1a517B6B80Ac1dCA280E1534E0810a3EcaEB265'; 
 
   constructor(private metamaskService: MetamaskService) {}
 
