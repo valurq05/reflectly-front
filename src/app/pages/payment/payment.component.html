@@ -1,12 +1,30 @@
-<div class="container">
-    <h2>Suscripción Premium</h2>
-    <p>Precio de la suscripción: <strong>{{ subscriptionPrice }} ETH</strong></p>
-  
-    <button (click)="connectWallet()">Conectar MetaMask</button>
-  
-    <div *ngIf="walletAddress">
-      <p><strong>Conectado con:</strong> {{ walletAddress }}</p>
-      <button (click)="paySubscription()">Pagar Suscripción</button>
-    </div>
+<div class="container mt-5">
+  <div class="card shadow p-4">
+      <h2 class="mb-3">Suscripción Premium</h2>
+      <p class="mb-4">Precio de la suscripción: <strong>{{ subscriptionPrice }} ETH</strong></p>
+
+      <button class="btn btn-primary w-100" (click)="connectWallet()">Conectar MetaMask</button>
+      
+      <div *ngIf="walletAddress" class="mt-3">
+          <p class="mb-2"><strong>Conectado con:</strong> {{ walletAddress }}</p>
+          
+          <div class="mb-3">
+              <label class="form-label"><strong>Seleccione el nivel de gasto de gas:</strong></label>
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gasOption" value="low" [(ngModel)]="selectedGasOption">
+                  <label class="form-check-label">Bajo</label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gasOption" value="average" [(ngModel)]="selectedGasOption">
+                  <label class="form-check-label">Medio</label>
+              </div>
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gasOption" value="high" [(ngModel)]="selectedGasOption">
+                  <label class="form-check-label">Alto</label>
+              </div>
+          </div>
+          <button class="btn btn-success w-100" (click)="paySubscription(selectedGasOption)">Pagar Suscripción</button>
+      </div>
   </div>
+</div>
   

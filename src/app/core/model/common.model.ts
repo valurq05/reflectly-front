@@ -139,3 +139,5 @@ export interface ApiResponse<T> {
     Data: T;
     NewAccessToken: string;
 }
+
+export type LevelGas="low"|"average"|"high";

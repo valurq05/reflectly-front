@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ethers, FeeData } from 'ethers';
+import { LevelGas } from '../model/common.model';
 
 declare global {
   interface Window {
@@ -58,57 +59,90 @@ export class MetamaskService {
     }
   }
 
-  async sendPayment(to: string, amount: number, priority: 'low' | 'average' | 'high' = 'high') {
+  async sendPayment(to: string, amount: number, priority: LevelGas) {
     try {
-      if (!this.signer) throw new Error("No hay signer disponible");
+        if (!this.signer) throw new Error("No hay signer disponible");
 
-      console.log("Obteniendo tarifas de gas...");
-      const gasPrices = await this.getGasPrices();
-      if (!gasPrices) throw new Error("No se pudieron obtener tarifas de gas");
+        console.log("Obteniendo tarifas de gas...");
+        const gasPrices = await this.getGasPrices();
+        if (!gasPrices) throw new Error("No se pudieron obtener tarifas de gas");
 
-      const selectedGasPrice = gasPrices[priority];
-      console.log(`Usando tarifa de gas (${priority}):`, ethers.formatUnits(selectedGasPrice, "gwei"), "Gwei");
+        const selectedGasPrice = gasPrices[priority];
+        console.log(`Usando tarifa de gas (${priority}):`, ethers.formatUnits(selectedGasPrice, "gwei"), "Gwei");
 
-      console.log("Estimando gas para la transacción...");
-      const gasLimit = await this.provider.estimateGas({
-        to,
-        value: ethers.parseEther(amount.toString()),
-      });
+        console.log("Estimando gas para la transacción...");
+        const gasLimit = await this.provider.estimateGas({
+            to,
+            value: ethers.parseEther(amount.toString()),
+        });
 
-      console.log("Gas estimado:", gasLimit.toString());
+        console.log("Gas estimado:", gasLimit.toString());
 
-      console.log("Enviando transacción a:", to, 'con monto:', amount);
-    
-      let feeData = {
-        maxFeePerGas: ethers.parseUnits("10", "gwei"),
-        maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
-      };
-      
-      if (this.signer.provider) {
-        const fetchedFeeData = await this.signer.provider.getFeeData();
-        feeData = {
-          maxFeePerGas: fetchedFeeData.maxFeePerGas ?? feeData.maxFeePerGas,
-          maxPriorityFeePerGas: fetchedFeeData.maxPriorityFeePerGas ?? feeData.maxPriorityFeePerGas,
+        // Calcular el costo total de la transacción en ETH
+        const gasCostInEth = ethers.formatUnits(gasLimit * selectedGasPrice, "wei"); 
+        const totalAmount = amount + parseFloat(gasCostInEth);
+        console.log("costo de gas en ETH:", gasCostInEth)
+
+        let feeData = {
+            maxFeePerGas: ethers.parseUnits("10", "gwei"),
+            maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
         };
-      }
-      
-      const tx = await this.signer.sendTransaction({
-        to,
-        value: ethers.parseEther(amount.toString()),
-        maxFeePerGas: feeData.maxFeePerGas,
-        maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
-      });
-      
 
-      console.log("Transacción enviada: ", tx.hash);
-      return {
-        txHash: tx.hash,
-        gasUsed: gasLimit.toString(),
-        gasPrice: selectedGasPrice,
-      };
+        if (this.signer.provider) {
+            const fetchedFeeData = await this.signer.provider.getFeeData();
+            feeData = {
+                maxFeePerGas: fetchedFeeData.maxFeePerGas ?? feeData.maxFeePerGas,
+                maxPriorityFeePerGas: fetchedFeeData.maxPriorityFeePerGas ?? feeData.maxPriorityFeePerGas,
+            };
+        }
+
+        console.log("Enviando transacción a:", to, 'con monto:', totalAmount);
+        
+        const tx = await this.signer.sendTransaction({
+            to,
+            value: ethers.parseEther(amount.toString()),
+            maxFeePerGas: feeData.maxFeePerGas,
+            maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
+        });
+
+        console.log("Transacción enviada: ", tx.hash);
+        return {
+            txHash: tx.hash,
+            gasUsed: gasLimit.toString(),
+            gasPrice: selectedGasPrice,
+        };
     } catch (error) {
-      console.error("Error al enviar la transacción: ", error);
-      throw error;
+        console.error("Error al enviar la transacción: ", error);
+        throw error;
     }
+}
+    async signMessage(message: string): Promise<string> {
+    if (!this.signer) throw new Error("No hay signer disponible");
+    
+    return await this.signer.signMessage(message);
+}
+
+async verifySignature(message: string, signature: string) {
+  try {
+      const recoveredAddress = ethers.verifyMessage(message, signature);
+      console.log("Dirección recuperada:", recoveredAddress);
+
+      // Obtener la dirección de la billetera conectada
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const userAddress = await signer.getAddress();
+
+      console.log("Dirección original:", userAddress);
+
+      // Comparar direcciones
+      if (recoveredAddress.toLowerCase() === userAddress.toLowerCase()) {
+          console.log("✅ Firma válida: la firma pertenece al usuario.");
+      } else {
+          console.log("❌ Firma inválida: la dirección no coincide.");
+      }
+  } catch (error) {
+      console.error("Error verificando la firma:", error);
   }
+}
+
 }
