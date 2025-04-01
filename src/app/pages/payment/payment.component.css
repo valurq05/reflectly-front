@@ -1,0 +1,55 @@
+.btn-custom-purple {
+    background-color: #6f42c1;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-custom-purple:hover {
+    background-color: #5a2b9d;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .btn-custom-aqua {
+    background-color: #7FDBFF; /* Color aguamarina */
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-custom-aqua:hover {
+    background-color: #39C0D1; /* Un tono más oscuro de aguamarina para el hover */
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .card {
+    background-color: #f9f9f9;
+    border: none;
+  }
+  
+  .alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-radius: 8px;
+  }
+  
+  .form-check-label {
+    font-size: 1rem;
+  }
+  
+  .form-check-input {
+    margin-top: 5px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .text-primary {
+    color: #9f00d9 !important;
+  }
+  

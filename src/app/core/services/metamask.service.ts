@@ -59,64 +59,7 @@ export class MetamaskService {
     }
   }
 
-  async sendPayment(to: string, amount: number, priority: LevelGas) {
-    try {
-        if (!this.signer) throw new Error("No hay signer disponible");
-
-        console.log("Obteniendo tarifas de gas...");
-        const gasPrices = await this.getGasPrices();
-        if (!gasPrices) throw new Error("No se pudieron obtener tarifas de gas");
-
-        const selectedGasPrice = gasPrices[priority];
-        console.log(`Usando tarifa de gas (${priority}):`, ethers.formatUnits(selectedGasPrice, "gwei"), "Gwei");
-
-        console.log("Estimando gas para la transacción...");
-        const gasLimit = await this.provider.estimateGas({
-            to,
-            value: ethers.parseEther(amount.toString()),
-        });
-
-        console.log("Gas estimado:", gasLimit.toString());
-
-        // Calcular el costo total de la transacción en ETH
-        const gasCostInEth = ethers.formatUnits(gasLimit * selectedGasPrice, "wei"); 
-        const totalAmount = amount + parseFloat(gasCostInEth);
-        console.log("costo de gas en ETH:", gasCostInEth)
-
-        let feeData = {
-            maxFeePerGas: ethers.parseUnits("10", "gwei"),
-            maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
-        };
-
-        if (this.signer.provider) {
-            const fetchedFeeData = await this.signer.provider.getFeeData();
-            feeData = {
-                maxFeePerGas: fetchedFeeData.maxFeePerGas ?? feeData.maxFeePerGas,
-                maxPriorityFeePerGas: fetchedFeeData.maxPriorityFeePerGas ?? feeData.maxPriorityFeePerGas,
-            };
-        }
-
-        console.log("Enviando transacción a:", to, 'con monto:', totalAmount);
-        
-        const tx = await this.signer.sendTransaction({
-            to,
-            value: ethers.parseEther(amount.toString()),
-            maxFeePerGas: feeData.maxFeePerGas,
-            maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
-        });
-
-        console.log("Transacción enviada: ", tx.hash);
-        return {
-            txHash: tx.hash,
-            gasUsed: gasLimit.toString(),
-            gasPrice: selectedGasPrice,
-        };
-    } catch (error) {
-        console.error("Error al enviar la transacción: ", error);
-        throw error;
-    }
-}
-    async signMessage(message: string): Promise<string> {
+  async signMessage(message: string): Promise<string> {
     if (!this.signer) throw new Error("No hay signer disponible");
     
     return await this.signer.signMessage(message);
@@ -143,6 +86,77 @@ async verifySignature(message: string, signature: string) {
   } catch (error) {
       console.error("Error verificando la firma:", error);
   }
+}
+
+  async sendPayment(to: string, amount: number, priority: LevelGas) {
+    try {
+        if (!this.signer) throw new Error("No hay signer disponible");
+
+        console.log("Obteniendo tarifas de gas...");
+        const gasPrices = await this.getGasPrices();
+        if (!gasPrices) throw new Error("No se pudieron obtener tarifas de gas");
+
+        const selectedGasPrice = gasPrices[priority];
+
+        console.log("Estimando gas para la transacción...");
+        const gasLimit = await this.provider.estimateGas({
+            to,
+            value: ethers.parseEther(amount.toString()),
+        });
+        
+        console.log("Gas estimado:", gasLimit.toString(), "-", gasLimit, selectedGasPrice, selectedGasPrice*gasLimit);
+
+        // Calcular el costo total de la transacción en ETH
+        const gasPriceInWei = ethers.parseUnits(selectedGasPrice.toString(), "gwei"); 
+
+// Calcular el costo total de gas en Wei
+const gasCostInWei = gasLimit * gasPriceInWei; 
+
+// Convertir de Wei a ETH
+const gasCostInEth = ethers.formatUnits(gasCostInWei, "ether");
+
+console.log("Costo de gas en ETH:", gasCostInEth);
+
+const totalAmount = (amount + parseFloat(gasCostInEth))*0.00001;
+console.log("Monto total con gas incluido:", totalAmount, "ETH");
+        console.log("costo de gas en ETH:", gasCostInEth)
+        console.log("Limite de gas en ETH:", gasLimit)
+        console.log ("seleccion de gas en ETH:", ethers.formatUnits(selectedGasPrice))
+        console.log("Monto total con gas incluido:", totalAmount, "ETH");
+        console.log("amount", amount)
+
+        let feeData = {
+            maxFeePerGas: ethers.parseUnits("10", "gwei"),
+            maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
+        };
+
+        if (this.signer.provider) {
+            const fetchedFeeData = await this.signer.provider.getFeeData();
+            feeData = {
+                maxFeePerGas: fetchedFeeData.maxFeePerGas ?? feeData.maxFeePerGas,
+                maxPriorityFeePerGas: fetchedFeeData.maxPriorityFeePerGas ?? feeData.maxPriorityFeePerGas,
+            };
+        }
+
+        console.log("Enviando transacción a:", to, 'con monto:', totalAmount);
+        
+        const tx = await this.signer.sendTransaction({
+            to,
+            value: ethers.parseEther(totalAmount.toString()),
+            maxFeePerGas: feeData.maxFeePerGas,
+            maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
+        });
+
+        console.log("Transacción enviada: ", tx.hash);
+        return {
+            txHash: tx.hash,
+            gasUsed: gasLimit.toString(),
+            gasPrice: selectedGasPrice,
+        };
+    } catch (error) {
+        console.error("Error al enviar la transacción: ", error);
+        throw error;
+    }
 }
 
 }

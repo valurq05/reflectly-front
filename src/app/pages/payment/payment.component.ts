@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MetamaskService } from '../../core/services/metamask.service';
 import { LevelGas } from '../../core/model/common.model';
+import { ethers } from 'ethers';
 
 @Component({
   selector: 'app-payment',
@@ -8,11 +9,16 @@ import { LevelGas } from '../../core/model/common.model';
   styleUrl: './payment.component.css'
 })
 export class PaymentComponent {
+  Fees: any={}
   walletAddress: string | null = null;
   subscriptionPrice = 0.01; 
-  paymentAddress = '0x565211137cD1599E0Ed849E818892BaaD1081a2E'; 
+  paymentAddress = '0x7059340F1c684b88DEa3538314735f7d27dfE55B'; 
   selectedGasOption: LevelGas = "average";
   constructor(private metamaskService: MetamaskService) {}
+  ngOnInit(){
+    this.getGasFee()
+
+  }
 
   async connectWallet() {
     try {
@@ -21,6 +27,11 @@ export class PaymentComponent {
     } catch (error) {
       console.error('Error al conectar MetaMask:', error);
     }
+  }
+
+  async getGasFee(){
+    this.Fees= await this.metamaskService.getGasPrices()
+    console.log(this.Fees)
   }
 
   async paySubscription(gas:LevelGas) {

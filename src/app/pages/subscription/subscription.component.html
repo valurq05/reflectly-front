@@ -1,14 +1,26 @@
-<div class="container">
-    <div class="text-center">
-        <h3>Subscribete para obtener beneficios especiales</h3>
-        <h6>Beneficios</h6>
-        <ul>
-            <li>Recibe consejos por parte de nuestros especialistas en las notas que desees</li>
-            <li>Agrega imágenes a tus notas</li>
-            <li>Colabora con tus amigos</li>
-            <li>Y mucho más!</li>
-        </ul>
-        <P>$5</P>
-        <button class="btn btn-secondary"  [routerLink]="['/payment']">Subscribirse</button>
+<div class="container my-5">
+    <div class="text-center p-4 border rounded shadow-sm bg-light">
+      <h3 class="mb-4">¡Suscríbete para obtener beneficios especiales!</h3>
+      <h6 class="mb-3 text-muted">Beneficios</h6>
+      <ul class="list-unstyled text-left mb-4">
+        <li><i class="bi bi-check-circle me-2 text-success"></i>Recibe consejos por parte de nuestros especialistas en las notas que desees</li>
+        <li><i class="bi bi-check-circle me-2 text-success"></i>Agrega imágenes a tus notas</li>
+        <li><i class="bi bi-check-circle me-2 text-success"></i>Colabora con tus amigos</li>
+        <li><i class="bi bi-check-circle me-2 text-success"></i>Y mucho más!</li>
+      </ul>
+      <h4 class="text-primary mb-4">$0.01 ETH</h4>
+      <button class="btn btn-custom-purple" [routerLink]="['/payment']">Suscribirse</button>
     </div>
-</div>
+  </div>
+  
+  <style>
+    .btn-custom-purple {
+      background-color: #6f42c1;
+      color: white;
+    }
+    .btn-custom-purple:hover {
+      background-color: #5a2b9d;
+      color: white;
+    }
+  </style>
+  
