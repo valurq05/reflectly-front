@@ -29,6 +29,7 @@ import { AdminPatientsComponent } from './pages/admin-patients/admin-patients.co
 import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
 import { SubscriptionComponent } from './pages/subscription/subscription.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 //register swiper
 register();
 
@@ -52,7 +53,8 @@ register();
     AdminPatientsComponent,
     AdminHomeComponent,
     SubscriptionComponent,
-    PaymentComponent
+    PaymentComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,

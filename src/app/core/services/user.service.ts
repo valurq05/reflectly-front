@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse, chatBotPayLoad, DailyLog, User } from '../model/common.model';
+import { ApiResponse, chatBotPayLoad, DailyLog, emotionPayload, emotionResponse, User } from '../model/common.model';
 import { ApiEndpoint } from '../constants.ts/constants';
 import { map } from 'rxjs';
 
@@ -24,9 +24,12 @@ export class UserService {
     });
   }
   
-  
-  
   public askChatBot(payload: chatBotPayLoad){
-    return this.http.post<string>(`${ApiEndpoint.Bot.Question}`, payload);
+    return this.http.post<{ respuesta:string }>(`${ApiEndpoint.Bot.Question}`, payload);
   }
+
+  public getEmotions(payload: emotionPayload){
+    return this.http.post<emotionResponse>(`${ApiEndpoint.Bot.Emotions}`, payload);
+  }
+
 }

@@ -1,0 +1,219 @@
+.add-note-button {
+    background-color: #C06EF3;
+    color: white;
+    border-radius: 12px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+  
+  .add-note-button:hover {
+    background-color: #5a54e0;
+  }
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+    height: auto;
+  }
+  
+  /* Calendar Styling */
+  .calendar {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .calendar-header button {
+    color: #0d1bd6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .calendar-weekdays,
+  .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .calendar-weekdays span {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .calendar-days span {
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    min-width: 80px;
+  }
+  
+  .calendar-days span.selected {
+    background-color: #8e44ad;
+    color: #fff;
+  }
+  
+  .calendar-days span.today {
+    background-color: #a47bca;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .calendar-days span.not-current-month {
+    color: #aaa;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .calendar-days span.disabled {
+    background-color: #f1f1f1;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  /* Swiper Pagination Dots */
+  
+  .slider-cards {
+    margin-top: 20px;
+  }
+  
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  .categorie {
+    font-size: 0.8rem;
+    margin: 0 5px 5px 0;
+    display: inline-block;
+  }
+  
+  .swiper-pagination-bullet {
+    background-color: #7e57c2;
+    opacity: 1;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background-color: #5a2d82;
+  }
+  
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #5a2d82;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+  }
+  
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    transform: scale(1.2);
+    background-color: #5a2d82;
+    color: #fff;
+  }
+  
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 1.5rem;
+  }
+  
+  .container-noSelected {
+    border-radius: 15px;
+    background-color: #f8f8f8;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 20px;
+    color: #555;
+  }
+  
+  
+  /* Card Styling */
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #FBF3FF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-header {
+    background-color: #FBF3FF;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #0c0909;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-body {
+    padding: 16px;
+    color: #6c757d;
+    font-size: 0.95rem;
+    flex-grow: 1;
+  }
+  
+  .card-footer {
+    background-color: #FBF3FF;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .titulo-not {
+    color: var(--purple-font-color);
+  }
+  
+  .image-container {
+    width: 400px; /* Ajusta el tamaño según lo que necesites */
+    height: 300px;
+    overflow: hidden; /* Evita que las imágenes se salgan del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Hace que todas las imágenes tengan el mismo tamaño sin deformarse */
+}

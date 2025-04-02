@@ -58,3 +58,10 @@
     background-color: var(--purple-color);
     transition: 0.5s;
 }
+
+@media (max-width: 576px) {
+    .btn-custom {
+        padding: 2px 6px;
+        font-size: 0.875rem;
+    }
+}

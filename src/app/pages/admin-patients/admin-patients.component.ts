@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../core/services/user.service';
-import { chatBotPayLoad, User } from '../../core/model/common.model';
+import { chatBotPayLoad, emotionPayload, User } from '../../core/model/common.model';
 
 @Component({
   selector: 'app-admin-patients',
@@ -13,11 +13,15 @@ export class AdminPatientsComponent implements OnInit {
   selectedUserId: number | null = null;
   question: string = '';       
   chatResponse: string = ''; 
+  overallEmotion: string = '';
+  emoji: string = '';
+  contexto:string = '';
+  loading:boolean = true;
 
   constructor(private userService_: UserService) { }
 
   ngOnInit() {
-    console.log("Cargado componente pacientes");
+    console.log("Cargando componente pacientes");
     this.readUserNotes();
   }
 
@@ -30,32 +34,46 @@ export class AdminPatientsComponent implements OnInit {
 
   openModal(userId: number) {
     this.selectedUserId = userId;
+    this.getAllNotes(this.selectedUserId);
     this.chatResponse = '';
-    console.log("Usuario seleccionado para consulta:", userId);
   }
 
-   onSubmit() {
-    if (!this.selectedUserId || !this.question.trim()) {
-      console.log("No hay usuario seleccionado o la pregunta está vacía.");
+  getAllNotes(userId: number){
+    console.log(userId);
+    if (!userId) {
+      console.log("No hay usuario seleccionado");
       return;
     }
+    console.log("Usuario a sacar contexto:" + this.selectedUserId);
+    this.userService_.readAllEntries(userId).subscribe(res =>{
+      this.contexto = res.Data;
+      this.getEmotions(this.contexto);
+    })
+  }
+  
+  getEmotions(contexto:string) {
+    
+    const payload: emotionPayload = {
+      texto: contexto
+    };
+    this.userService_.getEmotions(payload).subscribe(res => {
+      this.overallEmotion = res.emocion;
+      this.emoji = res.emoji
+      console.log(res);
+      this.loading = false;
+    });
+  }
+  
 
-    console.log(this.selectedUserId);
-
-    this.userService_.readAllEntries(this.selectedUserId).subscribe(response => {
-      const contexto = response.Data;
-      console.log("Contexto obtenido:", contexto);
-
+  onSubmit() {
       const payload: chatBotPayLoad = {
-        contexto: contexto,  
+        contexto: this.contexto,  
         pregunta: this.question
       };
 
       this.userService_.askChatBot(payload).subscribe(res => {
-        this.chatResponse = res;
-        console.log("✅ Respuesta del chatbot:", res);
+        this.chatResponse = res.respuesta;
       });
-    });
   }
  
 }

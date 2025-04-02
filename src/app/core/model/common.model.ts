@@ -44,6 +44,17 @@ export interface chatBotPayLoad{
     contexto: string
 }
 
+export interface emotionPayload{
+    texto: string
+}
+
+export interface emotionResponse{
+    confianza:number,
+    emocion: string,
+    emoji: string,
+    emocion_base: string
+}
+
 export interface Entry {
     entId: number;
     entDate: Date;
@@ -130,6 +141,28 @@ export interface googleResponse {
 export interface Roles{
     rolId: number;
 }
+
+export interface Photo{
+    fotoId: number,
+    nombreFoto: string,
+    rutaArchivo: string
+    descripcion: string
+    fechaSubida: string
+    visible: boolean,
+    fullPath?: string,
+    user: User
+}
+
+export interface imageAI {
+    nombreArchivo: string;
+    clasificacion: {
+        predictions: {
+            label: string;
+            probability: number;
+        }[];
+    };
+}
+
 
 export interface ApiResponse<T> {
     Status?: boolean;

@@ -24,7 +24,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" 
     id="modalPregunta" 
     tabindex="-1" 
@@ -39,27 +38,40 @@
         data-bs-dismiss="modal" 
         aria-label="Close">
         </button>
+        <div class="modal-header justify-content-center">
+          <h4 class="fw-bold">Consulta</h4>
+        </div>
         <div class="modal-body text-center justify-content-center">
-          <div>
-              <h1 class="fw-bold">Consulta</h1>
-              <p>Haz las preguntas que desees sobre tu paciente y obtén respuestas basadas en sus notas!</p>
+          
+          <div *ngIf="loading" class="text-center">
+            <h3>Cargando...</h3>
           </div>
-          <form (submit)="onSubmit(); $event.preventDefault();" class="form-login">
+
+          <div *ngIf="!loading">
+            <p class="text-start">Emociones Generales: {{ overallEmotion }} {{ emoji }}</p>
+            <hr>
+            <div class="text-start">Notas del usuario: {{ contexto }}</div>
+            
+            <form (submit)="onSubmit(); $event.preventDefault();" class="form-login pt-3">
               <div>
                 <input type="text" class="form-control" [(ngModel)]="question" name="question">
               </div>
               <div>
                   <button type="submit" class="btn btn-send fw-bold mt-3">Preguntar</button>
               </div>   
-          </form>
-          <div class="mt-3">
+            </form>
+
+            <div class="mt-3" *ngIf="chatResponse">
               <h5>Respuesta del Chatbot:</h5>
               <p *ngIf="chatResponse">{{ chatResponse }}</p>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
-</div>  
+</div>
+
 
 
   

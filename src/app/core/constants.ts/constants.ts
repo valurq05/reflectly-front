@@ -1,5 +1,6 @@
 import { Collaborator } from '../model/common.model';
 const API_URL = 'http://localhost:8080';
+const CHATBOT_URL = 'http://localhost:5000'
 
 export const ApiEndpoint = {
     Auth: {
@@ -26,6 +27,10 @@ export const ApiEndpoint = {
         showImage:`${API_URL}/images/{filename}`,
         defaultImage:`${API_URL}/images/GdXyg8gWgAAQmW1.jpg`,
         changeDefaultImage:`${API_URL}/user/profile/img`,
+        uploadGalleryImage: `${API_URL}/foto`,
+        userImages: `${API_URL}/user/{userId}/fotos`,
+        showPhotos: `${API_URL}/fotos/archivo/{filename}`,
+        clasifyImages: `${API_URL}/clasificar-imagen`
     },
     Entry:{
         Delete:`${API_URL}/entry`,
@@ -52,7 +57,8 @@ export const ApiEndpoint = {
         Delete:`${API_URL}/Categories/entry`,
     },
     Bot:{
-        Question:`http://localhost:5000/chatbot`
+        Question:`${CHATBOT_URL}/chatbot`,
+        Emotions: `${CHATBOT_URL}/detectar-emocion`
     }
 }
 
