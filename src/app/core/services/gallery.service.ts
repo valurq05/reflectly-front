@@ -33,8 +33,6 @@ export class GalleryService {
   }
 
   public getImageDescription(fileName: string) {
-    console.log("hola el nombre del coso desde el servicio " + fileName);
-    
     let params = new HttpParams().set('filename', fileName);
   
     return this.http.post<imageAI>(ApiEndpoint.image.clasifyImages, {}, { params: params });

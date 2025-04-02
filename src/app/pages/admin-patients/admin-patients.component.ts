@@ -7,6 +7,7 @@ import { chatBotPayLoad, emotionPayload, User } from '../../core/model/common.mo
   templateUrl: './admin-patients.component.html',
   styleUrl: './admin-patients.component.css'
 })
+
 export class AdminPatientsComponent implements OnInit {
 
   users: User[] | null = null;
@@ -52,7 +53,6 @@ export class AdminPatientsComponent implements OnInit {
   }
   
   getEmotions(contexto:string) {
-    
     const payload: emotionPayload = {
       texto: contexto
     };
@@ -64,7 +64,6 @@ export class AdminPatientsComponent implements OnInit {
     });
   }
   
-
   onSubmit() {
       const payload: chatBotPayLoad = {
         contexto: this.contexto,  

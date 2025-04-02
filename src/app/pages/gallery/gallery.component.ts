@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageService } from '../../core/services/image.service';
 import { GalleryService } from '../../core/services/gallery.service';
 import { Photo, User } from '../../core/model/common.model';
 import { AuthService } from '../../core/services/auth.service';
